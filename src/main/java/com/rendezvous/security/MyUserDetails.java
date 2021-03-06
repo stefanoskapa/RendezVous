@@ -1,7 +1,7 @@
 
-package com.rendezvous;
+package com.rendezvous.security;
 
-import com.rendezvous.model.User;
+import com.rendezvous.entity.User;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

@@ -1,5 +1,5 @@
 
-package com.rendezvous.model;
+package com.rendezvous.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

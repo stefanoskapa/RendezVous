@@ -1,7 +1,8 @@
 
-package com.rendezvous;
+package com.rendezvous.security;
 
-import com.rendezvous.model.User;
+import com.rendezvous.repository.UserRepository;
+import com.rendezvous.entity.User;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
