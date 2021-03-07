@@ -1,7 +1,7 @@
 
-package com.rendezvous;
+package com.rendezvous.repository;
 
-import com.rendezvous.model.User;
+import com.rendezvous.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

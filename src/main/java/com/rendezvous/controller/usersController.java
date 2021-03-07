@@ -1,5 +1,5 @@
 
-package com.rendezvous;
+package com.rendezvous.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,12 +9,9 @@ APIs than can verify if the authentication succeeded
 */
 
 @RestController
-public class HomeResource {
+public class usersController {
 
-    @GetMapping("/")
-    public String home() {
-        return "<h1>Welcome</h1>";
-    }
+
     
     @GetMapping("/client")
     public String user() {
