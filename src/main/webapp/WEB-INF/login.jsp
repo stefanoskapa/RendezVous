@@ -1,6 +1,6 @@
 <%-- 
-    Document   : newjsp
-    Created on : Mar 7, 2021, 12:42:47 AM
+    Document   : login
+    Created on : Mar 8, 2021, 3:07:22 PM
     Author     : Leyteris
 --%>
 
@@ -12,7 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <!--URL: / (xoris tipota)-->
-        <h1>Hello World!</h1>
+        <!--URL: /login-->
+
+
+        <!--forma login, POST, /login-->
     </body>
 </html>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : newjsp
-    Created on : Mar 7, 2021, 12:42:47 AM
+    Document   : business_hours
+    Created on : Mar 8, 2021, 3:36:25 PM
     Author     : Leyteris
 --%>
 
@@ -12,7 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <!--URL: / (xoris tipota)-->
-        <h1>Hello World!</h1>
+        <!--URL: company/business-hours-->    
+        
+<!--        forma: POST, company/business-hours
+        deutera: start time , end time
+        triti: start time, end time
+        kok-->
+        
     </body>
 </html>

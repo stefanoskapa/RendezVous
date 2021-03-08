@@ -1,6 +1,6 @@
 <%-- 
-    Document   : newjsp
-    Created on : Mar 7, 2021, 12:42:47 AM
+    Document   : success_premium
+    Created on : Mar 8, 2021, 10:24:54 PM
     Author     : Leyteris
 --%>
 
@@ -12,7 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <!--URL: / (xoris tipota)-->
-        <h1>Hello World!</h1>
+        <!--URL: company/pro/success-->    
+        
+        <!--enimerosi epitixous agoras kai automato redirect sto company/profile, opou tha exei ksekleidosei i epilogi category-->
     </body>
 </html>
