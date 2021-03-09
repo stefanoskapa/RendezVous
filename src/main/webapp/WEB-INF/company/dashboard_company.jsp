@@ -16,6 +16,8 @@
         <!--URL: company/dashboard-->
 
         <!--imerologio tou company me ta kleismena rantevou-->
+        <!--ta data tha erxontai me ajax-->
+        
         <!--link alagis orariou gia to  URL: company/business-hours-->  
         <!--link alagis stoixeion tis etairias gia to  URL: company/profile-->  
         <!--link agoras premium gia to  URL: company/pro-->  
