@@ -1,6 +1,6 @@
 <%-- 
-    Document   : newjsp
-    Created on : Mar 7, 2021, 12:42:47 AM
+    Document   : company_date_pick
+    Created on : Mar 8, 2021, 10:12:42 PM
     Author     : Leyteris
 --%>
 
@@ -12,7 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <!--URL: / (xoris tipota)-->
-        <h1>Hello World!</h1>
+        <!--URL: client/date-select?id=[companyid]-->    
+        
+        <!--imerologio me ta anoixta rantevou tis etairias-->
+        
     </body>
 </html>

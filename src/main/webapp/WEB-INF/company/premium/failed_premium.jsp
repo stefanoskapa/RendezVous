@@ -1,6 +1,6 @@
 <%-- 
-    Document   : newjsp
-    Created on : Mar 7, 2021, 12:42:47 AM
+    Document   : failed_premium
+    Created on : Mar 8, 2021, 10:25:04 PM
     Author     : Leyteris
 --%>
 
@@ -12,7 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <!--URL: / (xoris tipota)-->
-        <h1>Hello World!</h1>
+        <!--URL: company/pro/rejected-->    
+        
+        <!--enimerosi anepitixous agoras kai automato redirect sto company/dashboard-->
     </body>
 </html>
