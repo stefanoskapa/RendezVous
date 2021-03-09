@@ -1,4 +1,3 @@
-
 package com.rendezvous.security;
 
 import com.rendezvous.repository.UserRepository;
@@ -19,7 +18,7 @@ public class MyUserDetailsService implements UserDetailsService{
     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional <User> user = userRepository.findByUsername(username);
+        Optional <User> user = userRepository.findByEmail(username);
         user.orElseThrow(()-> new UsernameNotFoundException("User " + username + " not found!"));
         return user.map(MyUserDetails::new).get();
     }
