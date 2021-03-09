@@ -17,6 +17,6 @@
         <!--forma anazitisis etairias-->
         <!--anazitisi me vasi to category-->
         <!--anazitisi me vasi to onoma/tilefono-->
-        
+        <!--o client epilegei etairia, kai me mia forma xtypao to back :POST client/comp-select, stelnontas to id tis eterias-->
     </body>
 </html>

@@ -12,9 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <!--URL: client/date-select?id=[companyid]-->    
         
         <!--imerologio me ta anoixta rantevou tis etairias-->
+        <!--ta data tha erxontai me ajax, me vasi to id tis eterias pou tha lamvanete meso tou model("comp_id")-->
         
     </body>
 </html>

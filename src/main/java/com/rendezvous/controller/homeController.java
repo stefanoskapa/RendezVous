@@ -8,12 +8,9 @@ package com.rendezvous.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/**
- *
- * @author Leyteris
- */
+
 @Controller
-public class homeController {
+public class HomeController {
 
     @GetMapping("/")
     public String home() {

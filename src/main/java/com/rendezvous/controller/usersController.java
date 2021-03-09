@@ -9,7 +9,7 @@ APIs than can verify if the authentication succeeded
 */
 
 @RestController
-public class usersController {
+public class UsersController { //todo to delete after testing
 
 
     

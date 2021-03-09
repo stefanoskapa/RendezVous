@@ -14,10 +14,13 @@
     <body>
         <!--arxiki selida tou logarismenou client-->
         <!--URL: client/dashboard-->
-        
+
         <!--prosopiko imerologio client-->
+        <!--ta data tha erxontai me ajax-->
+
+
         <!--link kleisimatos rantevou gia to client/comp-select-->
         <!--link alagis stoixeion tou client gia to  URL: client/profile-->  
-        
+
     </body>
 </html>
