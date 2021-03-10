@@ -40,7 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/client").hasRole("CLIENT")
                 .antMatchers("/company").hasRole("COMPANY")
                 .antMatchers("/").permitAll()
-                .and().formLogin();
+                .and().formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticateTheUser"); // Handled by Spring, no need for controller
                 
     }
     
