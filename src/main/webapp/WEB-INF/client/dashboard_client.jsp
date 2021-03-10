@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +16,7 @@
     </head>
     <body>
         dashboard client
-        
+        <br/>
         <!--arxiki selida tou logarismenou client-->
         <!--URL: client/dashboard-->
 
@@ -24,5 +27,8 @@
         <!--link kleisimatos rantevou gia to client/comp-select-->
         <!--link alagis stoixeion tou client gia to  URL: client/profile-->  
 
+        welcome <sec:authentication property="name"/>
+        
+        
     </body>
 </html>
