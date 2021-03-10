@@ -29,7 +29,7 @@ public class MyUserDetails implements UserDetails {
         //        .map(SimpleGrantedAuthority::new)
         //        .collect(Collectors.toList());
        List<GrantedAuthority> ga = new ArrayList<>();
-       for (Role a: user.getRoleCollection()) {
+       for (Role a: user.getRoleList()) {
            ga.add(new SimpleGrantedAuthority(a.getRole()));
        }
        this.authorities = ga;

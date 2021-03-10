@@ -13,9 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,10 +25,10 @@ import javax.validation.constraints.Size;
  * @author Leyteris
  */
 @Entity
-@Table(name = "role")
+@Table(name = "comp_category")
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")})
-public class Role implements Serializable {
+    @NamedQuery(name = "CompCategory.findAll", query = "SELECT c FROM CompCategory c")})
+public class CompCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -40,23 +40,23 @@ public class Role implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "role")
-    private String role;
+    @Size(min = 1, max = 40)
+    @Column(name = "category")
+    private String category;
     
-//    @ManyToMany(mappedBy = "roleList")
-//    private List<User> userList;
+//    @OneToMany(mappedBy = "categoryId")
+//    private List<Company> companyList;
 
-    public Role() {
+    public CompCategory() {
     }
 
-    public Role(Integer id) {
+    public CompCategory(Integer id) {
         this.id = id;
     }
 
-    public Role(Integer id, String role) {
+    public CompCategory(Integer id, String category) {
         this.id = id;
-        this.role = role;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -67,20 +67,20 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getCategory() {
+        return category;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-//    public List<User> getUserList() {
-//        return userList;
+//    public List<Company> getCompanyList() {
+//        return companyList;
 //    }
 //
-//    public void setUserList(List<User> userList) {
-//        this.userList = userList;
+//    public void setCompanyList(List<Company> companyList) {
+//        this.companyList = companyList;
 //    }
 
     @Override
@@ -93,10 +93,10 @@ public class Role implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof CompCategory)) {
             return false;
         }
-        Role other = (Role) object;
+        CompCategory other = (CompCategory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -105,7 +105,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rendezvous.entity.Role[ id=" + id + " ]";
+        return "com.rendezvous.entity.CompCategory[ id=" + id + " ]";
     }
     
 }
