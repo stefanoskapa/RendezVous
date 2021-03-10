@@ -18,14 +18,4 @@ public class AuthenticationController {
         return "login";
     }
 
-   // @PostMapping("/login")
-   // public String login() {
-        
-        //todo
-        //elegxos login xristi
-
-        //redirect sto client/dashboard i sto company/dashboard
-     //   return null;
-    //}
-
 }

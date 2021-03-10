@@ -21,7 +21,7 @@ public class ClientController {
     
     @GetMapping("/dashboard")
     public String showDashboard() {
-        return "client/dasbboard_client";
+        return "client/dashboard_client";
     }
     
 //    @GetMapping("/profile")
