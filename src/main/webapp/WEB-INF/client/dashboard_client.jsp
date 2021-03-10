@@ -12,6 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
+        dashboard client
+        
         <!--arxiki selida tou logarismenou client-->
         <!--URL: client/dashboard-->
 

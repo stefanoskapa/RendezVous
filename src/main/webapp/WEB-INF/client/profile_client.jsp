@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %> %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +13,11 @@
         <title>JSP Page</title>
     </head>
     <body>
+        
+        <form:form>
+            
+        </form:form>    
+        
         <!--URL: client/profile-->
         
         <!--forma allagis stoixeon tou client POST, client/profile -->

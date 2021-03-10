@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/company")
 public class CompanyController {
     
     @GetMapping("/dashboard")
     public String showDashboard() {
-        return "company/dasbboard_company";
+        return "company/dashboard_company";
     }
     
 //    @GetMapping("/profile")

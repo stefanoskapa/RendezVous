@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        dashboard company
         <!--arxiki selida tou logarismenou company-->
         <!--URL: company/dashboard-->
 
