@@ -15,13 +15,13 @@
                 ${userExistsError}
             </c:if>
             <form:form action="${pageContext.request.contextPath}/client-register" 
-                       method="post" modelAttribute="newClientUser">
+                       method="post" modelAttribute="newClient">
                 
                 <p>
-                    <form:input path="email" placeholder="email"/>
+                    <form:input path="userId.email" placeholder="email"/>
                 </p>
                 <p>
-                    <form:input path="password" placeholder="password"/>
+                    <form:input path="userId.password" placeholder="password"/>
                 </p>
                 <p>
                     <form:input path="fname" placeholder="first name"/>

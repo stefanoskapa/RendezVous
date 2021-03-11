@@ -33,13 +33,14 @@ public class RegistrationController {
     ClientRepository clientRepository;
 
     @GetMapping("/client-register")
-    public String showClientRegistration(Model model) {
-        model.addAttribute("newClientUser", new ClientUser());
+    public String showClientRegistration(@ModelAttribute("newClient") Client newClient,Model model) {
+        
         return "client/register_client";
     }
 
     @PostMapping("/client-register")
-    public String clientRegistration(@ModelAttribute("newClientUser") ClientUser newClientUser, Model m) {
+    public String clientRegistration(@ModelAttribute("newClient") Client newClient, Model m) {
+        System.out.println(newClient.getUserId().getEmail());
         
         List<Role> userRole = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
@@ -48,27 +49,26 @@ public class RegistrationController {
                userRole.add(a);
             }
         }
+        newClient.getUserId().setRoleList(userRole);
         
         //create user
         User newUser = new User();
-        newUser.setEmail(newClientUser.getEmail());
-        newUser.setPassword(newClientUser.getPassword());
+        newUser.setEmail(newClient.getUserId().getEmail());
+        newUser.setPassword(newClient.getUserId().getPassword());
         newUser.setRoleList(userRole);
         userRepository.save(newUser); 
         
-        //Create client. Need to fix DB first
-        /*
+        //create client
         Client client = new Client();
-        client.setFname(newClientUser.getFname());
-        client.setLname(newClientUser.getLname());
-        client.setTel(newClientUser.getTel());
+        client.setFname(newClient.getFname());
+        client.setLname(newClient.getLname());
+        client.setTel(newClient.getTel());
         client.setUserId(newUser);
         clientRepository.save(client);
-        */
         
-        //todo
-        //meta apo epitixi prosthiki xristi:
-        //redirectAttributes.addAttribute("success_creation", "Your account has been succesfully created");
+        
+        
+        
         return "redirect:/login";
     }
 
