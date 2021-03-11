@@ -5,10 +5,6 @@
  */
 package com.rendezvous.controller;
 
-/**
- *
- * @author Leyteris
- */
 public class ChatController {
     
 }

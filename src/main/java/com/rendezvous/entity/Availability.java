@@ -22,10 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author Leyteris
- */
+
 @Entity
 @Table(name = "availability")
 @NamedQueries({
