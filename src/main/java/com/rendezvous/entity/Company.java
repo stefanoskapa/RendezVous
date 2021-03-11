@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -91,6 +92,7 @@ public class Company implements Serializable {
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @Valid
     private User userId;
     
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
