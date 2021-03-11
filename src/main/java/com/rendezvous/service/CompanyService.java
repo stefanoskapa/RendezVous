@@ -5,22 +5,22 @@
  */
 package com.rendezvous.service;
 
-import com.rendezvous.entity.Client;
-import com.rendezvous.repository.ClientRepository;
+import com.rendezvous.entity.Company;
+import com.rendezvous.repository.CompanyRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+
 @Service
-public class ClientService {
-    
+public class CompanyService {
     @Autowired
-    ClientRepository clientRepository;
+    CompanyRepository companyRepository;
     
-    public Client findClientByEmail(String email){
-        Optional<Client> client = clientRepository.findClientByUserEmail(email);
-        client.orElseThrow(()-> new UsernameNotFoundException("User " + email + " not found!"));
-        return client.get();
+    public Company findCompanyByEmail(String email){
+        Optional<Company> company = companyRepository.findCompanyByUserEmail(email);
+        company.orElseThrow(()-> new UsernameNotFoundException("Company " + email + " not found!"));
+        return company.get();
     }
 }

@@ -32,28 +32,33 @@ import javax.validation.constraints.Size;
 public class ClientMessages implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
+    
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "message")
     private String message;
+    
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Client clientId;
+    private Client client;
+    
     @JoinColumn(name = "conversation_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Conversation conversationId;
+    private Conversation conversation;
 
     public ClientMessages() {
     }
@@ -92,20 +97,20 @@ public class ClientMessages implements Serializable {
         this.message = message;
     }
 
-    public Client getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(Client clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public Conversation getConversationId() {
-        return conversationId;
+    public Conversation getConversation() {
+        return conversation;
     }
 
-    public void setConversationId(Conversation conversationId) {
-        this.conversationId = conversationId;
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
     }
 
     @Override

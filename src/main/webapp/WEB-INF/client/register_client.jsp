@@ -22,12 +22,13 @@
             </c:if>
             <form:form action="${pageContext.request.contextPath}/client-register" 
                        method="post" modelAttribute="newClient">
-                
+                <!--todo: user sucessfully created-->
+
                 <p>
-                    <form:input path="userId.email" placeholder="email"/>
+                    <form:input path="user.email" placeholder="email"/>
                 </p>
                 <p>
-                    <form:input path="userId.password" placeholder="password"/>
+                    <form:input path="user.password" placeholder="password"/>
                 </p>
                 <p>
                     <form:input path="fname" placeholder="first name"/>
@@ -38,7 +39,7 @@
                 <p>
                     <form:input path="tel" placeholder="tel"/>
                 </p>
-                
+
                 <input type="submit" value="Register">
             </form:form>
         </div>

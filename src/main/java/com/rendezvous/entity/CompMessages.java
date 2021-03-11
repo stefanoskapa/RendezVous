@@ -6,6 +6,7 @@
 package com.rendezvous.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,28 +33,32 @@ import javax.validation.constraints.Size;
 public class CompMessages implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
+    private LocalDate timestamp;
+    
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "message")
     private String message;
+    
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Company companyId;
+    private Company company;
+    
     @JoinColumn(name = "conversation_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Conversation conversationId;
+    private Conversation conversation;
 
     public CompMessages() {
     }
@@ -62,7 +67,7 @@ public class CompMessages implements Serializable {
         this.id = id;
     }
 
-    public CompMessages(Integer id, Date timestamp, String message) {
+    public CompMessages(Integer id, LocalDate timestamp, String message) {
         this.id = id;
         this.timestamp = timestamp;
         this.message = message;
@@ -76,11 +81,11 @@ public class CompMessages implements Serializable {
         this.id = id;
     }
 
-    public Date getTimestamp() {
+    public LocalDate getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDate timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -92,20 +97,20 @@ public class CompMessages implements Serializable {
         this.message = message;
     }
 
-    public Company getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Company companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
-    public Conversation getConversationId() {
-        return conversationId;
+    public Conversation getConversation() {
+        return conversation;
     }
 
-    public void setConversationId(Conversation conversationId) {
-        this.conversationId = conversationId;
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
     }
 
     @Override

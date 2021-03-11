@@ -42,7 +42,7 @@ public class RegistrationController {
         return "client/register_client";
     }
 
-    @PostMapping("/client-register")
+    @PostMapping("/client-register") //todo check if user email already exists
     public String clientRegistration(@ModelAttribute("newClient") Client newClient, Model m) {
         
         List<Role> userRole = new ArrayList<>();
@@ -52,12 +52,12 @@ public class RegistrationController {
                userRole.add(a);
             }
         }
-        newClient.getUserId().setRoleList(userRole);
+        newClient.getUser().setRoleList(userRole);
         
         //create user
         User newUser = new User();
-        newUser.setEmail(newClient.getUserId().getEmail());
-        newUser.setPassword(newClient.getUserId().getPassword());
+        newUser.setEmail(newClient.getUser().getEmail());
+        newUser.setPassword(newClient.getUser().getPassword());
         newUser.setRoleList(userRole);
         userRepository.save(newUser); 
         
@@ -66,7 +66,7 @@ public class RegistrationController {
         client.setFname(newClient.getFname());
         client.setLname(newClient.getLname());
         client.setTel(newClient.getTel());
-        client.setUserId(newUser);
+        client.setUser(newUser);
         clientRepository.save(client);
         
         return "redirect:/login";
@@ -77,7 +77,7 @@ public class RegistrationController {
         return "company/register_company";
     }
 
-    @PostMapping("/company-register")
+    @PostMapping("/company-register") //todo check if user email already exists
     public String companyRegistration(@ModelAttribute("newCompany") Company newCompany, Model m) {
        List<Role> userRole = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
@@ -86,12 +86,12 @@ public class RegistrationController {
                userRole.add(a);
             }
         }
-        newCompany.getUserId().setRoleList(userRole);
+        newCompany.getUser().setRoleList(userRole);
         
         //create user
         User newUser = new User();
-        newUser.setEmail(newCompany.getUserId().getEmail());
-        newUser.setPassword(newCompany.getUserId().getPassword());
+        newUser.setEmail(newCompany.getUser().getEmail());
+        newUser.setPassword(newCompany.getUser().getPassword());
         newUser.setRoleList(userRole);
         userRepository.save(newUser); 
         
@@ -105,7 +105,7 @@ public class RegistrationController {
         company.setAddrNo(newCompany.getAddrNo());
         company.setAddrStr(newCompany.getAddrStr());
         company.setDisplayName(newCompany.getDisplayName());
-        company.setUserId(newUser);
+        company.setUser(newUser);
         
         companyRepository.save(company);
         

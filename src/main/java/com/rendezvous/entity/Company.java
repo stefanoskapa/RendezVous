@@ -77,25 +77,25 @@ public class Company implements Serializable {
     @Column(name = "addr_city")
     private String addrCity;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<CompMessages> compMessagesList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Appointment> appointmentList;
     
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
-    private CompCategory categoryId;
+    private CompCategory category;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @Valid
-    private User userId;
+    private User user;
     
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
 //    private List<Availability> availabilityList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Conversation> conversationList;
 
     public Company() {
@@ -200,20 +200,20 @@ public class Company implements Serializable {
         this.appointmentList = appointmentList;
     }
 
-    public CompCategory getCategoryId() {
-        return categoryId;
+    public CompCategory getCategory() {
+        return category;
     }
 
-    public void setCategoryId(CompCategory categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(CompCategory category) {
+        this.category = category;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 //    public List<Availability> getAvailabilityList() {

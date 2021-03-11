@@ -29,21 +29,26 @@ import javax.persistence.Table;
 public class Conversation implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversationId")
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversation")
     private List<CompMessages> compMessagesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversationId")
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversation")
     private List<ClientMessages> clientMessagesList;
+    
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Client clientId;
+    private Client client;
+    
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Company companyId;
+    private Company company;
 
     public Conversation() {
     }
@@ -76,20 +81,20 @@ public class Conversation implements Serializable {
         this.clientMessagesList = clientMessagesList;
     }
 
-    public Client getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(Client clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public Company getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Company companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override
