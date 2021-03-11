@@ -21,10 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author Leyteris
- */
+
 @Entity
 @Table(name = "conversation")
 @NamedQueries({

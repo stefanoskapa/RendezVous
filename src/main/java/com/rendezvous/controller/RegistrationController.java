@@ -35,7 +35,7 @@ public class RegistrationController {
     @Autowired
     CompanyRepository companyRepository;
     
-
+    
     @GetMapping("/client-register")
     public String showClientRegistration(@ModelAttribute("newClient") Client newClient,Model model) {
         

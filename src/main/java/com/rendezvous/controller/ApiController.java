@@ -8,10 +8,6 @@ package com.rendezvous.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author Leyteris
- */
 @RestController
 @RequestMapping("/api/v1/") //todo add /api/v1/client and /api/v1/company in Spring Security
 public class ApiController {

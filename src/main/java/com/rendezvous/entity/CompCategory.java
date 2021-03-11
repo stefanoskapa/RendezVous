@@ -20,10 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author Leyteris
- */
+
 @Entity
 @Table(name = "comp_category")
 @NamedQueries({

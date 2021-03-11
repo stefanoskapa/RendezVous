@@ -9,6 +9,14 @@
         <title>Register Page</title>
     </head>
     <body>
+        <!--URL: /company-register-->
+        
+        <!--form register for company, POST, /custregiter-->
+        <!--email*, onomasia etairias*, fname*, lname*, afm*, address street, address no, address city, password*--> 
+        <!--i epilogi category tha ksekleidonei me tin agora premioum-->
+
+        <!--me tin epitixi dimiourgia redirect sto /login-->
+
         <div align="center">
             <h3>Registration Form</h3>
             <c:if test="${userExistsError != null}">

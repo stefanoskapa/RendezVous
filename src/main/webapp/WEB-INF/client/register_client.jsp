@@ -9,6 +9,12 @@
         <title>Register Page</title>
     </head>
     <body>
+        <!--URL: /client-register-->
+
+        <!--form register for client, POST, /client-register-->
+        <!--email*, fname*, lname*, tel, password*-->
+        <!--me tin epitixi dimiourgia redirect sto /login-->
+
         <div align="center">
             <h3>Registration Form</h3>
             <c:if test="${userExistsError != null}">
