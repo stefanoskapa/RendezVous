@@ -16,12 +16,12 @@ public class RegistrationController {
 
     @GetMapping("/client-register")
     public String showClientRegistration() {
-        return "register_client";
+        return "client/register_client";
     }
 
     @GetMapping("/company-register")
     public String showCompanyRegistration() {
-        return "register_company";
+        return "company/register_company";
     }
     
     @PostMapping("/client-register")

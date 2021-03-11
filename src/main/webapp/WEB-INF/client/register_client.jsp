@@ -13,7 +13,7 @@
     </head>
     <body>
         <!--URL: /client-register-->
-
+        client register
 
         <!--form register for client, POST, /client-register-->
         <!--email*, fname*, lname*, tel, password*-->

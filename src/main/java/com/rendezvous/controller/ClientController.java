@@ -5,7 +5,12 @@
  */
 package com.rendezvous.controller;
 
+import com.rendezvous.entity.Client;
+import com.rendezvous.service.ClientService;
 import java.security.Principal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,23 +24,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/client")
 public class ClientController {
 
-    @GetMapping("/dashboard")
-    public String showDashboard(Principal principal, Model model) {
+    @Autowired
+    ClientService clientService;
 
-        if (principal != null) {
-            model.addAttribute("username", principal.getName());
-        }
-        
+    @GetMapping("/dashboard")
+    public String showDashboard() {
         return "client/dashboard_client";
     }
 
-//    @GetMapping("/profile")
-//    public String showProfile(@ModelAttribute("client") Client client) {
-//        
-//        //todo
-//        client = //o logarismenos client. Tha ton xrisomopoiei i forma diorthoseis stoixeion tou xristi sto profile_client
-//        return "client/profile_client";
-//    }
+    @GetMapping("/profile")
+    public String showProfile(@ModelAttribute("client") Client client) {
+
+        //todo
+        //client = //o logarismenos client. Tha ton xrisomopoiei i forma diorthoseis stoixeion tou xristi sto profile_client
+        return "client/profile_client";
+    }
 //    @PostMapping("/profile")
 //    public String updateProfile(@ModelAttribute("client") Client client ) {
 //        
@@ -43,6 +46,7 @@ public class ClientController {
 //        //ananeosi tou client stin vasi
 //        return "redirect:/client/dashboard";
 //    }
+
     @GetMapping("/comp-select")
     public String showCompanySelect() {
         return "client/company_search";
@@ -54,4 +58,12 @@ public class ClientController {
         return "client/company_date_pick";
     }
 
+    @ModelAttribute
+    public void addAttributes(Principal principal, Model model) {
+
+        if (principal != null) {
+            Client c = clientService.findClientByEmail(principal.getName());
+            model.addAttribute("username", c.getFname() + " " + c.getLname());
+        }
+    }
 }

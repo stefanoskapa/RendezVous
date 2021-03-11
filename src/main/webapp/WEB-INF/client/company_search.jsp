@@ -13,7 +13,7 @@
     </head>
     <body>
         <!--URL: client/comp-select-->
-        
+        Company search page
         <!--forma anazitisis etairias-->
         <!--anazitisi me vasi to category-->
         <!--anazitisi me vasi to onoma/tilefono-->
