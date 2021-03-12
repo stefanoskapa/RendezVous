@@ -8,17 +8,22 @@ package com.rendezvous.service;
 import com.rendezvous.customexception.IncorrectWorkingHours;
 import com.rendezvous.entity.Availability;
 import com.rendezvous.entity.Company;
+import com.rendezvous.entity.Role;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
 import com.rendezvous.repository.AvailabilityRepository;
 import com.rendezvous.repository.CompanyRepository;
+import com.rendezvous.repository.RoleRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +33,13 @@ public class CompanyService {
 
     @Autowired
     CompanyRepository companyRepository;
-
+    
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    private JdbcUserDetailsManager jdbcUserDetailsManager;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     AvailabilityRepository availabilityRepository;
 
@@ -36,6 +47,18 @@ public class CompanyService {
         Optional<Company> company = companyRepository.findCompanyByUserEmail(email);
         company.orElseThrow(() -> new UsernameNotFoundException("Company " + email + " not found!"));
         return company.get();
+    }
+
+    public void saveCompany(Company company) {
+        List<Role> roles = roleRepository.findAll();
+        for (Role a : roles) {
+            if (a.getRole().equals("ROLE_COMPANY")) {
+                company.getUser().setRoleList(Arrays.asList(a));
+            }
+        }
+        String encodedPassword = bCryptPasswordEncoder.encode(company.getUser().getPassword());
+        company.getUser().setPassword(encodedPassword);
+        companyRepository.save(company);
     }
 
     //reads a company's avalailable hours, and creates a map. Keys are day1, day2, day3 etc.
@@ -65,7 +88,7 @@ public class CompanyService {
 
             Integer weekDay = Integer.parseInt(entry.getKey());
             WorkDayHours hours = entry.getValue();
-            
+
             if (hours.getCloseTime().isBefore(hours.getStartTime())) {
                 throw new IncorrectWorkingHours("Closing time can not be before Opening Time");
             }
@@ -76,11 +99,11 @@ public class CompanyService {
             }
 
             if (hours.getStartTime() == null && hours.getCloseTime() == null) {
-                availabilityRepository.deleteByCompanyAndWeekDay(company,weekDay);
+                availabilityRepository.deleteByCompanyAndWeekDay(company, weekDay);
             } else {
                 //save to db
                 Availability day;
-                Optional<Availability> dayOptional = availabilityRepository.findByCompanyAndWeekDay(company,weekDay);
+                Optional<Availability> dayOptional = availabilityRepository.findByCompanyAndWeekDay(company, weekDay);
                 if (dayOptional.isPresent()) {
                     day = dayOptional.get();
                     day.setOpenTime(hours.getStartTime());
@@ -95,7 +118,7 @@ public class CompanyService {
                     availabilityRepository.save(day);
                 }
             }
-            
+
         }
     }
 
