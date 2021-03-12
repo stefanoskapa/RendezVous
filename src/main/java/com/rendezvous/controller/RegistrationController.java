@@ -51,7 +51,7 @@ public class RegistrationController {
 
     @PostMapping("/client-register") //todo check if user email already exists
     public String clientRegistration(@Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model) {
-        
+
         if (bindingResult.hasErrors()) {
             return "/client/register_client";
         }
@@ -68,23 +68,9 @@ public class RegistrationController {
             }
         }
         newClient.getUser().setRoleList(userRole);
-
-        //create user
-        User newUser = new User();
-        newUser.setEmail(newClient.getUser().getEmail());
         String encodedPassword = bCryptPasswordEncoder.encode(newClient.getUser().getPassword());
-        newUser.setPassword(encodedPassword);
-        newUser.setRoleList(userRole);
-        userRepository.save(newUser);
-
-        //create client
-        Client client = new Client();
-        client.setFname(newClient.getFname());
-        client.setLname(newClient.getLname());
-        client.setTel(newClient.getTel());
-        client.setUser(newUser);
-        clientRepository.save(client);
-
+        newClient.getUser().setPassword(encodedPassword);
+        clientRepository.save(newClient);
         return "redirect:/";
     }
 
@@ -93,18 +79,18 @@ public class RegistrationController {
         return "company/register_company";
     }
 
-    @PostMapping("/company-register") //todo check if user email already exists
+    @PostMapping("/company-register")
     public String companyRegistration(@Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "company/register_company";
         }
-        if (userRepository.findByEmail(newCompany.getUser().getEmail()).isPresent()) {      
+        if (userRepository.findByEmail(newCompany.getUser().getEmail()).isPresent()) {
             model.addAttribute("userExistsError", "This email is already being used!");
-             model.addAttribute("newCompany", new Company());
+            model.addAttribute("newCompany", new Company());
             return "company/register_company";
         }
-        
+
         List<Role> userRole = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
         for (Role a : roles) {
@@ -113,29 +99,9 @@ public class RegistrationController {
             }
         }
         newCompany.getUser().setRoleList(userRole);
-
-        //create user
-        User newUser = new User();
-        newUser.setEmail(newCompany.getUser().getEmail());
-        newUser.setPassword(newCompany.getUser().getPassword());
         String encodedPassword = bCryptPasswordEncoder.encode(newCompany.getUser().getPassword());
-        newUser.setPassword(encodedPassword);
-        newUser.setRoleList(userRole);
-        userRepository.save(newUser);
-
-        //create company
-        Company company = new Company();
-        company.setFname(newCompany.getFname());
-        company.setLname(newCompany.getLname());
-        company.setTel(newCompany.getTel());
-        company.setAddrCity(newCompany.getAddrCity());
-        company.setAfm(newCompany.getAfm());
-        company.setAddrNo(newCompany.getAddrNo());
-        company.setAddrStr(newCompany.getAddrStr());
-        company.setDisplayName(newCompany.getDisplayName());
-        company.setUser(newUser);
-
-        companyRepository.save(company);
+        newCompany.getUser().setPassword(encodedPassword);
+        companyRepository.save(newCompany);
 
         return "redirect:/login";
 
