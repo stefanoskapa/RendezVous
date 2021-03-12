@@ -7,6 +7,7 @@ package com.rendezvous.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -46,12 +47,12 @@ public class Availability implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "open_time")
-    private LocalDate openTime;
+    private LocalTime openTime;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "close_time")
-    private LocalDate closeTime;
+    private LocalTime closeTime;
     
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -64,7 +65,7 @@ public class Availability implements Serializable {
         this.id = id;
     }
 
-    public Availability(Integer id, int weekDay, LocalDate openTime, LocalDate closeTime) {
+    public Availability(Integer id, int weekDay, LocalTime openTime, LocalTime closeTime) {
         this.id = id;
         this.weekDay = weekDay;
         this.openTime = openTime;
@@ -87,19 +88,19 @@ public class Availability implements Serializable {
         this.weekDay = weekDay;
     }
 
-    public LocalDate getOpenTime() {
+    public LocalTime getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(LocalDate openTime) {
+    public void setOpenTime(LocalTime openTime) {
         this.openTime = openTime;
     }
 
-    public LocalDate getCloseTime() {
+    public LocalTime getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(LocalDate closeTime) {
+    public void setCloseTime(LocalTime closeTime) {
         this.closeTime = closeTime;
     }
 
