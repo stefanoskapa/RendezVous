@@ -5,6 +5,7 @@
  */
 package com.rendezvous.service;
 
+import com.rendezvous.customexception.IncorrectWorkingHours;
 import com.rendezvous.entity.Availability;
 import com.rendezvous.entity.Company;
 import com.rendezvous.model.WorkDayHours;
@@ -19,8 +20,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CompanyService {
 
     @Autowired
@@ -42,16 +45,58 @@ public class CompanyService {
         Map<String, WorkDayHours> week = new HashMap<>();
 
         for (int i = 1; i <= 7; i++) {
-            week.put("day" + i, null);
+            week.put(String.valueOf(i), null);
         }
-     
+
         for (Availability av : availabilities) {
             WorkDayHours wdh = new WorkDayHours(av.getOpenTime(), av.getCloseTime());
-            week.put("day"+av.getWeekDay(), wdh);
+            week.put(String.valueOf(av.getWeekDay()), wdh);
         }
-        
+
         WorkWeek workWeek = new WorkWeek(week);
 
         return workWeek;
     }
+
+    public void saveWorkingHours(Company company, WorkWeek workWeek) throws IncorrectWorkingHours {
+        for (Map.Entry<String, WorkDayHours> entry : workWeek.getWeek().entrySet()) {
+            System.out.println("Key = " + entry.getKey()
+                    + ", Value = " + entry.getValue());
+
+            Integer weekDay = Integer.parseInt(entry.getKey());
+            WorkDayHours hours = entry.getValue();
+            
+            if (hours.getCloseTime().isBefore(hours.getStartTime())) {
+                throw new IncorrectWorkingHours("Closing time can not be before Opening Time");
+            }
+
+            //XOR operation
+            if (hours.getStartTime() == null ^ hours.getCloseTime() == null) {
+                throw new IncorrectWorkingHours("Both Opening Time and Closing Time must be selected");
+            }
+
+            if (hours.getStartTime() == null && hours.getCloseTime() == null) {
+                availabilityRepository.deleteByCompanyAndWeekDay(company,weekDay);
+            } else {
+                //save to db
+                Availability day;
+                Optional<Availability> dayOptional = availabilityRepository.findByCompanyAndWeekDay(company,weekDay);
+                if (dayOptional.isPresent()) {
+                    day = dayOptional.get();
+                    day.setOpenTime(hours.getStartTime());
+                    day.setCloseTime(hours.getCloseTime());
+                    availabilityRepository.save(day);
+                } else {
+                    day = new Availability();
+                    day.setOpenTime(hours.getStartTime());
+                    day.setCloseTime(hours.getCloseTime());
+                    day.setCompany(company);
+                    day.setWeekDay(weekDay);
+                    availabilityRepository.save(day);
+                }
+            }
+            
+        }
+    }
+
 }
