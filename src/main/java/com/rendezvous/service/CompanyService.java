@@ -94,7 +94,7 @@ public class CompanyService {
         }
     }
 
-    public void saveCompany(Company company) {
+    public void updateCompany(Company company) {
         companyRepository.save(company);
     }
 

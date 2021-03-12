@@ -68,7 +68,7 @@ public class CompanyController {
         company.setUser(loggedUser.getUser()); //making sure user havent malformed his credentials
         company.setAfm(loggedUser.getAfm());
         
-        companyService.saveCompany(company);
+        companyService.updateCompany(company);
         return "redirect:/company/dashboard";
     }
 
