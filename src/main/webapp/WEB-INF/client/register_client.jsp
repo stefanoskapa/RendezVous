@@ -26,18 +26,23 @@
 
                 <p>
                     <form:input path="user.email" placeholder="email"/>
+                    <form:errors path="user.email"/>
                 </p>
                 <p>
                     <form:input path="user.password" placeholder="password"/>
+                    <form:errors path="user.password"/>
                 </p>
                 <p>
                     <form:input path="fname" placeholder="first name"/>
+                    <form:errors path="fname"/>
                 </p>
                 <p>
                     <form:input path="lname" placeholder="last name"/>
+                    <form:errors path="lname"/>
                 </p>
                 <p>
                     <form:input path="tel" placeholder="tel"/>
+                    <form:errors path="tel"/>
                 </p>
 
                 <input type="submit" value="Register">

@@ -26,7 +26,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "user")
 @NamedQueries({
@@ -39,32 +38,31 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+
+    @Pattern(regexp = "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?", message = "Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
-    
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 68)
+    @Size(min = 6, max = 68)
     @Column(name = "password")
     private String password;
-    
+
     @JoinTable(name = "user_roles", joinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "role_id", referencedColumnName = "id")})
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roleList;
-    
+
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
 //    private List<Client> clientList;
 //    
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
 //    private List<Company> companyList;
-
     public User() {
     }
 
@@ -125,7 +123,6 @@ public class User implements Serializable {
 //    public void setCompanyList(List<Company> companyList) {
 //        this.companyList = companyList;
 //    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -150,5 +147,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.User[ id=" + id + " ]";
     }
-    
+
 }

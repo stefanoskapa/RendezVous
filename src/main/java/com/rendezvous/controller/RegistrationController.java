@@ -15,11 +15,13 @@ import com.rendezvous.repository.RoleRepository;
 import com.rendezvous.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,8 +50,16 @@ public class RegistrationController {
     }
 
     @PostMapping("/client-register") //todo check if user email already exists
-    public String clientRegistration(@ModelAttribute("newClient") Client newClient, Model m) {
-
+    public String clientRegistration(@Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model) {
+        
+        if (bindingResult.hasErrors()) {
+            return "/client/register_client";
+        }
+        if (userRepository.findByEmail(newClient.getUser().getEmail()).isPresent()) {
+            model.addAttribute("userExistsError", "This email is already being used!");
+            model.addAttribute("newClient", new Client());
+            return "client/register_client";
+        }
         List<Role> userRole = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
         for (Role a : roles) {
@@ -75,7 +85,7 @@ public class RegistrationController {
         client.setUser(newUser);
         clientRepository.save(client);
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping("/company-register")
@@ -84,7 +94,17 @@ public class RegistrationController {
     }
 
     @PostMapping("/company-register") //todo check if user email already exists
-    public String companyRegistration(@ModelAttribute("newCompany") Company newCompany, Model m) {
+    public String companyRegistration(@Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "company/register_company";
+        }
+        if (userRepository.findByEmail(newCompany.getUser().getEmail()).isPresent()) {      
+            model.addAttribute("userExistsError", "This email is already being used!");
+             model.addAttribute("newCompany", new Company());
+            return "company/register_company";
+        }
+        
         List<Role> userRole = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
         for (Role a : roles) {
