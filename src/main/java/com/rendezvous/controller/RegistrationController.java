@@ -16,6 +16,8 @@ import com.rendezvous.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,40 +29,44 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegistrationController {
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
     @Autowired
-    CompanyRepository companyRepository;
-    
-    
+    private CompanyRepository companyRepository;
+    @Autowired
+    private JdbcUserDetailsManager jdbcUserDetailsManager;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @GetMapping("/client-register")
-    public String showClientRegistration(@ModelAttribute("newClient") Client newClient,Model model) {
-        
+    public String showClientRegistration(@ModelAttribute("newClient") Client newClient, Model model) {
+
         return "client/register_client";
     }
 
     @PostMapping("/client-register") //todo check if user email already exists
     public String clientRegistration(@ModelAttribute("newClient") Client newClient, Model m) {
-        
+
         List<Role> userRole = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
         for (Role a : roles) {
             if (a.getRole().equals("ROLE_CLIENT")) {
-               userRole.add(a);
+                userRole.add(a);
             }
         }
         newClient.getUser().setRoleList(userRole);
-        
+
         //create user
         User newUser = new User();
         newUser.setEmail(newClient.getUser().getEmail());
-        newUser.setPassword(newClient.getUser().getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(newClient.getUser().getPassword());
+        newUser.setPassword(encodedPassword);
         newUser.setRoleList(userRole);
-        userRepository.save(newUser); 
-        
+        userRepository.save(newUser);
+
         //create client
         Client client = new Client();
         client.setFname(newClient.getFname());
@@ -68,33 +74,35 @@ public class RegistrationController {
         client.setTel(newClient.getTel());
         client.setUser(newUser);
         clientRepository.save(client);
-        
+
         return "redirect:/login";
     }
 
     @GetMapping("/company-register")
-    public String showCompanyRegistration(@ModelAttribute("newCompany") Company newCompany,Model model) {
+    public String showCompanyRegistration(@ModelAttribute("newCompany") Company newCompany, Model model) {
         return "company/register_company";
     }
 
     @PostMapping("/company-register") //todo check if user email already exists
     public String companyRegistration(@ModelAttribute("newCompany") Company newCompany, Model m) {
-       List<Role> userRole = new ArrayList<>();
+        List<Role> userRole = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
         for (Role a : roles) {
             if (a.getRole().equals("ROLE_COMPANY")) {
-               userRole.add(a);
+                userRole.add(a);
             }
         }
         newCompany.getUser().setRoleList(userRole);
-        
+
         //create user
         User newUser = new User();
         newUser.setEmail(newCompany.getUser().getEmail());
         newUser.setPassword(newCompany.getUser().getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(newCompany.getUser().getPassword());
+        newUser.setPassword(encodedPassword);
         newUser.setRoleList(userRole);
-        userRepository.save(newUser); 
-        
+        userRepository.save(newUser);
+
         //create company
         Company company = new Company();
         company.setFname(newCompany.getFname());
@@ -106,11 +114,11 @@ public class RegistrationController {
         company.setAddrStr(newCompany.getAddrStr());
         company.setDisplayName(newCompany.getDisplayName());
         company.setUser(newUser);
-        
+
         companyRepository.save(company);
-        
+
         return "redirect:/login";
-       
+
     }
 
 }
