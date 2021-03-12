@@ -49,7 +49,7 @@ public class RegistrationController {
         return "client/register_client";
     }
 
-    @PostMapping("/client-register") //todo check if user email already exists
+    @PostMapping("/client-register")
     public String clientRegistration(@Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model) {
         
         if (bindingResult.hasErrors()) {
@@ -85,7 +85,7 @@ public class RegistrationController {
         client.setUser(newUser);
         clientRepository.save(client);
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping("/company-register")
@@ -93,7 +93,7 @@ public class RegistrationController {
         return "company/register_company";
     }
 
-    @PostMapping("/company-register") //todo check if user email already exists
+    @PostMapping("/company-register")
     public String companyRegistration(@Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {

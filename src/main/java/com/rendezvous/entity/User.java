@@ -143,9 +143,22 @@ public class User implements Serializable {
         return true;
     }
 
+//    @Override
+//    public String toString() {
+//        return "com.rendezvous.entity.User[ id=" + id + " ]";
+//    }
+
     @Override
     public String toString() {
-        return "com.rendezvous.entity.User[ id=" + id + " ]";
+        StringBuilder sb = new StringBuilder();
+        sb.append("User{id=").append(id);
+        sb.append(", email=").append(email);
+        sb.append(", password=").append(password);
+        sb.append(", roleList=").append(roleList);
+        sb.append('}');
+        return sb.toString();
     }
+    
+    
 
 }

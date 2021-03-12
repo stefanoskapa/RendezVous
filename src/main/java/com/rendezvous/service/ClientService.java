@@ -23,4 +23,8 @@ public class ClientService {
         client.orElseThrow(()-> new UsernameNotFoundException("User " + email + " not found!"));
         return client.get();
     }
+    
+    public void saveClient(Client client){
+        clientRepository.save(client);
+    }
 }

@@ -8,9 +8,11 @@ package com.rendezvous.controller;
 import com.rendezvous.entity.Client;
 import com.rendezvous.service.ClientService;
 import java.security.Principal;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,25 +26,71 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
+    @ModelAttribute
+    public void addAttributes(Principal principal, Model model) {
+
+        if (principal != null) {
+            Client client = clientService.findClientByEmail(principal.getName());
+            model.addAttribute("username", client.getFname() + " " + client.getLname());
+            model.addAttribute("client", client);
+        }
+    }
+
+    @GetMapping("/")
+    public String redirectToDashboard() {
+        return "redirect:/client/dashboard";
+    }
+
     @GetMapping("/dashboard")
     public String showDashboard() {
         return "client/dashboard_client";
     }
 
     @GetMapping("/profile")
-    public String showProfile(@ModelAttribute("client") Client client) {
-
-        //todo
-        //client = //o logarismenos client. Tha ton xrisomopoiei i forma diorthoseis stoixeion tou xristi sto profile_client
+    public String showProfile() {
         return "client/profile_client";
     }
-//    @PostMapping("/profile")
-//    public String updateProfile(@ModelAttribute("client") Client client ) {
+
+    @PostMapping("/profile")
+    public String updateProfile(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, Model model) {
+        Client loggedUser = (Client) model.getAttribute("client");
+
+        System.out.println(client);
+
+        if (bindingResult.hasErrors()) {
+            return "client/profile_client";
+        }
+        
+        client.setUser(loggedUser.getUser()); //making sure user havent malformed his credentials
+
+        clientService.saveClient(client);
+
+//        boolean logout=false;
 //        
-//        //todo
-//        //ananeosi tou client stin vasi
-//        return "redirect:/client/dashboard";
-//    }
+//        if (client.getUser().getEmail() != loggedUser.getUser().getEmail()) {
+//            logout = true;
+//        }
+//        
+//        System.out.println(client);
+//
+//        if (bindingResult.hasErrors() && !bindingResult.hasFieldErrors("user.password")) {
+//            return "client/profile_client";
+//        }
+//
+//        if (bindingResult.getErrorCount() == 1 && bindingResult.hasFieldErrors("user.password")) {
+//            //save client to db without including a change in the password
+//            clientService.saveClientExludingPassword(client);
+//            return "redirect:/client/dashboard";
+//        }
+//            
+//        clientService.saveClient(client);
+//
+//        if (logout) {
+//            //logout user
+//        }
+//        
+        return "redirect:/client/dashboard";
+    }
 
     @GetMapping("/comp-select")
     public String showCompanySelect() {
@@ -55,12 +103,4 @@ public class ClientController {
         return "client/company_date_pick";
     }
 
-    @ModelAttribute
-    public void addAttributes(Principal principal, Model model) {
-
-        if (principal != null) {
-            Client c = clientService.findClientByEmail(principal.getName());
-            model.addAttribute("username", c.getFname() + " " + c.getLname());
-        }
-    }
 }
