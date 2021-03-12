@@ -7,10 +7,6 @@ package com.rendezvous.controller;
 
 import org.springframework.stereotype.Controller;
 
-/**
- *
- * @author Leyteris
- */
 @Controller
 public class CredentialsController {
     

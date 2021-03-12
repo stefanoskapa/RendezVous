@@ -55,40 +55,14 @@ public class ClientController {
     public String updateProfile(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, Model model) {
         Client loggedUser = (Client) model.getAttribute("client");
 
-        System.out.println(client);
-
         if (bindingResult.hasErrors()) {
             return "client/profile_client";
         }
         
         client.setUser(loggedUser.getUser()); //making sure user havent malformed his credentials
-
+        
         clientService.saveClient(client);
-
-//        boolean logout=false;
-//        
-//        if (client.getUser().getEmail() != loggedUser.getUser().getEmail()) {
-//            logout = true;
-//        }
-//        
-//        System.out.println(client);
-//
-//        if (bindingResult.hasErrors() && !bindingResult.hasFieldErrors("user.password")) {
-//            return "client/profile_client";
-//        }
-//
-//        if (bindingResult.getErrorCount() == 1 && bindingResult.hasFieldErrors("user.password")) {
-//            //save client to db without including a change in the password
-//            clientService.saveClientExludingPassword(client);
-//            return "redirect:/client/dashboard";
-//        }
-//            
-//        clientService.saveClient(client);
-//
-//        if (logout) {
-//            //logout user
-//        }
-//        
+ 
         return "redirect:/client/dashboard";
     }
 

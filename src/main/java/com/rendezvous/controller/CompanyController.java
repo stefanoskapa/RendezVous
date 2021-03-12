@@ -57,13 +57,21 @@ public class CompanyController {
         return "company/profile_company";
     }
 
-//    @PostMapping("/profile")
-//    public String updateProfile(@ModelAttribute("company") Company company) {
-//        
-//        //todo
-//        //ananeosi tis company stin vasi
-//        return "redirect:/company/dashboard";
-//    }
+    @PostMapping("/profile")
+    public String updateProfile(@Valid @ModelAttribute("company") Company company, BindingResult bindingResult, Model model) {
+        Company loggedUser = (Company) model.getAttribute("company");
+
+        if (bindingResult.hasErrors()) {
+            return "company/profile_company";
+        }
+
+        company.setUser(loggedUser.getUser()); //making sure user havent malformed his credentials
+        company.setAfm(loggedUser.getAfm());
+        
+        companyService.saveCompany(company);
+        return "redirect:/company/dashboard";
+    }
+
     @GetMapping("/business-hours")
     public String showBusinessHours(Principal principal, Model model) {
         Company company = (Company) model.getAttribute("company");
@@ -84,9 +92,8 @@ public class CompanyController {
 
 //        workWeek.getWeek().forEach((key, value) -> System.out.println(key + ":" + value));
 //        System.out.println();
-        
         Company company = (Company) model.getAttribute("company");
-        
+
         try {
             companyService.saveWorkingHours(company, workWeek);
         } catch (IncorrectWorkingHours ex) {
