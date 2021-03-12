@@ -13,8 +13,9 @@
     </head>
     <body>
         <!--URL: company/profile-->
-
-        <!--forma allagis stoixeion tis company, POST, company/profile-->
+        
+        Company edit profile
+        
         <!--email, onomasia etairias, fname, lname, address street, address no, address city, password-->
         <!--to afm as min allazei-->
     </body>

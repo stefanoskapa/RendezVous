@@ -24,12 +24,12 @@
             </c:if>
             <form:form action="${pageContext.request.contextPath}/company-register" 
                        method="post" modelAttribute="newCompany">
-                
+                <!--todo: user sucessfully created-->
                 <p>
-                    <form:input path="userId.email" placeholder="email"/>
+                    <form:input path="user.email" placeholder="email"/>
                 </p>
                 <p>
-                    <form:input path="userId.password" placeholder="password"/>
+                    <form:input path="user.password" placeholder="password"/>
                 </p>
                 <p>
                     <form:input path="displayName" placeholder="company name"/>

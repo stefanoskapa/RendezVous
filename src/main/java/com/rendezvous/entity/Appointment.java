@@ -6,6 +6,7 @@
 package com.rendezvous.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -40,8 +41,7 @@ public class Appointment implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    private LocalDate date;
     
     @Basic(optional = false)
     @NotNull
@@ -50,11 +50,11 @@ public class Appointment implements Serializable {
     
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Client clientId;
+    private Client client;
     
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Company companyId;
+    private Company company;
 
     public Appointment() {
     }
@@ -63,7 +63,7 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public Appointment(Integer id, Date date, int timeslot) {
+    public Appointment(Integer id, LocalDate date, int timeslot) {
         this.id = id;
         this.date = date;
         this.timeslot = timeslot;
@@ -77,11 +77,11 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -93,20 +93,20 @@ public class Appointment implements Serializable {
         this.timeslot = timeslot;
     }
 
-    public Client getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(Client clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public Company getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Company companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override

@@ -6,6 +6,7 @@
 package com.rendezvous.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -45,18 +46,16 @@ public class Availability implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "open_time")
-    @Temporal(TemporalType.TIME)
-    private Date openTime;
+    private LocalDate openTime;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "close_time")
-    @Temporal(TemporalType.TIME)
-    private Date closeTime;
+    private LocalDate closeTime;
     
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Company companyId;
+    private Company company;
 
     public Availability() {
     }
@@ -65,7 +64,7 @@ public class Availability implements Serializable {
         this.id = id;
     }
 
-    public Availability(Integer id, int weekDay, Date openTime, Date closeTime) {
+    public Availability(Integer id, int weekDay, LocalDate openTime, LocalDate closeTime) {
         this.id = id;
         this.weekDay = weekDay;
         this.openTime = openTime;
@@ -88,28 +87,28 @@ public class Availability implements Serializable {
         this.weekDay = weekDay;
     }
 
-    public Date getOpenTime() {
+    public LocalDate getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(Date openTime) {
+    public void setOpenTime(LocalDate openTime) {
         this.openTime = openTime;
     }
 
-    public Date getCloseTime() {
+    public LocalDate getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(Date closeTime) {
+    public void setCloseTime(LocalDate closeTime) {
         this.closeTime = closeTime;
     }
 
-    public Company getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Company companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override

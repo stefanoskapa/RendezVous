@@ -26,7 +26,7 @@
         crossorigin="anonymous"></script>
         <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
         <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
-        <script src="${pageContext.request.contextPath}/calendar/calendar.js"></script>
+        <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
 
         <style>
             .fc-event-main:hover {

@@ -55,13 +55,13 @@ public class Client implements Serializable {
     @Column(name = "tel")
     private String tel;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<ClientMessages> clientMessagesList;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @Valid
-    private User userId;
+    private User user;
     
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientId")
 //    private List<Appointment> appointmentList;
@@ -122,12 +122,12 @@ public class Client implements Serializable {
         this.clientMessagesList = clientMessagesList;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 //    public List<Appointment> getAppointmentList() {
