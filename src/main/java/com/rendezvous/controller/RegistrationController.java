@@ -71,7 +71,7 @@ public class RegistrationController {
 
         //create user
         User newUser = new User();
-        newUser.setEmail(newClient.getUser().getEmail());
+        newUser.setEmail(newClient.getUser().getEmail().toLowerCase());
         String encodedPassword = bCryptPasswordEncoder.encode(newClient.getUser().getPassword());
         newUser.setPassword(encodedPassword);
         newUser.setRoleList(userRole);
@@ -116,7 +116,7 @@ public class RegistrationController {
 
         //create user
         User newUser = new User();
-        newUser.setEmail(newCompany.getUser().getEmail());
+        newUser.setEmail(newCompany.getUser().getEmail().toLowerCase());
         newUser.setPassword(newCompany.getUser().getPassword());
         String encodedPassword = bCryptPasswordEncoder.encode(newCompany.getUser().getPassword());
         newUser.setPassword(encodedPassword);
