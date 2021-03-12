@@ -61,7 +61,7 @@ public class ClientController {
         
         client.setUser(loggedUser.getUser()); //making sure user havent malformed his credentials
         
-        clientService.saveClient(client);
+        clientService.updateClient(client);
  
         return "redirect:/client/dashboard";
     }
