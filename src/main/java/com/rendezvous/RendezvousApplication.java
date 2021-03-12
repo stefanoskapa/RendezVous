@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 //@EnableJpaRepositories(basePackageClasses = UserRepository.class)
+//@EnableJpaRepositories(basePackages="com.rendezvous.repository")
 public class RendezvousApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
