@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/company")
@@ -75,7 +76,7 @@ public class CompanyController {
     }
 
     @PostMapping("/business-hours")
-    public String updateBusinessHours(@Valid @ModelAttribute("weekHours") WorkWeek workWeek, BindingResult bindingResult, Model model) {
+    public String updateBusinessHours(@Valid @ModelAttribute("weekHours") WorkWeek workWeek, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "company/business_hours";
@@ -89,8 +90,8 @@ public class CompanyController {
         try {
             companyService.saveWorkingHours(company, workWeek);
         } catch (IncorrectWorkingHours ex) {
-            model.addAttribute("IncorrectWorkingHours", ex.getMessage());
-            return "company/business_hours";
+            redirectAttributes.addFlashAttribute("IncorrectWorkingHours", ex.getMessage());
+            return "redirect:/company/business-hours";
         }
 
         return "redirect:/company/dashboard";
