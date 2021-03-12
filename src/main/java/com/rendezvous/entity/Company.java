@@ -88,7 +88,7 @@ public class Company implements Serializable {
     private CompCategory category;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.ALL)
     @Valid
     private User user;
     

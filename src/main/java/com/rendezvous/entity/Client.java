@@ -59,7 +59,7 @@ public class Client implements Serializable {
     private List<ClientMessages> clientMessagesList;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @Valid
     private User user;
     
