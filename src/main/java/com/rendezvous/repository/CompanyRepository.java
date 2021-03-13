@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company,Integer> {
     Optional<Company> findCompanyByUserEmail(String email);
+    Optional<Company> findById(int id);
 }
