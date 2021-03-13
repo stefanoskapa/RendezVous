@@ -42,9 +42,11 @@ public class RegistrationController {
             model.addAttribute("newClient", new Client());
             return "client/register_client";
         }
+        
+
         clientService.saveClient(newClient);
         
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping("/company-register")

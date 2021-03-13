@@ -89,17 +89,13 @@ public class CompanyService {
             Integer weekDay = Integer.parseInt(entry.getKey());
             WorkDayHours hours = entry.getValue();
 
-            if (hours.getCloseTime().isBefore(hours.getStartTime())) {
-                throw new IncorrectWorkingHours("Closing time can not be before Opening Time");
-            }
-
-            //XOR operation
-            if (hours.getStartTime() == null ^ hours.getCloseTime() == null) {
-                throw new IncorrectWorkingHours("Both Opening Time and Closing Time must be selected");
-            }
-
+            
             if (hours.getStartTime() == null && hours.getCloseTime() == null) {
-                availabilityRepository.deleteByCompanyAndWeekDay(company, weekDay);
+                availabilityRepository.deleteByCompanyAndWeekDay(company,weekDay);
+            } else if (hours.getStartTime() == null ^ hours.getCloseTime() == null){    //XOR operation
+                throw new IncorrectWorkingHours("Both Opening Time and Closing Time must be selected");
+            } else if (hours.getCloseTime().isBefore(hours.getStartTime())) {
+                throw new IncorrectWorkingHours("Closing time can not be before Opening Time");
             } else {
                 //save to db
                 Availability day;
@@ -118,8 +114,11 @@ public class CompanyService {
                     availabilityRepository.save(day);
                 }
             }
-
         }
+    }
+
+    public void updateCompany(Company company) {
+        companyRepository.save(company);
     }
 
 }

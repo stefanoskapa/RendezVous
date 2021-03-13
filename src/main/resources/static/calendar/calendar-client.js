@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        // themeSystem: 'bootstrap',
+//         themeSystem: 'vader',
         initialView: 'timeGridWeek',
         // initialDate: '2021-02-07',
         headerToolbar: {

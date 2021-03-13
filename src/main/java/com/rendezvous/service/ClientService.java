@@ -36,6 +36,7 @@ public class ClientService {
         return client.get();
     }
     
+
     public void saveClient(Client client) {
     List<Role> roles = roleRepository.findAll();
         for (Role a : roles) {
@@ -45,6 +46,12 @@ public class ClientService {
         }
         String encodedPassword = bCryptPasswordEncoder.encode(client.getUser().getPassword());
         client.getUser().setPassword(encodedPassword);
+
         clientRepository.save(client);
+    }
+    
+    public void updateClient(Client client){
+                clientRepository.save(client);
+
     }
 }

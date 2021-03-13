@@ -10,10 +10,6 @@ import javax.persistence.Entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-/**
- *
- * @author Leyteris
- */
 public class WorkDayHours {
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime startTime;

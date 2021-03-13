@@ -8,10 +8,12 @@ package com.rendezvous.repository;
 import com.rendezvous.entity.Client;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client,Integer>{
+public interface ClientRepository extends JpaRepository<Client, Integer> {
+
     Optional<Client> findClientByUserEmail(String email);
-    
+
 }

@@ -9,10 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author Leyteris
- */
 public class WorkWeek {
     
     private Map<String, WorkDayHours> week;

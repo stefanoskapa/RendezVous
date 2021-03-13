@@ -166,9 +166,24 @@ public class Client implements Serializable {
         return true;
     }
 
+//    @Override
+//    public String toString() {
+//        return "com.rendezvous.entity.Client[ id=" + id + " ]";
+//    }
+
     @Override
     public String toString() {
-        return "com.rendezvous.entity.Client[ id=" + id + " ]";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Client{id=").append(id);
+        sb.append(", fname=").append(fname);
+        sb.append(", lname=").append(lname);
+        sb.append(", tel=").append(tel);
+        sb.append(", user=").append(user);
+        sb.append('}');
+        return sb.toString();
     }
+    
+    
+    
     
 }
