@@ -5,9 +5,9 @@
  */
 package com.rendezvous.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 
@@ -31,6 +29,7 @@ import javax.validation.constraints.NotNull;
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,10 +47,12 @@ public class Appointment implements Serializable {
     @Column(name = "timeslot")
     private int timeslot;
     
+    @JsonIgnore
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Client client;
     
+    @JsonIgnore
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Company company;
