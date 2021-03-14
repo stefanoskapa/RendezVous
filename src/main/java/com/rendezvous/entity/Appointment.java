@@ -47,12 +47,10 @@ public class Appointment implements Serializable {
     @Column(name = "timeslot")
     private int timeslot;
     
-    @JsonIgnore
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Client client;
     
-    @JsonIgnore
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Company company;

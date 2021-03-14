@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 public class ClientService {
 
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired

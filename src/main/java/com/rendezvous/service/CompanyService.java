@@ -6,16 +6,22 @@
 package com.rendezvous.service;
 
 import com.rendezvous.customexception.IncorrectWorkingHours;
+import com.rendezvous.entity.Appointment;
 import com.rendezvous.entity.Availability;
+import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Role;
+import com.rendezvous.model.CompanyCalendarProperties;
+import com.rendezvous.model.CompanyExtendedProps;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
 import com.rendezvous.repository.AvailabilityRepository;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.RoleRepository;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,16 +37,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class CompanyService {
 
     @Autowired
-    CompanyRepository companyRepository;
-    
+    private CompanyRepository companyRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
     private JdbcUserDetailsManager jdbcUserDetailsManager;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    AvailabilityRepository availabilityRepository;
+    private AvailabilityRepository availabilityRepository;
 
     public Company findCompanyByEmail(String email) {
         Optional<Company> company = companyRepository.findCompanyByUserEmail(email);
@@ -118,6 +123,22 @@ public class CompanyService {
 
     public void updateCompany(Company company) {
         companyRepository.save(company);
+    }
+    
+    public List<CompanyCalendarProperties> convertPropertiesList(List<Appointment> appointments) {
+        List<CompanyCalendarProperties> ccpList = new LinkedList<>();
+        LocalDateTime startTime;
+        String fullname;
+        for (Appointment ap : appointments) {
+            Client client = ap.getClient();
+            startTime = ap.getDate().atStartOfDay();
+            startTime = startTime.plusHours(ap.getTimeslot());
+            CompanyExtendedProps cep = new CompanyExtendedProps(client.getTel());
+            fullname = client.getFname() + " " + client.getLname();
+            CompanyCalendarProperties ccp = new CompanyCalendarProperties(fullname, startTime, startTime.plusHours(1), cep);
+            ccpList.add(ccp);
+        }
+        return ccpList;
     }
 
 }

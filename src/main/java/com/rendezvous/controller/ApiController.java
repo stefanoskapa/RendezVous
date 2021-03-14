@@ -6,11 +6,16 @@
 package com.rendezvous.controller;
 
 import com.rendezvous.entity.Client;
+import com.rendezvous.entity.Company;
 import com.rendezvous.model.ClientCalendarProperties;
+import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.service.ClientService;
+import com.rendezvous.service.CompanyService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/") //todo add /api/v1/client and /api/v1/company in Spring Security
 public class ApiController {
     @Autowired
-    AppointmentRepository appointmentRepository;
+    private AppointmentRepository appointmentRepository;
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
+    @Autowired
+    private CompanyService companyService;
     //todo:
 //    
     //calendar client, GET /client/dates
@@ -40,7 +47,7 @@ public class ApiController {
     //}
 
     @GetMapping("/client/dates") 
-    public List<ClientCalendarProperties> fetchClientAppointments() {
+    public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) { //find out who is asking 
@@ -49,7 +56,20 @@ public class ApiController {
             username = principal.toString();
         }      
         Client client = clientService.findClientByEmail(username);       
-        return clientService.convertPropertiesList(appointmentRepository.findByClient(client));      
+        return new ResponseEntity<> (clientService.convertPropertiesList(appointmentRepository.findByClient(client)),HttpStatus.OK);      
+    }
+    
+    @GetMapping("/company/dates") 
+    public ResponseEntity<List<CompanyCalendarProperties>> fetchCompanyAppointments() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) { //find out who is asking 
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }      
+        Company company = companyService.findCompanyByEmail(username);       
+        return new ResponseEntity<> (companyService.convertPropertiesList(appointmentRepository.findByCompany(company)), HttpStatus.OK);      
     }
     
     
