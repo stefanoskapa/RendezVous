@@ -11,6 +11,8 @@ import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Role;
 import com.rendezvous.entity.User;
+import com.rendezvous.model.ClientCalendarProperties;
+import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.repository.AvailabilityRepository;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -97,4 +100,17 @@ public class ApiController {
         return apList;
     }
 
+//    @GetMapping("/client/dates") 
+//    public List<ClientCalendarProperties> fetchClientAppointments() {
+//        //todo
+//        
+//        return ResponseEntity.ok(lista me ClientCalendarProperties);
+//    }
+//    
+//    @GetMapping("/client/dates")
+//    public List<CompanyCalendarProperties> fetchCompanyAppointments() {
+//        //todo
+//        
+//        return ResponseEntity.ok(lista me CompanyCalendarProperties);
+//    }
 }
