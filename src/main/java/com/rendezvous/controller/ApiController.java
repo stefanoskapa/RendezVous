@@ -7,6 +7,7 @@ package com.rendezvous.controller;
 
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
+import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.repository.AppointmentRepository;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -72,12 +74,14 @@ public class ApiController {
         return new ResponseEntity<> (companyService.convertPropertiesList(appointmentRepository.findByCompany(company)), HttpStatus.OK);      
     }
     
-    
-//    
-//    @GetMapping("/client/dates")
-//    public List<CompanyCalendarProperties> fetchCompanyAppointments() {
-//        //todo
-//        
-//        return ResponseEntity.ok(lista me CompanyCalendarProperties);
-//    }
+
+        @GetMapping("/client/company/{company_id}/availability") 
+        public ResponseEntity<AvailabilityCalendarProperties> fetchCompanyAvailability(@PathVariable String company_id) {
+        AvailabilityCalendarProperties AvailabilityCalendarProperties = new AvailabilityCalendarProperties();
+            
+        
+        //todo
+        return ResponseEntity.ok(AvailabilityCalendarProperties);      
+    }
+        
 }
