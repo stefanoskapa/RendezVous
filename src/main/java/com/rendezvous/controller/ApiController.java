@@ -19,11 +19,11 @@ import com.rendezvous.repository.AvailabilityRepository;
 import com.rendezvous.repository.ClientRepository;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.UserRepository;
+import com.rendezvous.service.ClientService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/") //todo add /api/v1/client and /api/v1/company in Spring Security
 public class ApiController {
 
-    @Autowired
-    UserRepository userRepository;
+    
     @Autowired
     AvailabilityRepository availabilityRepository;
     @Autowired
@@ -45,6 +44,8 @@ public class ApiController {
     ClientRepository clientRepository;
     @Autowired
     AppointmentRepository appointmentRepository;
+    @Autowired
+    ClientService clientService;
     //todo:
 //    
     //calendar client, GET /client/dates
@@ -67,45 +68,22 @@ public class ApiController {
         return workDayHours;
     }
 
-    @GetMapping("/appointments")
-    public List<Appointment> fetchAppointments() {
+  
 
+    @GetMapping("/client/dates") 
+    public List<ClientCalendarProperties> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
+        String username;
         if (principal instanceof UserDetails) { //find out who is asking 
             username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
-        }
-        Optional<User> currentUser = userRepository.findByEmail(username);
-        if (!currentUser.isPresent()) {
-            return null; //might be problematic
-        }
-        List<Role> userRole = currentUser.get().getRoleList();
-        boolean chooseRole = false; //false is client, true is company
-        for (Role a : userRole) {
-            if (a.getRole().equals("ROLE_COMPANY")) {
-                chooseRole = true;
-            }
-        }
-
-        if (chooseRole) {
-            Company company = companyRepository.findCompanyByUserEmail(username).get();
-            List<Appointment> apList = appointmentRepository.findByCompany(company);
-            return apList;
-        }
-
-        Client client = clientRepository.findClientByUserEmail(username).get();
-        List<Appointment> apList = appointmentRepository.findByClient(client);
-        return apList;
+        }      
+        Optional <Client> client = clientRepository.findClientByUserEmail(username);       
+        return clientService.convertPropertiesList(appointmentRepository.findByClient(client.get()));      
     }
-
-//    @GetMapping("/client/dates") 
-//    public List<ClientCalendarProperties> fetchClientAppointments() {
-//        //todo
-//        
-//        return ResponseEntity.ok(lista me ClientCalendarProperties);
-//    }
+    
+    
 //    
 //    @GetMapping("/client/dates")
 //    public List<CompanyCalendarProperties> fetchCompanyAppointments() {
