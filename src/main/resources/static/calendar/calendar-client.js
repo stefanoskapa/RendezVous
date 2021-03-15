@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             firstDay: 1,
             allDaySlot: false,
-//            slotDuration: '01:00:00',
+            slotDuration: '01:00:00',
 //             scrollTime: '07:00:00',
             // slotLabelInterval: '03:00',
             expandRows: true,

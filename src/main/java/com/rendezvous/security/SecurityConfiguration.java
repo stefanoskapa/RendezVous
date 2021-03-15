@@ -28,8 +28,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     core Spring Security objects. By using those objects
     we can define Spring Security behavior
      */
-
- 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
@@ -40,15 +38,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/client/**").hasRole("CLIENT")
+                .antMatchers("/api/v1/client/**").hasRole("CLIENT")
                 .antMatchers("/company/**").hasRole("COMPANY")
+                .antMatchers("/api/v1/company/**").hasRole("COMPANY")
                 .antMatchers("/").permitAll()
-                .and().formLogin()
+                .and()
+                .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser") // Handled by Spring, no need for controller
                 .successHandler(myAuthenticationSuccessHandler()) //redirect to dashboard according to role
-                ;
+                .and()
+                .logout()
+                .logoutSuccessUrl("/");
     }
 
     @Bean
