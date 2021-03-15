@@ -76,5 +76,10 @@ public class ClientController {
         model.addAttribute("comp_id", companyId); //comp_id will be used by company_date_pick
         return "client/company_date_pick";
     }
+    
+    @GetMapping("/date-select")
+    public String showDateSelect() {
+        return "client/company_date_pick";
+    }
 
 }
