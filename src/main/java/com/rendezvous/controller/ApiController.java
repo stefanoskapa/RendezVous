@@ -5,6 +5,7 @@
  */
 package com.rendezvous.controller;
 
+import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import com.rendezvous.model.AvailabilityCalendarProperties;
@@ -13,7 +14,10 @@ import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
+import java.security.Principal;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/") //todo add /api/v1/client and /api/v1/company in Spring Security
 public class ApiController {
+
     @Autowired
     private AppointmentRepository appointmentRepository;
     @Autowired
@@ -43,12 +48,10 @@ public class ApiController {
 //    
     //search company page, POST /client/comp-search/ (posting json obj with criteria https://stackoverflow.com/questions/5020704/how-to-design-restful-search-filtering?answertab=votes#tab-top)
 
-   // @GetMapping("/availability") //TODO We still need to figure out what type of object to return
+    // @GetMapping("/availability") //TODO We still need to figure out what type of object to return
     //public List<WorkDayHours> fetchWorkingHours(@RequestParam int id) {
-        
     //}
-
-    @GetMapping("/client/dates") 
+    @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
@@ -56,12 +59,12 @@ public class ApiController {
             username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
-        }      
-        Client client = clientService.findClientByEmail(username);       
-        return new ResponseEntity<> (clientService.convertPropertiesList(appointmentRepository.findByClient(client)),HttpStatus.OK);      
+        }
+        Client client = clientService.findClientByEmail(username);
+        return new ResponseEntity<>(clientService.convertPropertiesList(appointmentRepository.findByClient(client)), HttpStatus.OK);
     }
-    
-    @GetMapping("/company/dates") 
+
+    @GetMapping("/company/dates")
     public ResponseEntity<List<CompanyCalendarProperties>> fetchCompanyAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
@@ -69,19 +72,33 @@ public class ApiController {
             username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
-        }      
-        Company company = companyService.findCompanyByEmail(username);       
-        return new ResponseEntity<> (companyService.convertPropertiesList(appointmentRepository.findByCompany(company)), HttpStatus.OK);      
+        }
+        Company company = companyService.findCompanyByEmail(username);
+        return new ResponseEntity<>(companyService.convertPropertiesList(appointmentRepository.findByCompany(company)), HttpStatus.OK);
     }
-    
 
-        @GetMapping("/client/company/{company_id}/availability") 
-        public ResponseEntity<AvailabilityCalendarProperties> fetchCompanyAvailability(@PathVariable String company_id) {
-        AvailabilityCalendarProperties AvailabilityCalendarProperties = new AvailabilityCalendarProperties();
-            
+    @GetMapping("/client/company/{company_id}/availability")
+    public ResponseEntity<AvailabilityCalendarProperties> fetchCompanyAvailability(Principal principal, @PathVariable String company_id) {
+        AvailabilityCalendarProperties availabilityCalendarProperties = new AvailabilityCalendarProperties();
+
+        Client client = null;
+        Company company = null;
+
+        if (principal != null) {
+            client = clientService.findClientByEmail(principal.getName());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
         
-        //todo
-        return ResponseEntity.ok(AvailabilityCalendarProperties);      
+        try {
+            company = companyService.findCompanyById(Integer.parseInt(company_id));
+        } catch (CompanyIdNotFound ex) {
+            return ResponseEntity.badRequest().build();
+        }
+        
+        availabilityCalendarProperties = companyService.getAvailabilityCalendarProperties(company, client);
+
+        return ResponseEntity.ok(availabilityCalendarProperties);
     }
-        
+
 }

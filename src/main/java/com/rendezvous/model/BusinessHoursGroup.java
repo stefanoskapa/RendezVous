@@ -6,6 +6,7 @@
 package com.rendezvous.model;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class BusinessHoursGroup {
     }
 
     public BusinessHoursGroup() {
+        this.daysOfWeek = new ArrayList();
     }
 
     public List<Integer> getDaysOfWeek() {

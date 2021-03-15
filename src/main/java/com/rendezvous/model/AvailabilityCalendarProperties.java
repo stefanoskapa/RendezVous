@@ -5,6 +5,7 @@
  */
 package com.rendezvous.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,8 @@ public class AvailabilityCalendarProperties {
     private List<BlockDate> blockDates;
 
     public AvailabilityCalendarProperties() {
+        this.businessHours = new ArrayList();
+        this.blockDates = new ArrayList();
     }
 
     public AvailabilityCalendarProperties(List<BusinessHoursGroup> businessHours, List<BlockDate> blockDates) {

@@ -5,20 +5,27 @@
  */
 package com.rendezvous.service;
 
+import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.customexception.IncorrectWorkingHours;
 import com.rendezvous.entity.Appointment;
 import com.rendezvous.entity.Availability;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Role;
+import com.rendezvous.model.AvailabilityCalendarProperties;
+import com.rendezvous.model.BlockDate;
+import com.rendezvous.model.BusinessHoursGroup;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.CompanyExtendedProps;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
+import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.repository.AvailabilityRepository;
+import com.rendezvous.repository.ClientRepository;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.RoleRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,9 +46,9 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
     @Autowired
-    private RoleRepository roleRepository;
+    private AppointmentRepository appointmentRepository;
     @Autowired
-    private JdbcUserDetailsManager jdbcUserDetailsManager;
+    private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
@@ -50,6 +57,12 @@ public class CompanyService {
     public Company findCompanyByEmail(String email) {
         Optional<Company> company = companyRepository.findCompanyByUserEmail(email);
         company.orElseThrow(() -> new UsernameNotFoundException("Company " + email + " not found!"));
+        return company.get();
+    }
+
+    public Company findCompanyById(Integer id) throws CompanyIdNotFound {
+        Optional<Company> company = companyRepository.findById(id);
+        company.orElseThrow(() -> new CompanyIdNotFound("Company " + id + " not found!"));
         return company.get();
     }
 
@@ -93,10 +106,9 @@ public class CompanyService {
             Integer weekDay = Integer.parseInt(entry.getKey());
             WorkDayHours hours = entry.getValue();
 
-            
             if (hours.getStartTime() == null && hours.getCloseTime() == null) {
-                availabilityRepository.deleteByCompanyAndWeekDay(company,weekDay);
-            } else if (hours.getStartTime() == null ^ hours.getCloseTime() == null){    //XOR operation
+                availabilityRepository.deleteByCompanyAndWeekDay(company, weekDay);
+            } else if (hours.getStartTime() == null ^ hours.getCloseTime() == null) {    //XOR operation
                 throw new IncorrectWorkingHours("Both Opening Time and Closing Time must be selected");
             } else if (hours.getCloseTime().isBefore(hours.getStartTime())) {
                 throw new IncorrectWorkingHours("Closing time can not be before Opening Time");
@@ -124,7 +136,7 @@ public class CompanyService {
     public void updateCompany(Company company) {
         companyRepository.save(company);
     }
-    
+
     public List<CompanyCalendarProperties> convertPropertiesList(List<Appointment> appointments) {
         List<CompanyCalendarProperties> ccpList = new LinkedList<>();
         LocalDateTime startTime;
@@ -139,6 +151,50 @@ public class CompanyService {
             ccpList.add(ccp);
         }
         return ccpList;
+    }
+
+    public AvailabilityCalendarProperties getAvailabilityCalendarProperties(Company company, Client client) {
+        AvailabilityCalendarProperties availabilityCalendarProperties = new AvailabilityCalendarProperties();
+
+        //finding and adding business hours
+        WorkWeek workWeek = findWorkingHoursByCompany(company);
+
+        List<BusinessHoursGroup> businessHours = new ArrayList();
+
+        for (Map.Entry<String, WorkDayHours> entry : workWeek.getWeek().entrySet()) {
+
+            Integer weekDay = Integer.parseInt(entry.getKey());
+            WorkDayHours hours = entry.getValue();
+
+            if (hours != null) {
+                BusinessHoursGroup businessHoursGroup = new BusinessHoursGroup();
+
+                businessHoursGroup.getDaysOfWeek().add(weekDay);
+                businessHoursGroup.setStartTime(hours.getStartTime());
+                businessHoursGroup.setEndTime(hours.getCloseTime());
+
+                businessHours.add(businessHoursGroup);
+            }
+        }
+        availabilityCalendarProperties.setBusinessHours(businessHours);
+
+        //finding and adding company events
+        List<BlockDate> blockDates = new ArrayList();
+
+        List<Appointment> companyAppointments = appointmentRepository.findByCompany(company);
+
+        for (Appointment ap : companyAppointments) {
+            LocalDateTime startTime = ap.getDate().atStartOfDay();
+            startTime = startTime.plusHours(ap.getTimeslot());
+
+            LocalDateTime endTime = startTime.plusHours(1);
+
+            blockDates.add(new BlockDate("Date Unavailable", startTime, endTime));
+        }
+
+        //finding and adding company events
+        availabilityCalendarProperties.setBlockDates(blockDates);
+        return availabilityCalendarProperties;
     }
 
 }
