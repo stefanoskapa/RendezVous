@@ -192,7 +192,27 @@ public class CompanyService {
             blockDates.add(new BlockDate("Date Unavailable", startTime, endTime));
         }
 
-        //finding and adding company events
+        //finding and adding client events
+        List<Appointment> clientAppointments = appointmentRepository.findByClient(client);
+
+        for (Appointment ap : clientAppointments) {
+            LocalDateTime startTime = ap.getDate().atStartOfDay();
+            startTime = startTime.plusHours(ap.getTimeslot());
+
+            LocalDateTime endTime = startTime.plusHours(1);
+            
+            String title = ap.getCompany().getDisplayName();
+
+            //testing if the already have an appointment, to make sure the 2 appointments wont show up at the same time
+            BlockDate alreadyExistingAppointment = new BlockDate("Date Unavailable", startTime, endTime);
+            if (blockDates.contains(alreadyExistingAppointment)) {
+                int indexOf = blockDates.indexOf(alreadyExistingAppointment);
+                blockDates.set(indexOf, new BlockDate("Appointment with "+title+" already exists", startTime, endTime));
+            } else {
+                blockDates.add(new BlockDate(title, startTime, endTime));
+            }
+        }
+        
         availabilityCalendarProperties.setBlockDates(blockDates);
         return availabilityCalendarProperties;
     }
