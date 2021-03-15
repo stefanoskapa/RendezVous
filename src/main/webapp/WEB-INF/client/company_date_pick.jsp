@@ -37,7 +37,7 @@
     <body>
         <h1>Pick a date for your appointment</h1>
 
-        <input type="text" id="comp-id" value="4" hidden  />
+        <input type="text" id="comp-id" value="7" hidden  />
 
         <div id='calendar'></div>
 

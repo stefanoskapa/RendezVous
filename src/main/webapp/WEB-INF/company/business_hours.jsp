@@ -89,11 +89,11 @@
         </fieldset>
         <fieldset>
             <legend>Sunday  </legend>
-            <form:label path="week['7'].startTime">Opening time</form:label>
-            <form:input path="week['7'].startTime" type="time" />
+            <form:label path="week['0'].startTime">Opening time</form:label>
+            <form:input path="week['0'].startTime" type="time" />
             <br/>
-            <form:label path="week['7'].closeTime">Closing time</form:label>
-            <form:input path="week['7'].closeTime" type="time"/>
+            <form:label path="week['0'].closeTime">Closing time</form:label>
+            <form:input path="week['0'].closeTime" type="time"/>
             <br/>
             <input type="checkbox" id="closedAllDay7" ><label for="closedAllDay7">Closed all Day</label>
         </fieldset>

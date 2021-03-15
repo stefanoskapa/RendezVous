@@ -84,7 +84,7 @@ public class CompanyService {
 
         Map<String, WorkDayHours> week = new HashMap<>();
 
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 0; i <= 6; i++) {
             week.put(String.valueOf(i), null);
         }
 
