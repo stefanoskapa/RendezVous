@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (this.readyState == 4 && this.status == 200) {
             calendarData = JSON.parse(this.responseText);
             drawCalendar(calendarData);
+            console.log(calendarData.businessHours);
         }
     };
     xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/company/dates", true);
@@ -41,16 +42,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 $('#myModal').modal('show');
             },
             // selectable: true,
-            businessHours: {
-                // days of week. an array of zero-based day of week integers (0=Sunday)
-                daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
-
-                startTime: '08:00', // a start time (10am in this example)
-                endTime: '18:00', // an end time (6pm in this example)
-            },
+            businessHours: calendarData.businessHours,
 //            slotMinTime: "08:00:00", //na to allazoume dinamika me vasi to orario
 //            slotMaxTime: "18:00:00", //na to allazoume dinamika me vasi to orario
-            events: calendarData
+            events: calendarData.events
         });
 
         calendar.render();

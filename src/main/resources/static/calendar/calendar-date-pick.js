@@ -7,10 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             calendarData = JSON.parse(this.responseText);
-
-            console.log(calendarData);
-            console.log(calendarData.businessHours);
-            console.log(calendarData.blockDates);
             drawCalendar(calendarData);
         }
     };
@@ -80,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $.ajax("http://localhost:8080/rendezvous/api/v1/client/company/" + comp_id + "/date",
                 {   type: 'POST', 
+                    data: JSON.stringify({"companyId": "4", "appointmentTimestamp": Date()}),
                     //todo send comp-id and datetime of the date
                     success: function (data, status, xhr) {   // success callback function
                         alert("ok");

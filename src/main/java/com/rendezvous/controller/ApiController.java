@@ -8,9 +8,11 @@ package com.rendezvous.controller;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
+import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
+import com.rendezvous.model.CompanyDate;
 import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
@@ -26,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -66,7 +69,7 @@ public class ApiController {
     }
 
     @GetMapping("/company/dates")
-    public ResponseEntity<List<CompanyCalendarProperties>> fetchCompanyAppointments() {
+    public ResponseEntity<CompanyCalendarProperties> fetchCompanyAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) { //find out who is asking 
@@ -74,8 +77,12 @@ public class ApiController {
         } else {
             username = principal.toString();
         }
+        
         Company company = companyService.findCompanyByEmail(username);
-        return new ResponseEntity<>(companyService.convertPropertiesList(appointmentRepository.findByCompany(company)), HttpStatus.OK);
+        
+        CompanyCalendarProperties companyCalendarProperties = companyService.getCompanyCalendarProperites(company);
+        
+        return new ResponseEntity<>(companyCalendarProperties, HttpStatus.OK);
     }
 
     @GetMapping("/client/company/{company_id}/availability")
@@ -104,8 +111,8 @@ public class ApiController {
     
     //
     @PostMapping("/client/company/{company_id}/date")
-    public ResponseEntity<String> confirmAppointment(Principal principal, @PathVariable String company_id) {
-
+    public ResponseEntity<String> confirmAppointment(Principal principal,@RequestBody AppointmentRequest appointmentRequest) {
+        System.out.println(appointmentRequest);
 
         //todo check if date is accepted
         
