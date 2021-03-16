@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUserDetailsService implements UserDetailsService{
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     /*
     Here typically we call JPA methods to create a UserDetails object
     */
