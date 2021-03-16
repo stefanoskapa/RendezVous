@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ClientController {
 
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
     @Autowired 
-    CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
 
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {

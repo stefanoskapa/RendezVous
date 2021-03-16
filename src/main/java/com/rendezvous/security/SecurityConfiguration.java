@@ -18,9 +18,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     /* 
     Once we extend WebSecurityConfigurerAdapter class,
