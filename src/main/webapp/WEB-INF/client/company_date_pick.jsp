@@ -37,10 +37,10 @@
     <body>
         <h1>Pick a date for your appointment</h1>
 
-        <input type="text" id="comp-id" value="2" hidden  />
-
         <div class="alert alert-dismissible fade show" role="alert" id="alert">
         </div>
+
+        <input type="text" id="comp-id" value="${comp_id}" hidden  />
 
         <div id='calendar'></div>
 
