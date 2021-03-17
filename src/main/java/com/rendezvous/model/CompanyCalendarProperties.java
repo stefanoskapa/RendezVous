@@ -5,61 +5,42 @@
  */
 package com.rendezvous.model;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Leyteris
  */
 public class CompanyCalendarProperties {
-    private String title;
-    private LocalDateTime  start;
-    private LocalDateTime  end;
-    private CompanyExtendedProps extendedProps;
+    private List<CompanyDate> events;
+    private List<BusinessHoursGroup> businessHours;
 
     public CompanyCalendarProperties() {
+        this.events = new ArrayList();
+        this.businessHours = new ArrayList();
     }
 
-    public CompanyCalendarProperties(String title, LocalDateTime start, LocalDateTime end, CompanyExtendedProps extendedProps) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.extendedProps = extendedProps;
+    public CompanyCalendarProperties(List<CompanyDate> events, List<BusinessHoursGroup> businessHours) {
+        this.events = events;
+        this.businessHours = businessHours;
     }
 
-    public String getTitle() {
-        return title;
+    public List<BusinessHoursGroup> getBusinessHours() {
+        return businessHours;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBusinessHours(List<BusinessHoursGroup> businessHours) {
+        this.businessHours = businessHours;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public List<CompanyDate> getEvents() {
+        return events;
     }
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
+    public void setEvents(List<CompanyDate> events) {
+        this.events = events;
     }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
-    }
-
-    public CompanyExtendedProps getExtendedProps() {
-        return extendedProps;
-    }
-
-    public void setExtendedProps(CompanyExtendedProps extendedProps) {
-        this.extendedProps = extendedProps;
-    }
-
-    
     
     
 }

@@ -1,21 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var calendarData;
+    $("#alert").hide();
 
-    var comp_id = $("#comp-id").val();
+    getCalendarDataAndDrawCalendar();
 
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            calendarData = JSON.parse(this.responseText);
+    function getCalendarDataAndDrawCalendar() {
+        var calendarData;
+        var comp_id = $("#comp-id").val();
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                calendarData = JSON.parse(this.responseText);
 
-            console.log(calendarData);
-            console.log(calendarData.businessHours);
-            console.log(calendarData.blockDates);
-            drawCalendar(calendarData);
-        }
-    };
-    xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/company/" + comp_id + "/availability", true);
-    xhttp.send();
+                if (calendarData.businessHours.length == 0) {
+                    calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
+                }
+                console.log(calendarData);
+                drawCalendar(calendarData);
+
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/company/" + comp_id + "/availability", true);
+        xhttp.send();
+    }
 
     function drawCalendar(calendarData) {
         var calendarEl = document.getElementById('calendar');
@@ -24,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
 //                slotMinTime: x.slotMinTime,
 //                slotMaxTime: x.slotMaxTime,
             events: calendarData.blockDates,
-
             // themeSystem: 'bootstrap',
             initialView: 'timeGridWeek',
             headerToolbar: {
@@ -39,24 +44,15 @@ document.addEventListener('DOMContentLoaded', function () {
             expandRows: true,
             // contentHeight: 1000,
             // displayEventTime: false,
-            // dateClick: function (info) {
-            // alert('Clicked on: ' + info.dateStr);
-            // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-            // alert('Current view: ' + info.view.type);
-            // change the day's background color just for fun
-            // info.dayEl.style.backgroundColor = 'red';
-            // },
             selectConstraint: "businessHours",
             select: function (info) {
                 $("#hdate").val(info.start);
-
                 $(".modal-title").text("Confirmation");
                 $(".modal-body p").html(
                         "Are you sure?" +
                         "<br/>" +
                         info.start
                         );
-
                 $('#myModal').modal('show');
             },
             selectable: true,
@@ -69,28 +65,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 return arg.event.title;
             },
         });
-
         calendar.render();
     }
 
     $("#submitDateToServer").click(function () {
-        //send to server the date(and the company)
-        console.log("ajax to server");
-        console.log($("#hdate").val());
-
-        $.ajax("http://localhost:8080/rendezvous/api/v1/client/company/" + comp_id + "/date",
-                {   type: 'POST', 
-                    //todo send comp-id and datetime of the date
+        $.ajax("http://localhost:8080/rendezvous/api/v1/client/request-app",
+                {type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(
+                            {
+                                "companyId": $("#comp-id").val(),
+                                "appointmentTimestamp": new Date($("#hdate").val())
+                            }
+                    ),
                     success: function (data, status, xhr) {   // success callback function
-                        alert("ok");
-//                        $('p').append(data.firstName + ' ' + data.middleName + ' ' + data.lastName);
+                        $('#alert').removeClass("alert-warning");
+                        $('#alert').addClass("alert-success");
+
+                        $('#alert').show();
+                        $('#alert').html("Your appointment has been successfully created")
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                        alert("error");
-//                        $('p').append('Error: ' + errorMessage);
+                        $('#alert').removeClass("alert-success");
+                        $('#alert').addClass("alert-warning");
+
+                        $('#alert').show();
+                        $('#alert').html("Your appointment request could not be completed. Refresh the page and try again")
                     }
-
                 });
-
+        getCalendarDataAndDrawCalendar();
     });
 });

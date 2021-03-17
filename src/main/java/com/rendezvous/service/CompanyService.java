@@ -16,6 +16,7 @@ import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.BlockDate;
 import com.rendezvous.model.BusinessHoursGroup;
 import com.rendezvous.model.CompanyCalendarProperties;
+import com.rendezvous.model.CompanyDate;
 import com.rendezvous.model.CompanyExtendedProps;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
@@ -24,6 +25,7 @@ import com.rendezvous.repository.AvailabilityRepository;
 import com.rendezvous.repository.ClientRepository;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.RoleRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,6 +100,28 @@ public class CompanyService {
         return workWeek;
     }
 
+    public List<BusinessHoursGroup> getBusinessHours(WorkWeek workWeek) {
+
+        List<BusinessHoursGroup> businessHours = new ArrayList();
+
+        for (Map.Entry<String, WorkDayHours> entry : workWeek.getWeek().entrySet()) {
+
+            Integer weekDay = Integer.parseInt(entry.getKey());
+            WorkDayHours hours = entry.getValue();
+
+            if (hours != null) {
+                BusinessHoursGroup businessHoursGroup = new BusinessHoursGroup();
+
+                businessHoursGroup.getDaysOfWeek().add(weekDay);
+                businessHoursGroup.setStartTime(hours.getStartTime());
+                businessHoursGroup.setEndTime(hours.getCloseTime());
+
+                businessHours.add(businessHoursGroup);
+            }
+        }
+        return businessHours;
+    }
+
     public void saveWorkingHours(Company company, WorkWeek workWeek) throws IncorrectWorkingHours {
         for (Map.Entry<String, WorkDayHours> entry : workWeek.getWeek().entrySet()) {
             System.out.println("Key = " + entry.getKey()
@@ -137,20 +161,29 @@ public class CompanyService {
         companyRepository.save(company);
     }
 
-    public List<CompanyCalendarProperties> convertPropertiesList(List<Appointment> appointments) {
-        List<CompanyCalendarProperties> ccpList = new LinkedList<>();
+    public CompanyCalendarProperties getCompanyCalendarProperites(Company company) {
+
+        CompanyCalendarProperties companyCalendarProperties = new CompanyCalendarProperties();
+
+        //adding company events
+        List<Appointment> companyAppointments = appointmentRepository.findByCompany(company);
         LocalDateTime startTime;
         String fullname;
-        for (Appointment ap : appointments) {
+        for (Appointment ap : companyAppointments) {
             Client client = ap.getClient();
             startTime = ap.getDate().atStartOfDay();
             startTime = startTime.plusHours(ap.getTimeslot());
             CompanyExtendedProps cep = new CompanyExtendedProps(client.getTel());
             fullname = client.getFname() + " " + client.getLname();
-            CompanyCalendarProperties ccp = new CompanyCalendarProperties(fullname, startTime, startTime.plusHours(1), cep);
-            ccpList.add(ccp);
+            CompanyDate ccp = new CompanyDate(fullname, startTime, startTime.plusHours(1), cep);
+            companyCalendarProperties.getEvents().add(ccp);
         }
-        return ccpList;
+
+        //finding and adding business hours
+        WorkWeek workWeek = findWorkingHoursByCompany(company);
+        companyCalendarProperties.setBusinessHours(getBusinessHours(workWeek));
+
+        return companyCalendarProperties;
     }
 
     public AvailabilityCalendarProperties getAvailabilityCalendarProperties(Company company, Client client) {
@@ -158,25 +191,7 @@ public class CompanyService {
 
         //finding and adding business hours
         WorkWeek workWeek = findWorkingHoursByCompany(company);
-
-        List<BusinessHoursGroup> businessHours = new ArrayList();
-
-        for (Map.Entry<String, WorkDayHours> entry : workWeek.getWeek().entrySet()) {
-
-            Integer weekDay = Integer.parseInt(entry.getKey());
-            WorkDayHours hours = entry.getValue();
-
-            if (hours != null) {
-                BusinessHoursGroup businessHoursGroup = new BusinessHoursGroup();
-
-                businessHoursGroup.getDaysOfWeek().add(weekDay);
-                businessHoursGroup.setStartTime(hours.getStartTime());
-                businessHoursGroup.setEndTime(hours.getCloseTime());
-
-                businessHours.add(businessHoursGroup);
-            }
-        }
-        availabilityCalendarProperties.setBusinessHours(businessHours);
+        availabilityCalendarProperties.setBusinessHours(getBusinessHours(workWeek));
 
         //finding and adding company events
         List<BlockDate> blockDates = new ArrayList();
@@ -200,21 +215,32 @@ public class CompanyService {
             startTime = startTime.plusHours(ap.getTimeslot());
 
             LocalDateTime endTime = startTime.plusHours(1);
-            
+
             String title = ap.getCompany().getDisplayName();
 
-            //testing if the already have an appointment, to make sure the 2 appointments wont show up at the same time
+            //testing if the client already have an appointment with the company, to make sure the 2 appointments wont show up at the same time
             BlockDate alreadyExistingAppointment = new BlockDate("Date Unavailable", startTime, endTime);
             if (blockDates.contains(alreadyExistingAppointment)) {
                 int indexOf = blockDates.indexOf(alreadyExistingAppointment);
-                blockDates.set(indexOf, new BlockDate("Appointment with "+title+" already exists", startTime, endTime));
+                blockDates.set(indexOf, new BlockDate("Appointment with " + title + " already exists", startTime, endTime));
             } else {
                 blockDates.add(new BlockDate(title, startTime, endTime));
             }
         }
-        
+
         availabilityCalendarProperties.setBlockDates(blockDates);
         return availabilityCalendarProperties;
+    }
+
+    public boolean isOccupied(Company company, LocalDateTime appointmentTimestamp) {
+        LocalDate reqDate = appointmentTimestamp.toLocalDate();
+        Integer timeslot = appointmentTimestamp.getHour() + 2; // todo: +2 to be removed after datesaving
+
+        return appointmentRepository.existsByCompanyAndDateAndTimeslot(company, reqDate, timeslot);
+    }
+
+    public boolean isDateInBusinessHours(Company company, LocalDateTime appointmentTimestamp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
