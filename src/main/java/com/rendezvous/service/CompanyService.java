@@ -25,6 +25,7 @@ import com.rendezvous.repository.AvailabilityRepository;
 import com.rendezvous.repository.ClientRepository;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.RoleRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,7 +99,7 @@ public class CompanyService {
 
         return workWeek;
     }
-    
+
     public List<BusinessHoursGroup> getBusinessHours(WorkWeek workWeek) {
 
         List<BusinessHoursGroup> businessHours = new ArrayList();
@@ -120,7 +121,6 @@ public class CompanyService {
         }
         return businessHours;
     }
-            
 
     public void saveWorkingHours(Company company, WorkWeek workWeek) throws IncorrectWorkingHours {
         for (Map.Entry<String, WorkDayHours> entry : workWeek.getWeek().entrySet()) {
@@ -183,7 +183,6 @@ public class CompanyService {
         WorkWeek workWeek = findWorkingHoursByCompany(company);
         companyCalendarProperties.setBusinessHours(getBusinessHours(workWeek));
 
-        
         return companyCalendarProperties;
     }
 
@@ -193,8 +192,7 @@ public class CompanyService {
         //finding and adding business hours
         WorkWeek workWeek = findWorkingHoursByCompany(company);
         availabilityCalendarProperties.setBusinessHours(getBusinessHours(workWeek));
-        
-        
+
         //finding and adding company events
         List<BlockDate> blockDates = new ArrayList();
 
@@ -232,6 +230,17 @@ public class CompanyService {
 
         availabilityCalendarProperties.setBlockDates(blockDates);
         return availabilityCalendarProperties;
+    }
+
+    public boolean isOccupied(Company company, LocalDateTime appointmentTimestamp) {
+        LocalDate reqDate = appointmentTimestamp.toLocalDate();
+        Integer timeslot = appointmentTimestamp.getHour() + 2; // todo: +2 to be removed after datesaving
+
+        return appointmentRepository.existsByCompanyAndDateAndTimeslot(company, reqDate, timeslot);
+    }
+
+    public boolean isDateInBusinessHours(Company company, LocalDateTime appointmentTimestamp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

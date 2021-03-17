@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             calendarData = JSON.parse(this.responseText);
+            if (calendarData.businessHours.length==0) {
+                calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
+            }
             drawCalendar(calendarData);
             console.log(calendarData.businessHours);
         }

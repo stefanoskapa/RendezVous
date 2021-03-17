@@ -48,7 +48,7 @@ public class ApiController {
     //calentar company, GET /company/dates
 //    
     //calendar selidas company_date_pick, emfanisi eleutheon rantevou, GET /client/company/{company_id}/availability
-    //calendar selidas company_date_pick, epilogi rantevou, POST /client/company/{company_id}/date
+    //calendar selidas company_date_pick, epilogi rantevou, POST /client/request-app
 //    
     //search company page, POST /client/comp-search/ (posting json obj with criteria https://stackoverflow.com/questions/5020704/how-to-design-restful-search-filtering?answertab=votes#tab-top)
 
@@ -77,11 +77,11 @@ public class ApiController {
         } else {
             username = principal.toString();
         }
-        
+
         Company company = companyService.findCompanyByEmail(username);
-        
+
         CompanyCalendarProperties companyCalendarProperties = companyService.getCompanyCalendarProperites(company);
-        
+
         return new ResponseEntity<>(companyCalendarProperties, HttpStatus.OK);
     }
 
@@ -97,27 +97,67 @@ public class ApiController {
         } else {
             return ResponseEntity.badRequest().build();
         }
-        
+
         try {
             company = companyService.findCompanyById(Integer.parseInt(company_id));
         } catch (CompanyIdNotFound ex) {
             return ResponseEntity.badRequest().build();
         }
-        
+
         availabilityCalendarProperties = companyService.getAvailabilityCalendarProperties(company, client);
 
         return ResponseEntity.ok(availabilityCalendarProperties);
     }
-    
+
     //
-    @PostMapping("/client/company/{company_id}/date")
-    public ResponseEntity<String> confirmAppointment(Principal principal,@RequestBody AppointmentRequest appointmentRequest) {
-        System.out.println(appointmentRequest);
+    @PostMapping("/client/request-app")
+    public ResponseEntity<String> confirmAppointment(Principal principal, @RequestBody AppointmentRequest appointmentRequest) {
+//        System.out.println(appointmentRequest);
 
-        //todo check if date is accepted
-        
+        Client client = null;
+        Company company = null;
 
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        if (principal != null) {
+            client = clientService.findClientByEmail(principal.getName());
+        } else {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+        //check if client is free on the requested timeslot
+        boolean isClientOccupied = clientService.isOccupied(client, appointmentRequest.getAppointmentTimestamp());
+        System.out.println("Client is occupied>>>>>>>>> " + isClientOccupied);
+
+        if (isClientOccupied) {
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+
+        //check if company exists
+        try {
+            company = companyService.findCompanyById(appointmentRequest.getCompanyId());
+        } catch (CompanyIdNotFound ex) {
+            return new ResponseEntity(HttpStatus.I_AM_A_TEAPOT);
+        }
+
+        //check if requested timeslot is inside company's working hour
+        boolean isDateInBusinessHours = companyService.isDateInBusinessHours(company, appointmentRequest.getAppointmentTimestamp());
+        System.out.println("Date in business hours>>>>>>>>> " + isDateInBusinessHours);
+
+        if (!isDateInBusinessHours) {
+            return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        //check if company have free the requested timeslot
+        boolean isCompanyOccupied = false;
+        isCompanyOccupied = companyService.isOccupied(company, appointmentRequest.getAppointmentTimestamp());
+
+        System.out.println("Company is occupied>>>>>>>>> " + isCompanyOccupied);
+
+        if (isCompanyOccupied) {
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+
+        //save new appointment
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

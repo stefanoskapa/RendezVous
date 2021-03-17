@@ -11,8 +11,10 @@ import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Role;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.ClientExtendedProps;
+import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.repository.ClientRepository;
 import com.rendezvous.repository.RoleRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -31,6 +33,8 @@ public class ClientService {
     private ClientRepository clientRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
     @Autowired
     private JdbcUserDetailsManager jdbcUserDetailsManager;
     @Autowired
@@ -72,5 +76,12 @@ public class ClientService {
             ccpList.add(ccp);
         }
         return ccpList;
+    }
+
+    public boolean isOccupied(Client client, LocalDateTime appointmentTimestamp) {
+        LocalDate reqDate = appointmentTimestamp.toLocalDate();
+        Integer timeslot = appointmentTimestamp.getHour()+2; // todo: +2 to be removed after datesaving
+        
+        return appointmentRepository.existsByClientAndDateAndTimeslot(client,reqDate,timeslot);
     }
 }
