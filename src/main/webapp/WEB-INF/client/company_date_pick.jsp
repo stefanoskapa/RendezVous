@@ -37,6 +37,9 @@
     <body>
         <h1>Pick a date for your appointment</h1>
 
+        <div class="alert alert-dismissible fade show" role="alert" id="alert">
+        </div>
+
         <input type="text" id="comp-id" value="${comp_id}" hidden  />
 
         <div id='calendar'></div>
@@ -55,7 +58,7 @@
                         <p>One fine body&hellip;</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" id="cancelModalBtn" data-dismiss="modal">Cancel</button>
                         <form>
                             <input type="text" hidden id="hdate" value="">
                             <button type="button" class="btn btn-primary" id="submitDateToServer" data-dismiss="modal">
