@@ -11,12 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     Optional<Company> findCompanyByUserEmail(String email);
-
     Optional<Company> findById(int id);
-
-    //@Query(
-    //        value = "SELECT * FROM company c WHERE c.display_name LIKE '%?%';",
-    //        nativeQuery = true)
-    //List<Company> findCompaniesBySearch(String searchTerm);
-    List<Company> findByDisplayNameContainingIgnoreCase(String searchTerm);
+    List<Company> findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(String term1, String term2, String term3);
+    List<Company> findAll();
 }

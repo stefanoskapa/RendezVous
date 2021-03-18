@@ -18,6 +18,7 @@ import com.rendezvous.model.BusinessHoursGroup;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.CompanyDate;
 import com.rendezvous.model.CompanyExtendedProps;
+import com.rendezvous.model.SearchResult;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
 import com.rendezvous.repository.AppointmentRepository;
@@ -31,10 +32,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -233,6 +236,32 @@ public class CompanyService {
         return availabilityCalendarProperties;
     }
 
+
+    public Set<SearchResult> companySearch(String searchTerm, String category) {
+        
+        Set<SearchResult> results = new HashSet<>();
+        List<Company> companies;
+        if (searchTerm.trim().equals("")) {
+            companies = companyRepository.findAll();
+            for (Company comp : companies) {
+                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                    results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                }
+            }
+        } else {
+        String[] searchTerms = searchTerm.split(" ");
+        for (String a : searchTerms) {
+            companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
+            for (Company comp : companies) {
+                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                    results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                }
+            }
+        }
+        }
+        return results;
+    }
+
     public boolean isOccupied(Company company, LocalDateTime appointmentTimestamp) {
         LocalDate reqDate = appointmentTimestamp.toLocalDate();
         Integer timeslot = appointmentTimestamp.getHour();
@@ -266,6 +295,7 @@ public class CompanyService {
                 return false;
             }
         }
+
     }
 
 }
