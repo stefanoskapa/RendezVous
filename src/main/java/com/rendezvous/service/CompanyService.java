@@ -17,6 +17,7 @@ import com.rendezvous.model.BlockDate;
 import com.rendezvous.model.BusinessHoursGroup;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.CompanyExtendedProps;
+import com.rendezvous.model.SearchResult;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
 import com.rendezvous.repository.AppointmentRepository;
@@ -28,10 +29,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -200,21 +203,33 @@ public class CompanyService {
             startTime = startTime.plusHours(ap.getTimeslot());
 
             LocalDateTime endTime = startTime.plusHours(1);
-            
+
             String title = ap.getCompany().getDisplayName();
 
             //testing if the already have an appointment, to make sure the 2 appointments wont show up at the same time
             BlockDate alreadyExistingAppointment = new BlockDate("Date Unavailable", startTime, endTime);
             if (blockDates.contains(alreadyExistingAppointment)) {
                 int indexOf = blockDates.indexOf(alreadyExistingAppointment);
-                blockDates.set(indexOf, new BlockDate("Appointment with "+title+" already exists", startTime, endTime));
+                blockDates.set(indexOf, new BlockDate("Appointment with " + title + " already exists", startTime, endTime));
             } else {
                 blockDates.add(new BlockDate(title, startTime, endTime));
             }
         }
-        
+
         availabilityCalendarProperties.setBlockDates(blockDates);
         return availabilityCalendarProperties;
+    }
+
+    public Set<SearchResult> companySearch(String searchTerm) {
+        String[] searchTerms = searchTerm.split(" ");
+        Set<SearchResult> results = new HashSet<>();
+        for (String a : searchTerms) {
+            List<Company> companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
+            for (Company comp : companies) {
+                results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+            }
+        }
+        return results;
     }
 
 }

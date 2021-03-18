@@ -6,6 +6,7 @@ public class SearchResult {
 
     private int id;
     private String displayName;
+    
     private String addrStr;
     private String addrNo;
     private String addrCity;
