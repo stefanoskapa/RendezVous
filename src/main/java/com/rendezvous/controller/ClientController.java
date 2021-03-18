@@ -6,8 +6,10 @@
 package com.rendezvous.controller;
 
 import com.rendezvous.entity.Client;
+import com.rendezvous.entity.CompCategory;
 import com.rendezvous.entity.Company;
 import com.rendezvous.model.SearchResult;
+import com.rendezvous.repository.CategoryRepository;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
@@ -36,10 +38,11 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
-    //@Autowired 
-    //private CompanyRepository companyRepository;
     @Autowired
     private CompanyService companyService;
+    @Autowired 
+    private CategoryRepository categoryRepository;
+    
 
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
@@ -99,8 +102,20 @@ public class ClientController {
     }
 
     @GetMapping("/comp-search")
-    public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm) {
-        Set<SearchResult> results = companyService.companySearch(searchTerm);
+    public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm, @RequestParam String category) {
+        Set<SearchResult> results = companyService.companySearch(searchTerm,category);
+        
         return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+    
+    @GetMapping("/categories") 
+        public ResponseEntity<List<String>> getAllCategories() {
+            List<String> categories = new LinkedList<>();
+            List<CompCategory> compCategories = categoryRepository.findAll();
+            for (CompCategory cat : compCategories) {
+                categories.add(cat.getCategory());
+            }
+        
+        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 }
