@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (calendarData.businessHours.length == 0) {
                     calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
                 }
+                console.log("RecievedfromServer>>>> ");
                 console.log(calendarData);
                 drawCalendar(calendarData);
 
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
             eventBackgroundColor: 'gray',
             eventBorderColor: 'gray',
             eventTextColor: 'white',
+            timeZone: 'Europe/Athens',
             // eventDisplay: 'block',
             eventContent: function (arg) {
                 return arg.event.title;
@@ -69,6 +71,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     $("#submitDateToServer").click(function () {
+        console.log("Sending to server:");
+        console.log($("#comp-id").val());
+        console.log(new Date($("#hdate").val()));
+        
         $.ajax("http://localhost:8080/rendezvous/api/v1/client/request-app",
                 {type: 'POST',
                     contentType: 'application/json',

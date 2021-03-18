@@ -80,7 +80,7 @@ public class ClientService {
 
     public boolean isOccupied(Client client, LocalDateTime appointmentTimestamp) {
         LocalDate reqDate = appointmentTimestamp.toLocalDate();
-        Integer timeslot = appointmentTimestamp.getHour()+2; // todo: +2 to be removed after datesaving
+        Integer timeslot = appointmentTimestamp.getHour();
         
         return appointmentRepository.existsByClientAndDateAndTimeslot(client,reqDate,timeslot);
     }

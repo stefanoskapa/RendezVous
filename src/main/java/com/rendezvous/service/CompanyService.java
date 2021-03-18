@@ -28,6 +28,7 @@ import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.RoleRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -263,13 +264,37 @@ public class CompanyService {
 
     public boolean isOccupied(Company company, LocalDateTime appointmentTimestamp) {
         LocalDate reqDate = appointmentTimestamp.toLocalDate();
-        Integer timeslot = appointmentTimestamp.getHour() + 2; // todo: +2 to be removed after datesaving
+        Integer timeslot = appointmentTimestamp.getHour();
 
         return appointmentRepository.existsByCompanyAndDateAndTimeslot(company, reqDate, timeslot);
     }
 
     public boolean isDateInBusinessHours(Company company, LocalDateTime appointmentTimestamp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        //convert getDayOfWeek() output to db availability table 0 based working hours
+        //getDayOfWeek().getValue() output 1-7(starting Mondey), db saves 0-6(starting Sunday)
+        int dayNumber = appointmentTimestamp.getDayOfWeek().getValue() == 7 ? 0 : appointmentTimestamp.getDayOfWeek().getValue();
+
+        
+        Optional<Availability> dayOpt = availabilityRepository.findByCompanyAndWeekDay(company, dayNumber);
+        
+        if (!dayOpt.isPresent()) {
+            //no Availability entry found for the spesific week day, so the company is closed for the entire day
+            return false;
+        } else {
+            Availability day = dayOpt.get();
+            LocalTime openTime = day.getOpenTime();
+            LocalTime closeTime = day.getCloseTime();
+            LocalTime requestedTime = appointmentTimestamp.toLocalTime();
+            
+            if (!openTime.isAfter(requestedTime) && closeTime.isAfter(requestedTime)) {
+                //open in the requested week day, AND inside working hours
+                return true;
+            } else {
+                //open in the requested week day, but outside working hours
+                return false;
+            }
+        }
 
     }
 

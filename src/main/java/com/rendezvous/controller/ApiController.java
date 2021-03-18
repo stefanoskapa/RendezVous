@@ -14,6 +14,7 @@ import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.CompanyDate;
 import com.rendezvous.repository.AppointmentRepository;
+import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
@@ -37,24 +38,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiController {
 
     @Autowired
-    private AppointmentRepository appointmentRepository;
-    @Autowired
     private ClientService clientService;
     @Autowired
     private CompanyService companyService;
-    //todo:
-//    
+    @Autowired
+    AppointmentService appointmentService;
+//todo:
+    //    
     //calendar client, GET /client/dates
     //calentar company, GET /company/dates
-//    
+    //    
     //calendar selidas company_date_pick, emfanisi eleutheon rantevou, GET /client/company/{company_id}/availability
     //calendar selidas company_date_pick, epilogi rantevou, POST /client/request-app
-//    
+    //    
     //search company page, POST /client/comp-search/ (posting json obj with criteria https://stackoverflow.com/questions/5020704/how-to-design-restful-search-filtering?answertab=votes#tab-top)
-
     // @GetMapping("/availability") //TODO We still need to figure out what type of object to return
     //public List<WorkDayHours> fetchWorkingHours(@RequestParam int id) {
     //}
+
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,7 +66,7 @@ public class ApiController {
             username = principal.toString();
         }
         Client client = clientService.findClientByEmail(username);
-        return new ResponseEntity<>(clientService.convertPropertiesList(appointmentRepository.findByClient(client)), HttpStatus.OK);
+        return new ResponseEntity<>(clientService.convertPropertiesList(appointmentService.findByClient(client)), HttpStatus.OK);
     }
 
     @GetMapping("/company/dates")
@@ -112,7 +113,7 @@ public class ApiController {
     //
     @PostMapping("/client/request-app")
     public ResponseEntity<String> confirmAppointment(Principal principal, @RequestBody AppointmentRequest appointmentRequest) {
-//        System.out.println(appointmentRequest);
+        System.out.println(appointmentRequest);
 
         Client client = null;
         Company company = null;
@@ -120,43 +121,44 @@ public class ApiController {
         if (principal != null) {
             client = clientService.findClientByEmail(principal.getName());
         } else {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         //check if client is free on the requested timeslot
         boolean isClientOccupied = clientService.isOccupied(client, appointmentRequest.getAppointmentTimestamp());
-        System.out.println("Client is occupied>>>>>>>>> " + isClientOccupied);
 
         if (isClientOccupied) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            System.out.println("Client is occupied>>>>>>>>> " + isClientOccupied);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         //check if company exists
         try {
             company = companyService.findCompanyById(appointmentRequest.getCompanyId());
         } catch (CompanyIdNotFound ex) {
-            return new ResponseEntity(HttpStatus.I_AM_A_TEAPOT);
+            System.out.println("Company doesnt exists");
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         //check if requested timeslot is inside company's working hour
         boolean isDateInBusinessHours = companyService.isDateInBusinessHours(company, appointmentRequest.getAppointmentTimestamp());
-        System.out.println("Date in business hours>>>>>>>>> " + isDateInBusinessHours);
 
         if (!isDateInBusinessHours) {
-            return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+            System.out.println("Date in business hours>>>>>>>>> " + isDateInBusinessHours);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         //check if company have free the requested timeslot
         boolean isCompanyOccupied = false;
         isCompanyOccupied = companyService.isOccupied(company, appointmentRequest.getAppointmentTimestamp());
 
-        System.out.println("Company is occupied>>>>>>>>> " + isCompanyOccupied);
-
         if (isCompanyOccupied) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            System.out.println("Company is occupied>>>>>>>>> " + isCompanyOccupied);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-
-        //save new appointment
+        
+        //if no error found in request, then save a new appointment
+        appointmentService.saveAppointment(client, company, appointmentRequest.getAppointmentTimestamp());
         return new ResponseEntity(HttpStatus.OK);
     }
 

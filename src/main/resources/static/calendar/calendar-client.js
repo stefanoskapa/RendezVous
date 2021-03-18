@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
             expandRows: true,
             contentHeight: 1000,
             displayEventTime: false,
+            timeZone: 'Europe/Athens',
             eventClick: function (info) {
                 $(".modal-title").text(info.event.title);
                 $(".modal-body p").html(
