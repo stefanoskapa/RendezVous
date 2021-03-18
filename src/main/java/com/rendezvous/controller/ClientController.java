@@ -10,9 +10,11 @@ import com.rendezvous.entity.Company;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.service.ClientService;
+import com.rendezvous.service.CompanyService;
 import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +36,10 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
-    @Autowired 
-    private CompanyRepository companyRepository;
+    //@Autowired 
+    //private CompanyRepository companyRepository;
+    @Autowired
+    private CompanyService companyService;
 
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
@@ -69,11 +73,11 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             return "client/profile_client";
         }
-        
+
         client.setUser(loggedUser.getUser()); //making sure user havent malformed his credentials
-        
+
         clientService.updateClient(client);
- 
+
         return "redirect:/client/dashboard";
     }
 
@@ -82,28 +86,21 @@ public class ClientController {
         return "client/company_search";
     }
 
-    @PostMapping("/comp-select") 
+    @PostMapping("/comp-select")
     public String showCompanySelect(@RequestParam int companyId, Model model) {
         model.addAttribute("comp_id", companyId); //comp_id will be used by company_date_pick
         return "client/company_date_pick";
     }
-    
-    
+
     @GetMapping("/date-select")
     public String showDateSelect(@RequestParam int companyId, Model model) {
         model.addAttribute("comp_id", companyId);
         return "client/company_date_pick";
     }
-    
+
     @GetMapping("/comp-search")
-    public ResponseEntity<List<SearchResult>> findCompanies (@RequestParam String searchTerm) {
-        
-        List<Company> companies = companyRepository.findByDisplayNameContainingIgnoreCase(searchTerm);
-        List<SearchResult> results = new LinkedList<>();
-        for (Company comp:companies) {
-            results.add(new SearchResult(comp.getId(),comp.getDisplayName(),comp.getAddrStr(),comp.getAddrNo(),comp.getAddrCity(), comp.getTel()));
-        }
-        
-    return new ResponseEntity<>(results, HttpStatus.OK); 
+    public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm) {
+        Set<SearchResult> results = companyService.companySearch(searchTerm);
+        return new ResponseEntity<>(results, HttpStatus.OK);
     }
 }
