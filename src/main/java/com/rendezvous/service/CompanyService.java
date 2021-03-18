@@ -220,14 +220,26 @@ public class CompanyService {
         return availabilityCalendarProperties;
     }
 
-    public Set<SearchResult> companySearch(String searchTerm) {
-        String[] searchTerms = searchTerm.split(" ");
+    public Set<SearchResult> companySearch(String searchTerm, String category) {
         Set<SearchResult> results = new HashSet<>();
-        for (String a : searchTerms) {
-            List<Company> companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
+        List<Company> companies;
+        if (searchTerm.trim().equals("")) {
+            companies = companyRepository.findAll();
             for (Company comp : companies) {
-                results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                    results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                }
             }
+        } else {
+        String[] searchTerms = searchTerm.split(" ");
+        for (String a : searchTerms) {
+            companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
+            for (Company comp : companies) {
+                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                    results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                }
+            }
+        }
         }
         return results;
     }

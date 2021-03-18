@@ -20,7 +20,7 @@
             }
         </style>
     </head>
-    <body>
+    <body onload="getCategories();">
         <!--URL: client/comp-select-->
         <h2>Company search page</h2>
         <!--forma anazitisis etairias-->
@@ -32,8 +32,6 @@
             <input type="text" name="searchTerm" id="searchbar"/>
             <select id="category">
                 <option selected="selected" value="All">All Categories</option>
-                <option value="health">health</option>
-                <option value="leisure">leisure</option>
             </select>
             <input type="button" value="search" onclick="getResults();"/>
         </form>
@@ -41,21 +39,40 @@
         <p id="matches"></p>
         <table id="resultTable"></table>
         <script>
+            function getCategories() {
+                
+                var xhttp = new XMLHttpRequest();
+                 xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {                   
+                        let categories = JSON.parse(this.responseText);
+                        let catSelect = document.getElementById("category");                  
+                        for (let i = 0; i < categories.length; i++) {                               
+                                    let opt = document.createElement("option");
+                                     opt.value= categories[i];                                    
+                                     opt.appendChild(document.createTextNode(categories[i]));
+                                    catSelect.appendChild(opt);
+                        }
+                    } 
+                };
+                xhttp.open("GET", "http://localhost:8080/rendezvous/client/categories");
+                xhttp.send();              
+            }
+            
             function getResults() {
 
                 let searchTerm = document.getElementById("searchbar").value;
                 let resultTable = document.getElementById("resultTable");
-
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
-
                     if (this.readyState == 4 && this.status == 200) {
-                        searchResults = JSON.parse(this.responseText);
+                        let searchResults = JSON.parse(this.responseText);
                         document.getElementById("matches").innerHTML = searchResults.length + " matches found";
                         if (searchResults.length > 0) {
                             document.getElementById("resultTable").innerHTML =
                                     "<tr><th>Company name</th><th>Address</th>" +
                                     "<th>City</th><th>Telephone</th><th></th></tr>";
+                        } else {
+                            document.getElementById("resultTable").innerHTML="";
                         }
                         for (let i = 0; i < searchResults.length; i++) {
                             var row = resultTable.insertRow(-1);
@@ -73,7 +90,7 @@
                         }
                     }
                 };
-                xhttp.open("GET", "http://localhost:8080/rendezvous/client/comp-search?searchTerm=" + searchTerm, true);
+                xhttp.open("GET", "http://localhost:8080/rendezvous/client/comp-search?searchTerm=" + searchTerm +"&category="+document.getElementById("category").value, true);
                 xhttp.send();
             }
 
