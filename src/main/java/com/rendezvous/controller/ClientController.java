@@ -58,7 +58,7 @@ public class ClientController {
     public String redirectToDashboard() {
         return "redirect:/client/dashboard";
     }
-
+    
     @GetMapping("/dashboard")
     public String showDashboard() {
         return "client/dashboard_client";
