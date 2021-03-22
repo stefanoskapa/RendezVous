@@ -46,7 +46,7 @@ public class Company implements Serializable {
     private String displayName;
     
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 20)
     @Column(name = "fname")
     private String fname;
@@ -76,6 +76,9 @@ public class Company implements Serializable {
     @Size(max = 30)
     @Column(name = "addr_city")
     private String addrCity;
+    
+    @Column(name = "premium", columnDefinition = "BOOLEAN")
+    private Boolean premium;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<CompMessages> compMessagesList;
@@ -126,38 +129,6 @@ public class Company implements Serializable {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public String getFname() {
-        return fname;
-    }
-
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    public String getLname() {
-        return lname;
-    }
-
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
-
-    public String getAfm() {
-        return afm;
-    }
-
-    public void setAfm(String afm) {
-        this.afm = afm;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
     }
 
     public String getAddrStr() {
@@ -216,6 +187,46 @@ public class Company implements Serializable {
         this.user = user;
     }
 
+        public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getAfm() {
+        return afm;
+    }
+
+    public void setAfm(String afm) {
+        this.afm = afm;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public Boolean getPremium() {
+        return premium;
+    }
+
+    public void setPremium(Boolean premium) {
+        this.premium = premium;
+    }
+    
 //    public List<Availability> getAvailabilityList() {
 //        return availabilityList;
 //    }
@@ -256,5 +267,5 @@ public class Company implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.Company[ id=" + id + " ]";
     }
-    
+   
 }
