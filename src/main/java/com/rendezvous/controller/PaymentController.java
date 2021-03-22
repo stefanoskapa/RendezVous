@@ -5,6 +5,7 @@
  */
 package com.rendezvous.controller;
 
+import com.rendezvous.service.StripeService;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,37 +14,42 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping("/company")
 public class PaymentController {
     
-//    @Value("${STRIPE_PUBLIC_KEY}")
-//    private String stripePublicKey;
+    @Value("${STRIPE_PUBLIC_KEY}")
+    private String stripePublicKey;
 
-//    @Autowired
-//    private StripeService1 stripeService1;
+    @Autowired
+    private StripeService stripeService;
+    
+    private double ammount=50; //50 currency(EUR)
 
-    @GetMapping("/company/pro")
+    @GetMapping("/pro")
     public String showPremium(Model model) {
-//        model.addAttribute("amount", 50 * 100); // In cents
-//        model.addAttribute("stripePublicKey", stripePublicKey);
+        model.addAttribute("amount", ammount * 100); // In cents
+        model.addAttribute("stripePublicKey", stripePublicKey);
         return "company/premium/premium";
     }
 
-    @PostMapping(value = "/company/pro/charge")
+    @PostMapping(value = "/pro/charge")
     public String chargeCard(HttpServletRequest request) throws Exception {
-//        String token = request.getParameter("stripeToken");
-//        Double amount = Double.parseDouble(request.getParameter("amount"));
-//        stripeService1.chargeNewCard(token, amount);
-//
-//        System.out.println("Stripe auth succesfull");
+        String token = request.getParameter("stripeToken");
+        
+        //if charging fails then stripe.exception.CardException will be thrown
+        stripeService.chargeNewCard(token, ammount);
+
+        //if no exception occurs the accept payment as successfull
         return "company/premium/success_premium";
     }
     
     @ExceptionHandler(com.stripe.exception.CardException.class)
     public String handleError() {
-        System.out.println("Error during Stripe auth");
         return "company/premium/failed_premium";
     }
+    
 }

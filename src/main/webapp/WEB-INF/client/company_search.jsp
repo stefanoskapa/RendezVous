@@ -54,7 +54,7 @@
                         }
                     } 
                 };
-                xhttp.open("GET", "http://localhost:8080/rendezvous/client/categories");
+                xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/categories");
                 xhttp.send();              
             }
             
@@ -90,7 +90,7 @@
                         }
                     }
                 };
-                xhttp.open("GET", "http://localhost:8080/rendezvous/client/comp-search?searchTerm=" + searchTerm +"&category="+document.getElementById("category").value, true);
+                xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/comp-search?searchTerm=" + searchTerm +"&category="+document.getElementById("category").value, true);
                 xhttp.send();
             }
 

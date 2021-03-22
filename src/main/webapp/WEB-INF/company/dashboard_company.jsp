@@ -40,6 +40,7 @@
         <br/>
         <a href="${pageContext.request.contextPath}/company/business-hours">Working hours</a>
         <a href="${pageContext.request.contextPath}/company/profile">Edit Profile</a>
+        <a href="${pageContext.request.contextPath}/company/pro">Buy Pro</a>
         <a href="${pageContext.request.contextPath}/logout">Logout</a>
 
 

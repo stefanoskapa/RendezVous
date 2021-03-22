@@ -7,18 +7,24 @@ package com.rendezvous.controller;
 
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
+import com.rendezvous.entity.CompCategory;
 import com.rendezvous.entity.Company;
 import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.CompanyDate;
+import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.AppointmentRepository;
+import com.rendezvous.repository.CategoryRepository;
 import com.rendezvous.service.AppointmentService;
+import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +37,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -43,19 +50,9 @@ public class ApiController {
     private CompanyService companyService;
     @Autowired
     AppointmentService appointmentService;
-//todo:
-    //    
-    //calendar client, GET /client/dates
-    //calentar company, GET /company/dates
-    //    
-    //calendar selidas company_date_pick, emfanisi eleutheon rantevou, GET /client/company/{company_id}/availability
-    //calendar selidas company_date_pick, epilogi rantevou, POST /client/request-app
-    //    
-    //search company page, POST /client/comp-search/ (posting json obj with criteria https://stackoverflow.com/questions/5020704/how-to-design-restful-search-filtering?answertab=votes#tab-top)
-    // @GetMapping("/availability") //TODO We still need to figure out what type of object to return
-    //public List<WorkDayHours> fetchWorkingHours(@RequestParam int id) {
-    //}
-
+    @Autowired
+    CategoryService categoryService;
+            
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -156,10 +153,24 @@ public class ApiController {
             System.out.println("Company is occupied>>>>>>>>> " + isCompanyOccupied);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        
+
         //if no error found in request, then save a new appointment
         appointmentService.saveAppointment(client, company, appointmentRequest.getAppointmentTimestamp());
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("client/comp-search")
+    public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm, @RequestParam String category) {
+        Set<SearchResult> results = companyService.companySearch(searchTerm, category);
+
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    @GetMapping("client/categories")
+    public ResponseEntity<List<String>> getAllCategories() {
+        List<String> categories = categoryService.getAllCategoriesNames();
+        
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
 }

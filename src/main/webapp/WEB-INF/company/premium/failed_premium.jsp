@@ -14,6 +14,7 @@
     <body>
         <!--URL: company/pro/rejected-->    
         
-        <!--enimerosi anepitixous agoras kai automato redirect sto company/dashboard-->
+        Stripe payment was unsuccessfull.
+        <a href="${pageContext.request.contextPath}/company/pro">Back to payment page</a>
     </body>
 </html>
