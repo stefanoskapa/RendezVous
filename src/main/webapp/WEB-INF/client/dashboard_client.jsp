@@ -29,7 +29,8 @@
         <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
 
         <style>
-            .fc-event-main:hover {
+            .fc-event-main:hover,
+            .fc-daygrid-event:hover {
                 cursor: pointer;
             }
         </style>

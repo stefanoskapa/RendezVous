@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     $("#alert").hide();
-
+    document.getElementById('calendar').innerHTML = "Loading Calendar Data";
     getCalendarDataAndDrawCalendar();
 
     function getCalendarDataAndDrawCalendar() {
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function drawCalendar(calendarData) {
         var calendarEl = document.getElementById('calendar');
+        calendarEl.innerHTML = "";
         var calendar = new FullCalendar.Calendar(calendarEl, {
             businessHours: calendarData.businessHours,
 //                slotMinTime: x.slotMinTime,
@@ -71,9 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     $("#submitDateToServer").click(function () {
-        console.log("Sending to server:");
-        console.log($("#comp-id").val());
-        console.log(new Date($("#hdate").val()));
+        $('html, body').css("cursor", "wait");
 
         $.ajax("http://localhost:8080/rendezvous/api/v1/client/request-app",
                 {type: 'POST',
@@ -85,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                     ),
                     success: function (data, status, xhr) {   // success callback function
+                        $('html, body').css("cursor", "auto");
                         $('#alert').removeClass("alert-warning");
                         $('#alert').addClass("alert-success");
 
@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         getCalendarDataAndDrawCalendar();
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                        $('html, body').css("cursor", "auto");
                         $('#alert').removeClass("alert-success");
                         $('#alert').addClass("alert-warning");
 
