@@ -81,7 +81,7 @@ public class CompanyService {
         }
         String encodedPassword = bCryptPasswordEncoder.encode(company.getUser().getPassword());
         company.getUser().setPassword(encodedPassword);
-        company.setPremium(true);
+        company.setPremium(false);
         companyRepository.save(company);
     }
 
