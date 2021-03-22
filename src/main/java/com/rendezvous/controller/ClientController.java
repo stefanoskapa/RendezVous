@@ -5,6 +5,7 @@
  */
 package com.rendezvous.controller;
 
+import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.CompCategory;
 import com.rendezvous.entity.Company;
@@ -17,6 +18,8 @@ import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,8 +43,7 @@ public class ClientController {
     private ClientService clientService;
     @Autowired
     private CompanyService companyService;
-    @Autowired 
-    private CategoryRepository categoryRepository;
+
     
 
     @ModelAttribute
@@ -89,33 +91,21 @@ public class ClientController {
         return "client/company_search";
     }
 
-    @PostMapping("/comp-select")
-    public String showCompanySelect(@RequestParam int companyId, Model model) {
-        model.addAttribute("comp_id", companyId); //comp_id will be used by company_date_pick
-        return "client/company_date_pick";
-    }
+//    @PostMapping("/comp-select")
+//    public String showCompanySelect(@RequestParam int companyId, Model model) {
+//        model.addAttribute("comp_id", companyId); //comp_id will be used by company_date_pick
+//        return "client/company_date_pick";
+//    }
 
     @GetMapping("/date-select")
     public String showDateSelect(@RequestParam int companyId, Model model) {
         model.addAttribute("comp_id", companyId);
+        try {
+            model.addAttribute("comp_name", companyService.findCompanyById(companyId).getDisplayName());
+        } catch (CompanyIdNotFound ex) {
+            // todo if exception occures company id is wrong and should be redirected to error page
+        }
         return "client/company_date_pick";
     }
 
-    @GetMapping("/comp-search")
-    public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm, @RequestParam String category) {
-        Set<SearchResult> results = companyService.companySearch(searchTerm,category);
-        
-        return new ResponseEntity<>(results, HttpStatus.OK);
-    }
-    
-    @GetMapping("/categories") 
-        public ResponseEntity<List<String>> getAllCategories() {
-            List<String> categories = new LinkedList<>();
-            List<CompCategory> compCategories = categoryRepository.findAll();
-            for (CompCategory cat : compCategories) {
-                categories.add(cat.getCategory());
-            }
-        
-        return new ResponseEntity<>(categories,HttpStatus.OK);
-    }
 }

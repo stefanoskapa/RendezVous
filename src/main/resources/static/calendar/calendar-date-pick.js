@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("Sending to server:");
         console.log($("#comp-id").val());
         console.log(new Date($("#hdate").val()));
-        
+
         $.ajax("http://localhost:8080/rendezvous/api/v1/client/request-app",
                 {type: 'POST',
                     contentType: 'application/json',
@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         $('#alert').show();
                         $('#alert').html("Your appointment has been successfully created")
+                        getCalendarDataAndDrawCalendar();
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
                         $('#alert').removeClass("alert-success");
@@ -99,6 +100,5 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#alert').html("Your appointment request could not be completed. Refresh the page and try again")
                     }
                 });
-        getCalendarDataAndDrawCalendar();
     });
 });

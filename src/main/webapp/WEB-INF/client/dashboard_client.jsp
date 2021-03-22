@@ -44,9 +44,7 @@
         <br/>
         <a href="${pageContext.request.contextPath}/client/comp-select">Close a rendezvous</a>
         <a href="${pageContext.request.contextPath}/client/profile">Edit Profile</a>
-        <a href="${pageContext.request.contextPath}/logout">Logout</a>
-        <a href="${pageContext.request.contextPath}/client/date-select">select date</a>
-        
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>        
 
         
         <div id='calendar'></div>
