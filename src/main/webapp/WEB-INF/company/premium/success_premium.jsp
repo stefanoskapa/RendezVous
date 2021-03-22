@@ -13,7 +13,13 @@
     </head>
     <body>
         <!--URL: company/pro/success-->    
-        
-        <!--enimerosi epitixous agoras kai automato redirect sto company/profile, opou tha exei ksekleidosei i epilogi category-->
+
+        You have successfully purchased the Premium package
+
+        You can now pick your company's category, and showing up in our search page when a user searches your category.
+
+        <a href="${pageContext.request.contextPath}/company/profile">Continue to your profile</a>
+
+
     </body>
 </html>

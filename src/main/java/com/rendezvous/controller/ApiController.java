@@ -18,6 +18,7 @@ import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.repository.CategoryRepository;
 import com.rendezvous.service.AppointmentService;
+import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
@@ -50,20 +51,8 @@ public class ApiController {
     @Autowired
     AppointmentService appointmentService;
     @Autowired
-    private CategoryRepository categoryRepository;
-//todo:
-    //    
-    //calendar client, GET /client/dates
-    //calentar company, GET /company/dates
-    //    
-    //calendar selidas company_date_pick, emfanisi eleutheon rantevou, GET /client/company/{company_id}/availability
-    //calendar selidas company_date_pick, epilogi rantevou, POST /client/request-app
-    //    
-    //search company page, POST /client/comp-search/ (posting json obj with criteria https://stackoverflow.com/questions/5020704/how-to-design-restful-search-filtering?answertab=votes#tab-top)
-    // @GetMapping("/availability") //TODO We still need to figure out what type of object to return
-    //public List<WorkDayHours> fetchWorkingHours(@RequestParam int id) {
-    //}
-
+    CategoryService categoryService;
+            
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -179,12 +168,8 @@ public class ApiController {
 
     @GetMapping("client/categories")
     public ResponseEntity<List<String>> getAllCategories() {
-        List<String> categories = new LinkedList<>();
-        List<CompCategory> compCategories = categoryRepository.findAll();
-        for (CompCategory cat : compCategories) {
-            categories.add(cat.getCategory());
-        }
-
+        List<String> categories = categoryService.getAllCategoriesNames();
+        
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 

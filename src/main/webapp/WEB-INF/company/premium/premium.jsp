@@ -14,8 +14,26 @@
     <body>
         <!--URL: company/pro-->        
         
-        <!--perigrafi premium xaraktiristikou (ksekleidoma epilogis katigorias)-->
-        <!--module stripe-->
+        <h3>Unlock our premium services</h3>
+        Unlock the option to customize your category and start getting found by more and more clients!
+        
+        <h4>Order Form</h4>
+        <h4>Price: ${amount/100}</h4>
+        <form action='${pageContext.request.contextPath}/company/pro/charge' method='POST' id='checkout-form'>
+            <!--<input type='hidden' value='${amount/100}' name='amount' />-->
+            <script
+                src='https://checkout.stripe.com/checkout.js'
+                class='stripe-button'
+                data-key=${stripePublicKey}
+                data-amount=${amount}
+                data-name='RendezVous'
+                data-description='Unlock Pro package'
+                <!--data-image='${pageContext.request.contextPath}/logo.jpg'/>-->
+                data-locale='auto'
+                data-zip-code='false'
+            </script>
+        </form>
+        
         <!--me tin epitixi agora, provoli selidas epitixous (company/pro/success) agoras kai redirect sto company/profile, opou tha exei ksekleidosei i epilogi category-->
         <!--me tin apotiximeni agora provoli selidas apotyxias (company/pro/rejected), kai redirect sto company/dashboard-->
         
