@@ -39,24 +39,35 @@
         <table id="resultTable"></table>
         <script>
             function getCategories() {
-                
+
                 var xhttp = new XMLHttpRequest();
-                 xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {                   
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
                         let categories = JSON.parse(this.responseText);
-                        let catSelect = document.getElementById("category");                  
-                        for (let i = 0; i < categories.length; i++) {                               
-                                    let opt = document.createElement("option");
-                                     opt.value= categories[i];                                    
-                                     opt.appendChild(document.createTextNode(categories[i]));
-                                    catSelect.appendChild(opt);
+                        categories.sort();
+                        let catSelect = document.getElementById("category");
+                        for (let i = 0; i < categories.length; i++) {
+                            let opt = document.createElement("option");
+                            opt.value = categories[i];
+                            opt.appendChild(document.createTextNode(categories[i]));
+                            catSelect.appendChild(opt);
                         }
-                    } 
+                    }
                 };
                 xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/categories");
-                xhttp.send();              
+                xhttp.send();
             }
-            
+
+            function compare(a, b) {
+                if (a.displayName < b.displayName) {
+                    return -1;
+                }
+                if (a.displayName > b.displayName) {
+                    return 1;
+                }
+                return 0;
+            }
+
             function getResults() {
                 $('*').css("cursor", "wait");
 
@@ -67,13 +78,16 @@
                     if (this.readyState == 4 && this.status == 200) {
                         $('*').css("cursor", "auto");
                         let searchResults = JSON.parse(this.responseText);
+                        
+                        searchResults.sort(compare); //sorting based on display name
+
                         document.getElementById("matches").innerHTML = searchResults.length + " matches found";
                         if (searchResults.length > 0) {
                             document.getElementById("resultTable").innerHTML =
                                     "<tr><th>Company name</th><th>Address</th>" +
                                     "<th>City</th><th>Telephone</th><th></th></tr>";
                         } else {
-                            document.getElementById("resultTable").innerHTML="";
+                            document.getElementById("resultTable").innerHTML = "";
                         }
                         for (let i = 0; i < searchResults.length; i++) {
                             var row = resultTable.insertRow(-1);
@@ -91,7 +105,7 @@
                         }
                     }
                 };
-                xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/comp-search?searchTerm=" + searchTerm +"&category="+document.getElementById("category").value, true);
+                xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/comp-search?searchTerm=" + searchTerm + "&category=" + document.getElementById("category").value, true);
                 xhttp.send();
             }
 

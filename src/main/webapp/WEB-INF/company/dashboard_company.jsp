@@ -38,8 +38,6 @@
         dashboard company
         <!--URL: company/dashboard-->
 
-        <!--link agoras premium gia to  URL: company/pro-->  
-
         welcome ${company_name}
         <br/>
         <a href="${pageContext.request.contextPath}/company/business-hours">Working hours</a>

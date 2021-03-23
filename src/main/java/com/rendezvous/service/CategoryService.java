@@ -12,7 +12,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class CategoryService {
 
@@ -22,9 +21,13 @@ public class CategoryService {
     public List<String> getAllCategoriesNames() {
         List<String> categories = new LinkedList<>();
         List<CompCategory> compCategories = categoryRepository.findAll();
-        
+
         compCategories.stream().forEach(c -> categories.add(c.getCategory()));
-        
+
         return categories;
+    }
+
+    public List<CompCategory> getAllCategories() {
+        return categoryRepository.findAll();
     }
 }

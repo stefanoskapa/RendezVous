@@ -298,5 +298,9 @@ public class CompanyService {
         }
 
     }
+    
+    public void setPremiumStatus(Company company) {
+        companyRepository.savePremiumStatus(company.getId());
+    }
 
 }
