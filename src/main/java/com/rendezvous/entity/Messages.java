@@ -2,6 +2,7 @@
 package com.rendezvous.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -39,8 +40,8 @@ public class Messages implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
+   // @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime timestamp;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -63,7 +64,7 @@ public class Messages implements Serializable {
         this.id = id;
     }
 
-    public Messages(Integer id, Date timestamp, String message, int userId) {
+    public Messages(Integer id, LocalDateTime timestamp, String message, int userId) {
         this.id = id;
         this.timestamp = timestamp;
         this.message = message;
@@ -78,11 +79,11 @@ public class Messages implements Serializable {
         this.id = id;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
