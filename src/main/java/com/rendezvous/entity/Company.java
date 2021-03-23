@@ -80,8 +80,8 @@ public class Company implements Serializable {
     @Column(name = "premium", columnDefinition = "BOOLEAN")
     private Boolean premium;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    private List<CompMessages> compMessagesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Messages> messagesList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Appointment> appointmentList;
@@ -155,12 +155,12 @@ public class Company implements Serializable {
         this.addrCity = addrCity;
     }
 
-    public List<CompMessages> getCompMessagesList() {
-        return compMessagesList;
+    public List<Messages> getMessagesList() {
+        return messagesList;
     }
 
-    public void setCompMessagesList(List<CompMessages> compMessagesList) {
-        this.compMessagesList = compMessagesList;
+    public void setMessagesList(List<Messages> messagesList) {
+        this.messagesList = messagesList;
     }
 
     public List<Appointment> getAppointmentList() {

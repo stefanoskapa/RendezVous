@@ -55,8 +55,8 @@ public class Client implements Serializable {
     @Column(name = "tel")
     private String tel;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
-    private List<ClientMessages> clientMessagesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Messages> messagesList;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -114,12 +114,12 @@ public class Client implements Serializable {
         this.tel = tel;
     }
 
-    public List<ClientMessages> getClientMessagesList() {
-        return clientMessagesList;
+    public List<Messages> getMessagesList() {
+        return messagesList;
     }
 
-    public void setClientMessagesList(List<ClientMessages> clientMessagesList) {
-        this.clientMessagesList = clientMessagesList;
+    public void setMessagesList(List<Messages> messagesList) {
+        this.messagesList = messagesList;
     }
 
     public User getUser() {
