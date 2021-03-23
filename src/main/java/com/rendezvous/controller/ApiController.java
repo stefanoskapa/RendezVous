@@ -9,14 +9,19 @@ import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.CompCategory;
 import com.rendezvous.entity.Company;
+import com.rendezvous.entity.Conversation;
+import com.rendezvous.entity.Messages;
 import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.CompanyDate;
+import com.rendezvous.model.Message;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.repository.CategoryRepository;
+import com.rendezvous.repository.ConversationRepository;
+import com.rendezvous.repository.MessagesRepository;
 import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
@@ -49,9 +54,13 @@ public class ApiController {
     @Autowired
     private CompanyService companyService;
     @Autowired
-    AppointmentService appointmentService;
+    private AppointmentService appointmentService;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
+    @Autowired
+    private MessagesRepository messagesRepository;
+    @Autowired
+    private ConversationRepository conversationRepository;
             
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
@@ -171,6 +180,32 @@ public class ApiController {
         List<String> categories = categoryService.getAllCategoriesNames();
         
         return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+    
+    @GetMapping("/client/history/{company_id}")
+    public ResponseEntity<List<Message>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal)
+    {
+    List <Message> jsonMessages= new LinkedList<>();
+        
+        Client tempClient = clientService.findClientByEmail(principal.getName());
+        Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
+        
+        if (tempConv==null) {
+            System.out.println("Conversation has not started yet");
+        } else {
+            System.out.println("There is an ongoing conversation");
+            List <Messages> messageList = messagesRepository.findByConversationId(company_id).get();
+            
+            for (Messages i: messageList) {
+                String meOrYou="you";
+                if (i.getUserId() == tempClient.getId()) {
+                meOrYou="me";
+                }
+                System.out.println(i.getMessage());              
+                jsonMessages.add(new Message(meOrYou,i.getMessage(),i.getTimestamp()));
+            }
+        }
+       return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
 
 }
