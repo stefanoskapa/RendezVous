@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,7 +25,30 @@
                 <form:input path="displayName" placeholder="company name"/>
                 <form:errors path="displayName"/>
             </p>
-            <p><form:label path="afm">ΑΦΜ:</form:label><br/>
+
+            <c:if test = "${company.premium == true}">
+                <p>
+                    <form:label path="category">Category:</form:label><br/>
+                    <form:select path="category">
+                        
+                        <c:if test = "${company.category == null}">
+                            <option disabled="true" selected="true">Select a category</option>
+                        </c:if>
+                        <c:if test = "${company.category != null}">
+                            <option selected="true" value="${company.category.id}">${company.category.category}</option>
+                        </c:if>
+                            
+                        <c:forEach items="${listCategory}" var="category">
+                            <c:if test = "${company.category.id != category.id}">
+                                <option value="${category.id}">${category.category}</option>
+                            </c:if>
+                        </c:forEach>
+                    </form:select>
+                </p>
+            </c:if>
+
+            <p>
+                <form:label path="afm">ΑΦΜ:</form:label><br/>
                 <form:input path="afm" placeholder="afm" disabled="true"/>
             </p>
             <p>
