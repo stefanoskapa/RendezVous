@@ -9,6 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
         <title>JSP Page</title>
         <style>
             th, td {
@@ -23,10 +26,6 @@
     <body onload="getCategories();">
         <!--URL: client/comp-select-->
         <h2>Company search page</h2>
-        <!--forma anazitisis etairias-->
-        <!--anazitisi me vasi to category-->
-        <!--anazitisi me vasi to onoma/tilefono-->
-        <!--o client epilegei etairia, kai me mia forma xtypao to back :POST client/comp-select, stelnontas to id tis eterias-->
         <br><br>
         <form>           
             <input type="text" name="searchTerm" id="searchbar"/>
@@ -59,12 +58,14 @@
             }
             
             function getResults() {
+                $('*').css("cursor", "wait");
 
                 let searchTerm = document.getElementById("searchbar").value;
                 let resultTable = document.getElementById("resultTable");
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
+                        $('*').css("cursor", "auto");
                         let searchResults = JSON.parse(this.responseText);
                         document.getElementById("matches").innerHTML = searchResults.length + " matches found";
                         if (searchResults.length > 0) {

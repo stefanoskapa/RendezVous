@@ -16,4 +16,15 @@ public class HomeController {
     public String home() {
         return "home";
     }
+    
+    
+    @GetMapping("/client")
+    public String client() {
+        return "redirect:/client/dashboard";
+    }
+    
+    @GetMapping("/company")
+    public String company() {
+        return "redirect:/company/dashboard";
+    }
 }

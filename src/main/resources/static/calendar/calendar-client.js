@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarData;
+    
+    document.getElementById('calendar').innerHTML = "Loading Calendar Data";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function drawCalendar(calendarData) {
         var calendarEl = document.getElementById('calendar');
+        calendarEl.innerHTML = "";
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
             headerToolbar: {

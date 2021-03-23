@@ -25,9 +25,13 @@
         <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-company.js"></script>
         <style>
-            .fc-event-main:hover {
+            .fc-event-main:hover,
+            .fc-daygrid-event:hover
+            {
                 cursor: pointer;
             }
+            
+
         </style>
     </head>
     <body>
