@@ -5,6 +5,7 @@
  */
 package com.rendezvous.controller;
 
+import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.CompCategory;
@@ -27,6 +28,7 @@ import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
+import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -61,7 +63,7 @@ public class ApiController {
     private MessagesRepository messagesRepository;
     @Autowired
     private ConversationRepository conversationRepository;
-            
+
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -178,34 +180,94 @@ public class ApiController {
     @GetMapping("client/categories")
     public ResponseEntity<List<String>> getAllCategories() {
         List<String> categories = categoryService.getAllCategoriesNames();
-        
+
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
-    
+
     @GetMapping("/client/history/{company_id}")
-    public ResponseEntity<List<Message>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal)
-    {
-    List <Message> jsonMessages= new LinkedList<>();
-        
+    public ResponseEntity<List<Message>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal) throws CompanyIdNotFound {
+        List<Message> jsonMessages = new LinkedList<>();
+
         Client tempClient = clientService.findClientByEmail(principal.getName());
+        Company tempCompany = companyService.findCompanyById(company_id);
+
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
-        
-        if (tempConv==null) {
+
+        if (tempConv == null) {
             System.out.println("Conversation has not started yet");
+            tempConv = new Conversation();
+            tempConv.setClient(tempClient);
+            tempConv.setCompany(tempCompany);
+            conversationRepository.save(tempConv); //create conversation
         } else {
             System.out.println("There is an ongoing conversation");
-            List <Messages> messageList = messagesRepository.findByConversationId(company_id).get();
-            
-            for (Messages i: messageList) {
-                String meOrYou="you";
-                if (i.getUserId() == tempClient.getId()) {
-                meOrYou="me";
+            List<Messages> messageList = messagesRepository.findByConversationId(tempConv.getId()).get();
+
+            for (Messages i : messageList) {
+                String meOrYou = "you";
+                if (i.getUserId() == tempClient.getUser().getId()) {
+                    meOrYou = "me";
                 }
-                System.out.println(i.getMessage());              
-                jsonMessages.add(new Message(meOrYou,i.getMessage(),i.getTimestamp()));
+                System.out.println(i);
+                jsonMessages.add(new Message(meOrYou, i.getMessage(), i.getTimestamp()));
             }
         }
-       return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
+        return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
 
+    @PostMapping("/client/history/{company_id}")
+    public ResponseEntity<List<Message>> addClientMessageToHistory(@PathVariable int company_id, @RequestBody Message message, Principal principal) {
+        List<Message> jsonMessages = new LinkedList<>();
+        System.out.println(message);
+        Client tempClient = clientService.findClientByEmail(principal.getName());
+        Conversation conv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
+        Messages tempMessage = new Messages();
+        tempMessage.setTimestamp(message.getTimeStamp());
+        tempMessage.setMessage(message.getMessage());
+        tempMessage.setConversationId(conv.getId());
+        tempMessage.setUserId(tempClient.getUser().getId());
+        messagesRepository.save(tempMessage);
+
+        return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
+    }
+
+    @GetMapping("/company/history/{client_id}")
+    public ResponseEntity<List<Message>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
+        List<Message> jsonMessages = new LinkedList<>();
+        Company tempComp = companyService.findCompanyByEmail(principal.getName());
+        Client tempClient = clientService.findClientById(client_id);
+        Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(client_id, tempComp.getId());
+
+        if (tempConv == null) {
+            tempConv = new Conversation();
+            tempConv.setClient(tempClient);
+            tempConv.setCompany(tempComp);
+            conversationRepository.save(tempConv); //create conversation
+        } else {
+            List<Messages> messageList = messagesRepository.findByConversationId(tempConv.getId()).get();
+            for (Messages i : messageList) {
+                String meOrYou = "you";
+                if (i.getUserId() == tempComp.getUser().getId()) {
+                    meOrYou = "me";
+                }
+                System.out.println(i);
+                jsonMessages.add(new Message(meOrYou, i.getMessage(), i.getTimestamp()));
+            }
+        }
+        return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
+    }
+
+    @PostMapping("/company/history/{client_id}")
+    public ResponseEntity<List<Message>> addCompanyMessageToHistory(@PathVariable int client_id, @RequestBody Message message, Principal principal) {
+        List<Message> jsonMessages = new LinkedList<>();
+        Company tempCompany = companyService.findCompanyByEmail(principal.getName());
+        Conversation conv = conversationRepository.findByClientIdAndCompanyId(client_id, tempCompany.getId());
+        Messages tempMessage = new Messages();
+        tempMessage.setTimestamp(message.getTimeStamp());
+        tempMessage.setMessage(message.getMessage());
+        tempMessage.setConversationId(conv.getId());
+        tempMessage.setUserId(tempCompany.getUser().getId());
+        messagesRepository.save(tempMessage);
+        return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
+    }
 }
