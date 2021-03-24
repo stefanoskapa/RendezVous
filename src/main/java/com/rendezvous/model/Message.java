@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 public class Message {
 
     String sender;
-    String Message;
+    String message;
     LocalDateTime timeStamp;
 
     public Message(String sender, String Message, LocalDateTime timeStamp) {
         this.sender = sender;
-        this.Message = Message;
+        this.message = Message;
         this.timeStamp = timeStamp;
     }
 
@@ -25,11 +25,11 @@ public class Message {
     }
 
     public String getMessage() {
-        return Message;
+        return message;
     }
 
-    public void setMessage(String Message) {
-        this.Message = Message;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public LocalDateTime getTimeStamp() {
@@ -38,6 +38,11 @@ public class Message {
 
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" + "sender=" + sender + ", message=" + message + ", timeStamp=" + timeStamp + '}';
     }
     
 }

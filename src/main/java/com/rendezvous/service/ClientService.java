@@ -5,6 +5,7 @@
  */
 package com.rendezvous.service;
 
+import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.entity.Appointment;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
@@ -45,6 +46,12 @@ public class ClientService {
         client.orElseThrow(() -> new UsernameNotFoundException("User " + email + " not found!"));
         return client.get();
     }
+    
+    public Client findClientById(Integer id) throws ClientIdNotFound {
+        Optional<Client> client = clientRepository.findById(id);
+        client.orElseThrow(() -> new ClientIdNotFound("Client " + id + " not found!"));
+        return client.get();
+    }
 
     public void saveClient(Client client) {
         List<Role> roles = roleRepository.findAll();
@@ -55,13 +62,11 @@ public class ClientService {
         }
         String encodedPassword = bCryptPasswordEncoder.encode(client.getUser().getPassword());
         client.getUser().setPassword(encodedPassword);
-
         clientRepository.save(client);
     }
 
     public void updateClient(Client client) {
         clientRepository.save(client);
-
     }
 
     public List<ClientCalendarProperties> convertPropertiesList(List<Appointment> appointments) {

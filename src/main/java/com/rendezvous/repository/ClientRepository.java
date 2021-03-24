@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 
     Optional<Client> findClientByUserEmail(String email);
-   
+    Optional<Client> findById(int id);
 }
