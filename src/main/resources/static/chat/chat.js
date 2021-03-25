@@ -1,7 +1,9 @@
 var me = {};
 var you = {};
-me.avatar = "https://lh6.googleusercontent.com/-lr2nyjhhjXw/AAAAAAAAAAI/AAAAAAAARmE/MdtfUmC0M4s/photo.jpg?sz=48";
-you.avatar = "https://a11.t26.net/taringa/avatares/9/1/2/F/7/8/Demon_King1/48x48_5C5.jpg";
+
+me.avatar="https://eu.ui-avatars.com/api/?name=" + $('#me').val()+"&background=90EE90";
+you.avatar="https://eu.ui-avatars.com/api/?name=" + $('#you').val() +"&background=B0C4DE";
+
 var role = $('#userrole').val();
 var chatPartnerId = $('#userid').val();
 

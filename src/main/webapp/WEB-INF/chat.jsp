@@ -12,6 +12,8 @@
     <body>
         <input type="hidden" id="userrole" value="${role}"/>
         <input type="hidden" id="userid" value="${id}"/>
+        <input type="hidden" id="me" value="${me}"/>
+        <input type="hidden" id="you" value="${you}"/>
 
         <div class="col-sm-3 col-sm-offset-4 frame">
             <ul></ul>
