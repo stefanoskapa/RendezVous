@@ -82,21 +82,16 @@ public class ApiController {
         } else {
             username = principal.toString();
         }
-
         Company company = companyService.findCompanyByEmail(username);
-
         CompanyCalendarProperties companyCalendarProperties = companyService.getCompanyCalendarProperites(company);
-
         return new ResponseEntity<>(companyCalendarProperties, HttpStatus.OK);
     }
 
     @GetMapping("/client/company/{company_id}/availability")
     public ResponseEntity<AvailabilityCalendarProperties> fetchCompanyAvailability(Principal principal, @PathVariable String company_id) {
         AvailabilityCalendarProperties availabilityCalendarProperties = new AvailabilityCalendarProperties();
-
         Client client = null;
         Company company = null;
-
         if (principal != null) {
             client = clientService.findClientByEmail(principal.getName());
         } else {
@@ -110,11 +105,9 @@ public class ApiController {
         }
 
         availabilityCalendarProperties = companyService.getAvailabilityCalendarProperties(company, client);
-
         return ResponseEntity.ok(availabilityCalendarProperties);
     }
 
-    //
     @PostMapping("/client/request-app")
     public ResponseEntity<String> confirmAppointment(Principal principal, @RequestBody AppointmentRequest appointmentRequest) {
         System.out.println(appointmentRequest);
@@ -169,14 +162,12 @@ public class ApiController {
     @GetMapping("client/comp-search")
     public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm, @RequestParam String category) {
         Set<SearchResult> results = companyService.companySearch(searchTerm, category);
-
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
     @GetMapping("client/categories")
     public ResponseEntity<List<String>> getAllCategories() {
         List<String> categories = categoryService.getAllCategoriesNames();
-
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
@@ -204,7 +195,7 @@ public class ApiController {
                 if (i.getUserId() == tempClient.getUser().getId()) {
                     meOrYou = "me";
                 }
-                System.out.println(i);
+                
                 jsonMessages.add(new JsonMessage(meOrYou, i.getMessage(), i.getTimestamp()));
             }
         }
@@ -264,6 +255,7 @@ public class ApiController {
         tempMessage.setMessage(message.getMessage());
         tempMessage.setConversationId(conv.getId());
         tempMessage.setUserId(tempCompany.getUser().getId());
+        message.setSender(tempCompany.getUser().getId()+"");
         messagesService.save(tempMessage,message);
         return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }

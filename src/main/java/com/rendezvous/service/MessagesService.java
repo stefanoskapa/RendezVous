@@ -24,8 +24,7 @@ public class MessagesService {
     }
     
     public void save(Messages message, JsonMessage msg) {
-        messagesRepository.save(message);
         conversationService.notifyUsers(message.getConversationId(),msg);
-       
+        messagesRepository.save(message);     
     }
 }

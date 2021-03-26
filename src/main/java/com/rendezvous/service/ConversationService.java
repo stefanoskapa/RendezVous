@@ -26,10 +26,8 @@ public class ConversationService {
     public void notifyUsers (int conversationId, JsonMessage message) {
         List<String> users = new LinkedList<>();
         Conversation conv = conversationRepository.findById(conversationId).get();
-        String clientEmail = conv.getClient().getUser().getEmail();
-        String companyEmail = conv.getCompany().getUser().getEmail();
-        users.add(clientEmail);
-        users.add(companyEmail);   
+        users.add(conv.getClient().getUser().getEmail());
+        users.add(conv.getCompany().getUser().getEmail());   
         dispatcher.notifyUsers(users, message);        
     }
     

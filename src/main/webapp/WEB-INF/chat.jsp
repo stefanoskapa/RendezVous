@@ -8,11 +8,13 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="http://localhost:8080/rendezvous/chat/styles.css">
-
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+        
     </head>
     <body>
         <input type="hidden" id="userrole" value="${role}"/>
-        <input type="hidden" id="userid" value="${id}"/>
+        <input type="hidden" id="partnerId" value="${id}"/>
         <input type="hidden" id="me" value="${me}"/>
         <input type="hidden" id="you" value="${you}"/>
         <input type="hidden" id="myuid" value="${myuid}"/>
@@ -31,10 +33,6 @@
                 </div>                
             </div>
         </div>
-
-
-        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <script src="http://localhost:8080/rendezvous/chat/chat.js"></script>
     </body>
 </html>

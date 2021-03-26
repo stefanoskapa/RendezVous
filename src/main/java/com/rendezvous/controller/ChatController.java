@@ -13,6 +13,7 @@ import com.rendezvous.repository.UserRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import com.rendezvous.service.NotificationDispatcher;
+import com.rendezvous.service.UserService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -45,12 +46,9 @@ public class ChatController {
         
     }
 
-    @MessageMapping("/stop")
-    public void stop(StompHeaderAccessor stompHeaderAccessor) {
-        dispatcher.remove(stompHeaderAccessor.getSessionId());
-    }
+   
     
-    @GetMapping("/chatnow/{partnerId}")
+    @GetMapping("/chatnow/{partnerId}") //redirect client or company to the right controller
     public String goToChatPage(@PathVariable int partnerId, Principal principal, Model model) {
 
         if (principal != null) {
@@ -61,7 +59,6 @@ public class ChatController {
                return "redirect:/chatnow/comp/" + partnerId;
             }
         }
-
         return "login";
     }
     
@@ -74,6 +71,8 @@ public class ChatController {
         model.addAttribute("role", "client");
         model.addAttribute("id", company_id);
         model.addAttribute("myuid",client.getUser().getId());
+        model.addAttribute("hisuid",company.getUser().getId());
+        
         return "chat";
     }
 
@@ -86,6 +85,7 @@ public class ChatController {
         model.addAttribute("role", "company");
         model.addAttribute("id", client_id);
         model.addAttribute("myuid",company.getUser().getId());
+        model.addAttribute("hisuid",client.getUser().getId());
         return "chat";
     }
 
