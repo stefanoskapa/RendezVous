@@ -1,12 +1,12 @@
 var me = {};
 var you = {};
 
-me.avatar="https://eu.ui-avatars.com/api/?name=" + $('#me').val()+"&background=90EE90";
-you.avatar="https://eu.ui-avatars.com/api/?name=" + $('#you').val() +"&background=B0C4DE";
+me.avatar = "https://eu.ui-avatars.com/api/?name=" + $('#me').val() + "&background=90EE90";
+you.avatar = "https://eu.ui-avatars.com/api/?name=" + $('#you').val() + "&background=B0C4DE";
 
 var role = $('#userrole').val();
 var chatPartnerId = $('#userid').val();
-
+var myUserId = $('#myuid').val();
 
 function insertChat(who, text, time) {
     if (time === undefined) {
@@ -80,11 +80,9 @@ $(".mytext").on("keydown", function (e) {
         var text = $(this).val();
         if (text !== "") {
             var dateNow = new Date();
-            insertChat("me", text, dateNow.toISOString());
             var msgObj = {};
             msgObj.message = text;
             msgObj.timeStamp = dateNow.toISOString();
-            alert(msgObj.timeStamp);
             sendMessage(msgObj);
             $(this).val('');
         }
@@ -99,4 +97,30 @@ $('body > div > div > div:nth-child(2) > span').click(function () {
 resetChat();
 loadMessages();
 
+
+jQuery(function ($) {
+    let stompClient;
+
+    if (!stompClient) {
+        const socket = new SockJS("http://localhost:8080/rendezvous/ws");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function () {
+            stompClient.subscribe('/user/topic/thing', function (response) {
+                console.log('Got ' + response);
+                var messageBody = JSON.parse(response.body);
+                if (messageBody.sender == myUserId) {
+                    messageBody.sender = "me";
+                } else {
+                    messageBody.sender = "you";
+                }
+                insertChat(messageBody.sender, messageBody.message, messageBody.timeStamp);
+
+            });
+            console.info('connected!')
+            if (stompClient) {
+                stompClient.send("/app/start", {});
+            }
+        });
+    }
+});
 

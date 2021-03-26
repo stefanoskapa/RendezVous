@@ -55,6 +55,7 @@ public class ChatController {
         model.addAttribute("you",company.getFname() + "-" + company.getLname());
         model.addAttribute("role", "client");
         model.addAttribute("id", company_id);
+        model.addAttribute("myuid",client.getUser().getId());
         return "chat";
     }
 
@@ -66,6 +67,8 @@ public class ChatController {
         model.addAttribute("me",company.getFname() + "-" + company.getLname());
         model.addAttribute("role", "company");
         model.addAttribute("id", client_id);
+        model.addAttribute("myuid",company.getUser().getId());
+
         return "chat";
     }
 

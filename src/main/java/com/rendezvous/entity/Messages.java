@@ -1,6 +1,6 @@
-
 package com.rendezvous.entity;
 
+import com.rendezvous.service.ConversationService;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,13 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name = "messages")
@@ -31,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Messages.findByUserId", query = "SELECT m FROM Messages m WHERE m.userId = :userId")})
 public class Messages implements Serializable {
 
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +42,7 @@ public class Messages implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
-   // @Temporal(TemporalType.TIMESTAMP)
+    // @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime timestamp;
     @Basic(optional = false)
     @NotNull
@@ -56,6 +58,7 @@ public class Messages implements Serializable {
     @NotNull
     @Column(name = "conversation_id")
     private int conversationId;
+
 
     public Messages() {
     }
@@ -111,7 +114,6 @@ public class Messages implements Serializable {
         this.conversationId = conversationId;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
