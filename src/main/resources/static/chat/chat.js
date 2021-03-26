@@ -8,7 +8,7 @@ var myUserId = $('#myuid').val();
 var hisUserId = $('#hisuid').val();
 
 function insertChat(who, text, time) {
-    
+
     var control = "";
     var date = new Date(time);
     var timeStamp = convertDate(date);
@@ -60,7 +60,7 @@ function loadMessages() {
         if (this.readyState === 4 && this.status === 200) {
             let prevMsgs = JSON.parse(this.responseText);
             for (let i = 0; i < prevMsgs.length; i++) {
-                insertChat(prevMsgs[i].sender, prevMsgs[i].message, prevMsgs[i].timeStamp);
+                insertChat(prevMsgs[i].sender === myUserId ? "me" : "you", prevMsgs[i].message, prevMsgs[i].timeStamp);
             }
         }
     };
@@ -73,7 +73,6 @@ $(".mytext").on("keydown", function (e) {
         var text = $(this).val();
         if (text !== "") {
             var dateNow = new Date();
-            alert(dateNow);
             var msgObj = {};
             msgObj.message = text;
             msgObj.timeStamp = dateNow.toISOString();
@@ -99,9 +98,8 @@ jQuery(function ($) {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it
                 var messageBody = JSON.parse(response.body);
                 if (messageBody.sender === myUserId || messageBody.sender === hisUserId) { //make sure it is the right conversation
-                messageBody.sender = (messageBody.sender === myUserId) ? "me" : "you";
-                insertChat(messageBody.sender, messageBody.message, messageBody.timeStamp);
-            }
+                    insertChat(messageBody.sender === myUserId ? "me" : "you", messageBody.message, messageBody.timeStamp);
+                }
             });
             stompClient.send("/app/start", {});
         });

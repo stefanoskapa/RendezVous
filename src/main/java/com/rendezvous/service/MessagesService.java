@@ -23,8 +23,8 @@ public class MessagesService {
 
     }
     
-    public void save(Messages message, JsonMessage msg) {
-        conversationService.notifyUsers(message.getConversationId(),msg);
+    public void save(Messages message, JsonMessage jsonMessage) {
+        conversationService.notifyUsers(message.getConversationId(),jsonMessage);
         messagesRepository.save(message);     
     }
 }

@@ -18,12 +18,12 @@ import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.JsonMessage;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.ConversationRepository;
-import com.rendezvous.repository.MessagesRepository;
 import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import com.rendezvous.service.MessagesService;
+import com.rendezvous.util.Conversion;
 import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,8 +53,6 @@ public class ApiController {
     private AppointmentService appointmentService;
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private MessagesRepository messagesRepository;
     @Autowired
     private MessagesService messagesService;
     @Autowired
@@ -177,46 +175,35 @@ public class ApiController {
 
         Client tempClient = clientService.findClientByEmail(principal.getName());
         Company tempCompany = companyService.findCompanyById(company_id);
-
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
 
         if (tempConv == null) {
-            System.out.println("Conversation has not started yet");
             tempConv = new Conversation();
             tempConv.setClient(tempClient);
             tempConv.setCompany(tempCompany);
             conversationRepository.save(tempConv); //create conversation
         } else {
-            System.out.println("There is an ongoing conversation");
             List<Messages> messageList = messagesService.findByConversationId(tempConv.getId()).get();
-
             for (Messages i : messageList) {
-                String meOrYou = "you";
-                if (i.getUserId() == tempClient.getUser().getId()) {
-                    meOrYou = "me";
-                }
-                
-                jsonMessages.add(new JsonMessage(meOrYou, i.getMessage(), i.getTimestamp()));
+                jsonMessages.add(new JsonMessage(i.getUserId()+"", i.getMessage(), i.getTimestamp()));
             }
         }
         return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
 
     @PostMapping("/client/history/{company_id}")
-    public ResponseEntity<List<JsonMessage>> addClientMessageToHistory(@PathVariable int company_id, @RequestBody JsonMessage message, Principal principal) {
-        List<JsonMessage> jsonMessages = new LinkedList<>();
-        System.out.println(message);
+    public ResponseEntity addClientMessageToHistory(@PathVariable int company_id, @RequestBody JsonMessage jsonMessage, Principal principal) {        
         Client tempClient = clientService.findClientByEmail(principal.getName());
         Conversation conv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
         Messages tempMessage = new Messages();
-        tempMessage.setTimestamp(message.getTimeStamp());
-        tempMessage.setMessage(message.getMessage());
+        jsonMessage.setTimeStamp(Conversion.adjustTime(jsonMessage.getTimeStamp()));
+        tempMessage.setTimestamp(jsonMessage.getTimeStamp());
+        tempMessage.setMessage(jsonMessage.getMessage());
         tempMessage.setConversationId(conv.getId());
         tempMessage.setUserId(tempClient.getUser().getId());
-        message.setSender(tempClient.getUser().getId()+"");
-        messagesService.save(tempMessage, message);
-
-        return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
+        jsonMessage.setSender(tempClient.getUser().getId()+"");
+        messagesService.save(tempMessage, jsonMessage);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/company/history/{client_id}")
@@ -234,29 +221,24 @@ public class ApiController {
         } else {
             List<Messages> messageList = messagesService.findByConversationId(tempConv.getId()).get();
             for (Messages i : messageList) {
-                String meOrYou = "you";
-                if (i.getUserId() == tempComp.getUser().getId()) {
-                    meOrYou = "me";
-                }
-                System.out.println(i);
-                jsonMessages.add(new JsonMessage(meOrYou, i.getMessage(), i.getTimestamp()));
+                jsonMessages.add(new JsonMessage(i.getUserId()+"", i.getMessage(), i.getTimestamp()));
             }
         }
         return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
 
     @PostMapping("/company/history/{client_id}")
-    public ResponseEntity<List<JsonMessage>> addCompanyMessageToHistory(@PathVariable int client_id, @RequestBody JsonMessage message, Principal principal) {
-        List<JsonMessage> jsonMessages = new LinkedList<>();
+    public ResponseEntity addCompanyMessageToHistory(@PathVariable int client_id, @RequestBody JsonMessage jsonMessage, Principal principal) {
         Company tempCompany = companyService.findCompanyByEmail(principal.getName());
         Conversation conv = conversationRepository.findByClientIdAndCompanyId(client_id, tempCompany.getId());
         Messages tempMessage = new Messages();
-        tempMessage.setTimestamp(message.getTimeStamp());
-        tempMessage.setMessage(message.getMessage());
+        jsonMessage.setTimeStamp(Conversion.adjustTime(jsonMessage.getTimeStamp()));
+        tempMessage.setTimestamp(jsonMessage.getTimeStamp());
+        tempMessage.setMessage(jsonMessage.getMessage());
         tempMessage.setConversationId(conv.getId());
         tempMessage.setUserId(tempCompany.getUser().getId());
-        message.setSender(tempCompany.getUser().getId()+"");
-        messagesService.save(tempMessage,message);
-        return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
+        jsonMessage.setSender(tempCompany.getUser().getId()+"");
+        messagesService.save(tempMessage,jsonMessage);
+        return new ResponseEntity( HttpStatus.OK);
     }
 }
