@@ -105,7 +105,7 @@ jQuery(function ($) {
         const socket = new SockJS("http://localhost:8080/rendezvous/ws");
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function () {
-            stompClient.subscribe('/user/topic/thing', function (response) {
+            stompClient.subscribe('/user/topic/messages', function (response) {
                 console.log('Got ' + response);
                 var messageBody = JSON.parse(response.body);
                 if (messageBody.sender == myUserId) {
@@ -114,7 +114,6 @@ jQuery(function ($) {
                     messageBody.sender = "you";
                 }
                 insertChat(messageBody.sender, messageBody.message, messageBody.timeStamp);
-
             });
             console.info('connected!')
             if (stompClient) {

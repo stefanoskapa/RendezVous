@@ -16,7 +16,7 @@
         <input type="hidden" id="me" value="${me}"/>
         <input type="hidden" id="you" value="${you}"/>
         <input type="hidden" id="myuid" value="${myuid}"/>
-       
+
         <div class="col-sm-3 col-sm-offset-4 frame">
             <ul></ul>
             <div>
@@ -34,12 +34,7 @@
 
 
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-       <!-- <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.js"></script> -->
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-
-
-
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <script src="http://localhost:8080/rendezvous/chat/chat.js"></script>
     </body>
 </html>

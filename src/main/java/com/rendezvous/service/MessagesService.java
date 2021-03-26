@@ -1,9 +1,8 @@
 package com.rendezvous.service;
 
 import com.rendezvous.entity.Messages;
-import com.rendezvous.model.Message;
+import com.rendezvous.model.JsonMessage;
 import com.rendezvous.repository.MessagesRepository;
-
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +23,8 @@ public class MessagesService {
 
     }
     
-    public void save(Messages message, Message msg) {
+    public void save(Messages message, JsonMessage msg) {
         messagesRepository.save(message);
-        System.out.println("WE GOT A NEW MESSAGE! ");
-        System.out.println("In the conversation "+ message.getConversationId());
-        System.out.println("Check if client or company are connected and notify them");
-       // if (userService.findById(message.getUserId())
         conversationService.notifyUsers(message.getConversationId(),msg);
        
     }

@@ -12,8 +12,11 @@ import com.rendezvous.entity.User;
 import com.rendezvous.repository.UserRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
+import com.rendezvous.service.NotificationDispatcher;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +31,30 @@ public class ChatController {
     private ClientService clientService;
     @Autowired 
     private CompanyService companyService;
+    
+    private final NotificationDispatcher dispatcher;
 
+    @Autowired
+    public ChatController(NotificationDispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
+    @MessageMapping("/start")
+    public void start(StompHeaderAccessor stompHeaderAccessor) {
+        dispatcher.add(stompHeaderAccessor.getUser().getName(),stompHeaderAccessor.getSessionId());
+        
+    }
+
+    @MessageMapping("/stop")
+    public void stop(StompHeaderAccessor stompHeaderAccessor) {
+        dispatcher.remove(stompHeaderAccessor.getSessionId());
+    }
+    
     @GetMapping("/chatnow/{partnerId}")
     public String goToChatPage(@PathVariable int partnerId, Principal principal, Model model) {
 
         if (principal != null) {
-
             User tempUser = userRepository.findByEmail(principal.getName()).get();
-            
-
             if (tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY")) {
                return "redirect:/chatnow/client/" + partnerId;
             } else {
@@ -68,7 +86,6 @@ public class ChatController {
         model.addAttribute("role", "company");
         model.addAttribute("id", client_id);
         model.addAttribute("myuid",company.getUser().getId());
-
         return "chat";
     }
 
