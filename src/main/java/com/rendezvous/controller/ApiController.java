@@ -8,7 +8,6 @@ package com.rendezvous.controller;
 import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
-import com.rendezvous.entity.CompCategory;
 import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Conversation;
 import com.rendezvous.entity.Messages;
@@ -16,11 +15,8 @@ import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
-import com.rendezvous.model.CompanyDate;
-import com.rendezvous.model.Message;
+import com.rendezvous.model.JsonMessage;
 import com.rendezvous.model.SearchResult;
-import com.rendezvous.repository.AppointmentRepository;
-import com.rendezvous.repository.CategoryRepository;
 import com.rendezvous.repository.ConversationRepository;
 import com.rendezvous.repository.MessagesRepository;
 import com.rendezvous.service.AppointmentService;
@@ -29,12 +25,9 @@ import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import com.rendezvous.service.MessagesService;
 import java.security.Principal;
-import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -188,8 +181,8 @@ public class ApiController {
     }
 
     @GetMapping("/client/history/{company_id}")
-    public ResponseEntity<List<Message>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal) throws CompanyIdNotFound {
-        List<Message> jsonMessages = new LinkedList<>();
+    public ResponseEntity<List<JsonMessage>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal) throws CompanyIdNotFound {
+        List<JsonMessage> jsonMessages = new LinkedList<>();
 
         Client tempClient = clientService.findClientByEmail(principal.getName());
         Company tempCompany = companyService.findCompanyById(company_id);
@@ -212,15 +205,15 @@ public class ApiController {
                     meOrYou = "me";
                 }
                 System.out.println(i);
-                jsonMessages.add(new Message(meOrYou, i.getMessage(), i.getTimestamp()));
+                jsonMessages.add(new JsonMessage(meOrYou, i.getMessage(), i.getTimestamp()));
             }
         }
         return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
 
     @PostMapping("/client/history/{company_id}")
-    public ResponseEntity<List<Message>> addClientMessageToHistory(@PathVariable int company_id, @RequestBody Message message, Principal principal) {
-        List<Message> jsonMessages = new LinkedList<>();
+    public ResponseEntity<List<JsonMessage>> addClientMessageToHistory(@PathVariable int company_id, @RequestBody JsonMessage message, Principal principal) {
+        List<JsonMessage> jsonMessages = new LinkedList<>();
         System.out.println(message);
         Client tempClient = clientService.findClientByEmail(principal.getName());
         Conversation conv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
@@ -236,8 +229,8 @@ public class ApiController {
     }
 
     @GetMapping("/company/history/{client_id}")
-    public ResponseEntity<List<Message>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
-        List<Message> jsonMessages = new LinkedList<>();
+    public ResponseEntity<List<JsonMessage>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
+        List<JsonMessage> jsonMessages = new LinkedList<>();
         Company tempComp = companyService.findCompanyByEmail(principal.getName());
         Client tempClient = clientService.findClientById(client_id);
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(client_id, tempComp.getId());
@@ -255,15 +248,15 @@ public class ApiController {
                     meOrYou = "me";
                 }
                 System.out.println(i);
-                jsonMessages.add(new Message(meOrYou, i.getMessage(), i.getTimestamp()));
+                jsonMessages.add(new JsonMessage(meOrYou, i.getMessage(), i.getTimestamp()));
             }
         }
         return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
 
     @PostMapping("/company/history/{client_id}")
-    public ResponseEntity<List<Message>> addCompanyMessageToHistory(@PathVariable int client_id, @RequestBody Message message, Principal principal) {
-        List<Message> jsonMessages = new LinkedList<>();
+    public ResponseEntity<List<JsonMessage>> addCompanyMessageToHistory(@PathVariable int client_id, @RequestBody JsonMessage message, Principal principal) {
+        List<JsonMessage> jsonMessages = new LinkedList<>();
         Company tempCompany = companyService.findCompanyByEmail(principal.getName());
         Conversation conv = conversationRepository.findByClientIdAndCompanyId(client_id, tempCompany.getId());
         Messages tempMessage = new Messages();

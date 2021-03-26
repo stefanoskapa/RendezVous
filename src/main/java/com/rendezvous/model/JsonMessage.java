@@ -4,13 +4,13 @@ package com.rendezvous.model;
 import java.time.LocalDateTime;
 
 
-public class Message {
+public class JsonMessage {
 
     String sender;
     String message;
     LocalDateTime timeStamp;
 
-    public Message(String sender, String Message, LocalDateTime timeStamp) {
+    public JsonMessage(String sender, String Message, LocalDateTime timeStamp) {
         this.sender = sender;
         this.message = Message;
         this.timeStamp = timeStamp;
