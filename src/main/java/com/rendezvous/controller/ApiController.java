@@ -27,6 +27,7 @@ import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
+import com.rendezvous.service.MessagesService;
 import java.security.Principal;
 import java.time.ZoneOffset;
 import java.util.LinkedList;
@@ -61,6 +62,8 @@ public class ApiController {
     private CategoryService categoryService;
     @Autowired
     private MessagesRepository messagesRepository;
+    @Autowired
+    private MessagesService messagesService;
     @Autowired
     private ConversationRepository conversationRepository;
 
@@ -201,7 +204,7 @@ public class ApiController {
             conversationRepository.save(tempConv); //create conversation
         } else {
             System.out.println("There is an ongoing conversation");
-            List<Messages> messageList = messagesRepository.findByConversationId(tempConv.getId()).get();
+            List<Messages> messageList = messagesService.findByConversationId(tempConv.getId()).get();
 
             for (Messages i : messageList) {
                 String meOrYou = "you";
@@ -226,7 +229,8 @@ public class ApiController {
         tempMessage.setMessage(message.getMessage());
         tempMessage.setConversationId(conv.getId());
         tempMessage.setUserId(tempClient.getUser().getId());
-        messagesRepository.save(tempMessage);
+        message.setSender(tempClient.getUser().getId()+"");
+        messagesService.save(tempMessage, message);
 
         return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
@@ -244,7 +248,7 @@ public class ApiController {
             tempConv.setCompany(tempComp);
             conversationRepository.save(tempConv); //create conversation
         } else {
-            List<Messages> messageList = messagesRepository.findByConversationId(tempConv.getId()).get();
+            List<Messages> messageList = messagesService.findByConversationId(tempConv.getId()).get();
             for (Messages i : messageList) {
                 String meOrYou = "you";
                 if (i.getUserId() == tempComp.getUser().getId()) {
@@ -267,7 +271,7 @@ public class ApiController {
         tempMessage.setMessage(message.getMessage());
         tempMessage.setConversationId(conv.getId());
         tempMessage.setUserId(tempCompany.getUser().getId());
-        messagesRepository.save(tempMessage);
+        messagesService.save(tempMessage,message);
         return new ResponseEntity<>(jsonMessages, HttpStatus.OK);
     }
 }
