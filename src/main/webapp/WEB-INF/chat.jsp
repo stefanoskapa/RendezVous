@@ -34,6 +34,6 @@
                 </div>                
             </div>
         </div>
-        <script src="http://localhost:8080/rendezvous/chat/chat.js"></script>
+        <script src="${pageContext.request.contextPath}/chat/chat.js"></script>
     </body>
 </html>

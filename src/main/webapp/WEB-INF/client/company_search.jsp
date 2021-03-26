@@ -38,6 +38,8 @@
         <p id="matches"></p>
         <table id="resultTable"></table>
         <script>
+            var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
             function getCategories() {
 
                 var xhttp = new XMLHttpRequest();
@@ -54,7 +56,7 @@
                         }
                     }
                 };
-                xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/categories");
+                xhttp.open("GET", full+"/rendezvous/api/v1/client/categories");
                 xhttp.send();
             }
 
@@ -78,7 +80,7 @@
                     if (this.readyState == 4 && this.status == 200) {
                         $('*').css("cursor", "auto");
                         let searchResults = JSON.parse(this.responseText);
-                        
+
                         searchResults.sort(compare); //sorting based on display name
 
                         document.getElementById("matches").innerHTML = searchResults.length + " matches found";
@@ -100,12 +102,12 @@
                             cell1.innerHTML = searchResults[i].addrStr + " " + searchResults[i].addrNo;
                             cell2.innerHTML = searchResults[i].addrCity;
                             cell3.innerHTML = searchResults[i].tel;
-                            cell4.innerHTML = "<a href='http://localhost:8080/rendezvous/client/date-select?companyId=" + searchResults[i].id + "'>CHECK</a>";
+                            cell4.innerHTML = "<a href='"+full+"/rendezvous/client/date-select?companyId=" + searchResults[i].id + "'>CHECK</a>";
 
                         }
                     }
                 };
-                xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/comp-search?searchTerm=" + searchTerm + "&category=" + document.getElementById("category").value, true);
+                xhttp.open("GET", full+"/rendezvous/api/v1/client/comp-search?searchTerm=" + searchTerm + "&category=" + document.getElementById("category").value, true);
                 xhttp.send();
             }
 
