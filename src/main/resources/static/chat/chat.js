@@ -6,6 +6,7 @@ var role = $('#userrole').val();
 var chatPartnerId = $('#partnerId').val(); //companyID or clientID, is used in url
 var myUserId = $('#myuid').val();
 var hisUserId = $('#hisuid').val();
+var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
 function insertChat(who, text, time) {
 
@@ -45,7 +46,7 @@ function convertDate(date) {
 
 function sendMessage(message) {
     $.ajax({
-        url: 'http://localhost:8080/rendezvous/api/v1/' + role + '/history/' + chatPartnerId,
+        url: full+'/rendezvous/api/v1/' + role + '/history/' + chatPartnerId,
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -54,7 +55,7 @@ function sendMessage(message) {
 
 }
 function loadMessages() {
-
+    
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -64,7 +65,7 @@ function loadMessages() {
             }
         }
     };
-    xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/" + role + "/history/" + chatPartnerId);
+    xhttp.open("GET", full + "/rendezvous/api/v1/" + role + "/history/" + chatPartnerId);
     xhttp.send();
 }
 
@@ -92,7 +93,7 @@ loadMessages();
 jQuery(function ($) {
     let stompClient;
     if (!stompClient) {
-        const socket = new SockJS("http://localhost:8080/rendezvous/ws");
+        const socket = new SockJS(full + "/rendezvous/ws");
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function () {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it

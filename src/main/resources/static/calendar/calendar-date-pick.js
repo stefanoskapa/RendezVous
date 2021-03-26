@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     getCalendarDataAndDrawCalendar();
 
     function getCalendarDataAndDrawCalendar() {
+        var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
         var calendarData;
         var comp_id = $("#comp-id").val();
         var xhttp = new XMLHttpRequest();
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
         };
-        xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/company/" + comp_id + "/availability", true);
+        xhttp.open("GET", full + "/rendezvous/api/v1/client/company/" + comp_id + "/availability", true);
         xhttp.send();
     }
 
@@ -73,8 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $("#submitDateToServer").click(function () {
         $('html, body').css("cursor", "wait");
+        var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
-        $.ajax("http://localhost:8080/rendezvous/api/v1/client/request-app",
+        $.ajax(full + "/rendezvous/api/v1/client/request-app",
                 {type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(

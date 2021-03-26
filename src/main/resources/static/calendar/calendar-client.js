@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarData;
-    
+    var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
     document.getElementById('calendar').innerHTML = "Loading Calendar Data";
 
     var xhttp = new XMLHttpRequest();
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             drawCalendar(calendarData);
         }
     };
-    xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/dates", true);
+    xhttp.open("GET", full+"/rendezvous/api/v1/client/dates", true);
     xhttp.send();
 
     function drawCalendar(calendarData) {
