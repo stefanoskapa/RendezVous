@@ -8,10 +8,13 @@ import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
+import com.rendezvous.entity.Conversation;
 import com.rendezvous.entity.User;
+import com.rendezvous.repository.ConversationRepository;
 import com.rendezvous.repository.UserRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
+import com.rendezvous.service.ConversationService;
 import com.rendezvous.service.NotificationDispatcher;
 import com.rendezvous.service.UserService;
 import java.security.Principal;
@@ -32,6 +35,8 @@ public class ChatController {
     private ClientService clientService;
     @Autowired 
     private CompanyService companyService;
+    @Autowired
+    private ConversationRepository conversationRepository;
     
     private final NotificationDispatcher dispatcher;
 
@@ -66,12 +71,14 @@ public class ChatController {
     public String chatWithCompany(@PathVariable int company_id, Model model,Principal principal) throws CompanyIdNotFound {
         Client client = clientService.findClientByEmail(principal.getName());
         Company company = companyService.findCompanyById(company_id);
+        Conversation conv = conversationRepository.findByClientIdAndCompanyId(client.getId(), company_id);
         model.addAttribute("me",client.getFname() + "-" + client.getLname());
         model.addAttribute("you",company.getFname() + "-" + company.getLname());
         model.addAttribute("role", "client");
         model.addAttribute("id", company_id);
         model.addAttribute("myuid",client.getUser().getId());
         model.addAttribute("hisuid",company.getUser().getId());
+        model.addAttribute("convId",conv.getId());
         
         return "chat";
     }
@@ -80,12 +87,15 @@ public class ChatController {
     public String chatWithClient(@PathVariable int client_id, Model model, Principal principal) throws ClientIdNotFound {
         Company company = companyService.findCompanyByEmail(principal.getName());
         Client client = clientService.findClientById(client_id);
+        Conversation conv = conversationRepository.findByClientIdAndCompanyId(client_id, company.getId());
+
         model.addAttribute("you",client.getFname() + "-" + client.getLname());
         model.addAttribute("me",company.getFname() + "-" + company.getLname());
         model.addAttribute("role", "company");
         model.addAttribute("id", client_id);
         model.addAttribute("myuid",company.getUser().getId());
         model.addAttribute("hisuid",client.getUser().getId());
+        model.addAttribute("convId",conv.getId());
         return "chat";
     }
 

@@ -17,7 +17,6 @@ public class MessagesService {
     private MessagesRepository messagesRepository;
     @Autowired 
     private ConversationService conversationService;
-   
     private final NotificationDispatcher dispatcher;
 
     @Autowired
@@ -30,12 +29,11 @@ public class MessagesService {
 
     }
     
-    public void save(Messages message, JsonMessage jsonMessage, Conversation conv) {
+    public void save(Messages message, Conversation conv) {
         List<String> users = new LinkedList<>();
-       // Conversation conv = conversationService.findById(message.getConversationId());
         users.add(conv.getClient().getUser().getEmail());
         users.add(conv.getCompany().getUser().getEmail());   
-        dispatcher.notifyUsers(users, jsonMessage);        
+        dispatcher.notifyUsers(users, message);        
         messagesRepository.save(message);     
     }
 }
