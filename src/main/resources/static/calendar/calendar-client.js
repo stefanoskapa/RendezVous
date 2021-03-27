@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarData;
+    var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+    document.getElementById('calendar').innerHTML = "Loading Calendar Data";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -8,11 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
             drawCalendar(calendarData);
         }
     };
-    xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/dates", true);
+    xhttp.open("GET", full+"/rendezvous/api/v1/client/dates", true);
     xhttp.send();
 
     function drawCalendar(calendarData) {
         var calendarEl = document.getElementById('calendar');
+        calendarEl.innerHTML = "";
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
             headerToolbar: {
@@ -28,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             expandRows: true,
             contentHeight: 1000,
             displayEventTime: false,
+            timeZone: 'Europe/Athens',
             eventClick: function (info) {
                 $(".modal-title").text(info.event.title);
                 $(".modal-body p").html(

@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
 
@@ -42,6 +43,7 @@
                                     <form:errors path="fname"/>
                                 </div>
 
+
                                 <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
                                     <form:label path="tel"><i class="fas fa-phone" style="font-size: 24px;"></i>&nbsp;Telephone</form:label>
                                     <form:input path="tel" placeholder="Telephone" class="form-control" type="phone" name="phone" style="width: 120px;"/>
@@ -68,6 +70,7 @@
                         <div class="form-row">
                             <div class="col-sm-12 col-md-6">
                                 <div class="form-group" style="color: rgb(255,255,255);font-size: 18px;">
+
 
                                     <form:label path="addrNo">&nbsp;<i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;Street Number</form:label>
                                     <form:input path="addrNo" placeholder="Number" class="form-control" name="streetnumber"  style="width: 55px;"/>

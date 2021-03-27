@@ -36,11 +36,10 @@ public class Conversation implements Serializable {
     @Column(name = "id")
     private Integer id;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversation")
-    private List<CompMessages> compMessagesList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversation")
-    private List<ClientMessages> clientMessagesList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversationId")
+    private List<Messages> messagesList;
     
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -65,21 +64,15 @@ public class Conversation implements Serializable {
         this.id = id;
     }
 
-    public List<CompMessages> getCompMessagesList() {
-        return compMessagesList;
+    public List<Messages> getMessagesList() {
+        return messagesList;
     }
 
-    public void setCompMessagesList(List<CompMessages> compMessagesList) {
-        this.compMessagesList = compMessagesList;
+    public void setMessagesList(List<Messages> compMessagesList) {
+        this.messagesList = compMessagesList;
     }
 
-    public List<ClientMessages> getClientMessagesList() {
-        return clientMessagesList;
-    }
-
-    public void setClientMessagesList(List<ClientMessages> clientMessagesList) {
-        this.clientMessagesList = clientMessagesList;
-    }
+    
 
     public Client getClient() {
         return client;

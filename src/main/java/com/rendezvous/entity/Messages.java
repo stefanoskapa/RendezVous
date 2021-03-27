@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.entity;
 
+import com.rendezvous.service.ConversationService;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,64 +10,68 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
-@Table(name = "client_messages")
+@Table(name = "messages")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ClientMessages.findAll", query = "SELECT c FROM ClientMessages c")})
-public class ClientMessages implements Serializable {
+    @NamedQuery(name = "Messages.findAll", query = "SELECT m FROM Messages m")
+    , @NamedQuery(name = "Messages.findById", query = "SELECT m FROM Messages m WHERE m.id = :id")
+    , @NamedQuery(name = "Messages.findByTimestamp", query = "SELECT m FROM Messages m WHERE m.timestamp = :timestamp")
+    , @NamedQuery(name = "Messages.findByUserId", query = "SELECT m FROM Messages m WHERE m.userId = :userId")})
+public class Messages implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
-    
+    // @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime timestamp;
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "message")
     private String message;
-    
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Client client;
-    
-    @JoinColumn(name = "conversation_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Conversation conversation;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "user_id")
+    private int userId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "conversation_id")
+    private int conversationId;
 
-    public ClientMessages() {
+
+    public Messages() {
     }
 
-    public ClientMessages(Integer id) {
+    public Messages(Integer id) {
         this.id = id;
     }
 
-    public ClientMessages(Integer id, Date timestamp, String message) {
+    public Messages(Integer id, LocalDateTime timestamp, String message, int userId) {
         this.id = id;
         this.timestamp = timestamp;
         this.message = message;
+        this.userId = userId;
     }
 
     public Integer getId() {
@@ -81,11 +82,11 @@ public class ClientMessages implements Serializable {
         this.id = id;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -97,20 +98,20 @@ public class ClientMessages implements Serializable {
         this.message = message;
     }
 
-    public Client getClient() {
-        return client;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Conversation getConversation() {
-        return conversation;
+    public int getConversationId() {
+        return conversationId;
     }
 
-    public void setConversation(Conversation conversation) {
-        this.conversation = conversation;
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
     }
 
     @Override
@@ -123,10 +124,10 @@ public class ClientMessages implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ClientMessages)) {
+        if (!(object instanceof Messages)) {
             return false;
         }
-        ClientMessages other = (ClientMessages) object;
+        Messages other = (Messages) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -135,7 +136,7 @@ public class ClientMessages implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rendezvous.entity.ClientMessages[ id=" + id + " ]";
+        return "com.rendezvous.entity.Messages[ id=" + id + " ]";
     }
-    
+
 }

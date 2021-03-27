@@ -1,22 +1,26 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarData;
+    var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+    document.getElementById('calendar').innerHTML = "Loading Calendar Data";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             calendarData = JSON.parse(this.responseText);
-            if (calendarData.businessHours.length==0) {
+            if (calendarData.businessHours.length == 0) {
                 calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
             }
             drawCalendar(calendarData);
             console.log(calendarData.businessHours);
         }
     };
-    xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/company/dates", true);
+    xhttp.open("GET", full + "/rendezvous/api/v1/company/dates", true);
     xhttp.send();
 
     function drawCalendar(calendarData) {
         var calendarEl = document.getElementById('calendar');
+        calendarEl.innerHTML = "";
         var calendar = new FullCalendar.Calendar(calendarEl, {
             // themeSystem: 'bootstrap',
             initialView: 'timeGridWeek',
@@ -32,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             expandRows: true,
             contentHeight: 1000,
             displayEventTime: false,
+            timeZone: 'Europe/Athens',
             eventClick: function (info) {
                 $(".modal-title").text(info.event.title);
                 $(".modal-body p").html(

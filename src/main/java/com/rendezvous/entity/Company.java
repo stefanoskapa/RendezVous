@@ -46,7 +46,7 @@ public class Company implements Serializable {
     private String displayName;
     
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 20)
     @Column(name = "fname")
     private String fname;
@@ -77,8 +77,11 @@ public class Company implements Serializable {
     @Column(name = "addr_city")
     private String addrCity;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    private List<CompMessages> compMessagesList;
+    @Column(name = "premium", columnDefinition = "BOOLEAN")
+    private Boolean premium;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Messages> messagesList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Appointment> appointmentList;
@@ -128,7 +131,63 @@ public class Company implements Serializable {
         this.displayName = displayName;
     }
 
-    public String getFname() {
+    public String getAddrStr() {
+        return addrStr;
+    }
+
+    public void setAddrStr(String addrStr) {
+        this.addrStr = addrStr;
+    }
+
+    public String getAddrNo() {
+        return addrNo;
+    }
+
+    public void setAddrNo(String addrNo) {
+        this.addrNo = addrNo;
+    }
+
+    public String getAddrCity() {
+        return addrCity;
+    }
+
+    public void setAddrCity(String addrCity) {
+        this.addrCity = addrCity;
+    }
+
+    public List<Messages> getMessagesList() {
+        return messagesList;
+    }
+
+    public void setMessagesList(List<Messages> messagesList) {
+        this.messagesList = messagesList;
+    }
+
+    public List<Appointment> getAppointmentList() {
+        return appointmentList;
+    }
+
+    public void setAppointmentList(List<Appointment> appointmentList) {
+        this.appointmentList = appointmentList;
+    }
+
+    public CompCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(CompCategory category) {
+        this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+        public String getFname() {
         return fname;
     }
 
@@ -160,62 +219,14 @@ public class Company implements Serializable {
         this.tel = tel;
     }
 
-    public String getAddrStr() {
-        return addrStr;
+    public Boolean getPremium() {
+        return premium;
     }
 
-    public void setAddrStr(String addrStr) {
-        this.addrStr = addrStr;
+    public void setPremium(Boolean premium) {
+        this.premium = premium;
     }
-
-    public String getAddrNo() {
-        return addrNo;
-    }
-
-    public void setAddrNo(String addrNo) {
-        this.addrNo = addrNo;
-    }
-
-    public String getAddrCity() {
-        return addrCity;
-    }
-
-    public void setAddrCity(String addrCity) {
-        this.addrCity = addrCity;
-    }
-
-    public List<CompMessages> getCompMessagesList() {
-        return compMessagesList;
-    }
-
-    public void setCompMessagesList(List<CompMessages> compMessagesList) {
-        this.compMessagesList = compMessagesList;
-    }
-
-    public List<Appointment> getAppointmentList() {
-        return appointmentList;
-    }
-
-    public void setAppointmentList(List<Appointment> appointmentList) {
-        this.appointmentList = appointmentList;
-    }
-
-    public CompCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(CompCategory category) {
-        this.category = category;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
+    
 //    public List<Availability> getAvailabilityList() {
 //        return availabilityList;
 //    }
@@ -256,5 +267,5 @@ public class Company implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.Company[ id=" + id + " ]";
     }
-    
+   
 }

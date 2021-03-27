@@ -36,7 +36,7 @@
     </head>
     <body>
         <h1>Pick a date for your appointment</h1>
-
+        <h2>${comp_name}</h2>
         <div class="alert alert-dismissible fade show" role="alert" id="alert">
         </div>
 

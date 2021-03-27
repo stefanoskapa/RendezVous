@@ -9,6 +9,7 @@ import com.rendezvous.customexception.IncorrectWorkingHours;
 import com.rendezvous.entity.Company;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
+import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
 import java.util.Map;
@@ -31,6 +32,8 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private CategoryService categoryService;
 
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
@@ -53,7 +56,8 @@ public class CompanyController {
     }
 
     @GetMapping("/profile")
-    public String showProfile() {
+    public String showProfile(Model model) {
+        model.addAttribute("listCategory", categoryService.getAllCategories());
         return "company/profile_company";
     }
 
@@ -66,7 +70,8 @@ public class CompanyController {
         }
 
         company.setUser(loggedUser.getUser()); //making sure user havent malformed his credentials
-        company.setAfm(loggedUser.getAfm());
+        company.setAfm(loggedUser.getAfm());    //making sure user havent malformed his credentials
+        company.setPremium(loggedUser.getPremium());    //making sure user havent malformed his credentials
         
         companyService.updateCompany(company);
         return "redirect:/company/dashboard";

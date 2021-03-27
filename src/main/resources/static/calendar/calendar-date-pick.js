@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     $("#alert").hide();
-
+    document.getElementById('calendar').innerHTML = "Loading Calendar Data";
     getCalendarDataAndDrawCalendar();
 
     function getCalendarDataAndDrawCalendar() {
+        var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
         var calendarData;
         var comp_id = $("#comp-id").val();
         var xhttp = new XMLHttpRequest();
@@ -14,17 +15,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (calendarData.businessHours.length == 0) {
                     calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
                 }
+                console.log("RecievedfromServer>>>> ");
                 console.log(calendarData);
                 drawCalendar(calendarData);
 
             }
         };
-        xhttp.open("GET", "http://localhost:8080/rendezvous/api/v1/client/company/" + comp_id + "/availability", true);
+        xhttp.open("GET", full + "/rendezvous/api/v1/client/company/" + comp_id + "/availability", true);
         xhttp.send();
     }
 
     function drawCalendar(calendarData) {
         var calendarEl = document.getElementById('calendar');
+        calendarEl.innerHTML = "";
         var calendar = new FullCalendar.Calendar(calendarEl, {
             businessHours: calendarData.businessHours,
 //                slotMinTime: x.slotMinTime,
@@ -60,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
             eventBackgroundColor: 'gray',
             eventBorderColor: 'gray',
             eventTextColor: 'white',
+            timeZone: 'Europe/Athens',
             // eventDisplay: 'block',
             eventContent: function (arg) {
                 return arg.event.title;
@@ -69,7 +73,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     $("#submitDateToServer").click(function () {
-        $.ajax("http://localhost:8080/rendezvous/api/v1/client/request-app",
+        $('html, body').css("cursor", "wait");
+        var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+        $.ajax(full + "/rendezvous/api/v1/client/request-app",
                 {type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(
@@ -79,13 +86,16 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                     ),
                     success: function (data, status, xhr) {   // success callback function
+                        $('html, body').css("cursor", "auto");
                         $('#alert').removeClass("alert-warning");
                         $('#alert').addClass("alert-success");
 
                         $('#alert').show();
                         $('#alert').html("Your appointment has been successfully created")
+                        getCalendarDataAndDrawCalendar();
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                        $('html, body').css("cursor", "auto");
                         $('#alert').removeClass("alert-success");
                         $('#alert').addClass("alert-warning");
 
@@ -93,6 +103,5 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#alert').html("Your appointment request could not be completed. Refresh the page and try again")
                     }
                 });
-        getCalendarDataAndDrawCalendar();
     });
 });

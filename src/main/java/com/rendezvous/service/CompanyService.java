@@ -18,6 +18,7 @@ import com.rendezvous.model.BusinessHoursGroup;
 import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.CompanyDate;
 import com.rendezvous.model.CompanyExtendedProps;
+import com.rendezvous.model.SearchResult;
 import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
 import com.rendezvous.repository.AppointmentRepository;
@@ -27,13 +28,16 @@ import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.RoleRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -77,6 +81,7 @@ public class CompanyService {
         }
         String encodedPassword = bCryptPasswordEncoder.encode(company.getUser().getPassword());
         company.getUser().setPassword(encodedPassword);
+        company.setPremium(false);
         companyRepository.save(company);
     }
 
@@ -232,15 +237,70 @@ public class CompanyService {
         return availabilityCalendarProperties;
     }
 
+
+    public Set<SearchResult> companySearch(String searchTerm, String category) {
+        
+        Set<SearchResult> results = new HashSet<>();
+        List<Company> companies;
+        if (searchTerm.trim().equals("")) {
+            companies = companyRepository.findAll();
+            for (Company comp : companies) {
+                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                    results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                }
+            }
+        } else {
+        String[] searchTerms = searchTerm.split(" ");
+        for (String a : searchTerms) {
+            companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
+            for (Company comp : companies) {
+                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                    results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                }
+            }
+        }
+        }
+        return results;
+    }
+
     public boolean isOccupied(Company company, LocalDateTime appointmentTimestamp) {
         LocalDate reqDate = appointmentTimestamp.toLocalDate();
-        Integer timeslot = appointmentTimestamp.getHour() + 2; // todo: +2 to be removed after datesaving
+        Integer timeslot = appointmentTimestamp.getHour();
 
         return appointmentRepository.existsByCompanyAndDateAndTimeslot(company, reqDate, timeslot);
     }
 
     public boolean isDateInBusinessHours(Company company, LocalDateTime appointmentTimestamp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        //convert getDayOfWeek() output to db availability table 0 based working hours
+        //getDayOfWeek().getValue() output 1-7(starting Mondey), db saves 0-6(starting Sunday)
+        int dayNumber = appointmentTimestamp.getDayOfWeek().getValue() == 7 ? 0 : appointmentTimestamp.getDayOfWeek().getValue();
+
+        
+        Optional<Availability> dayOpt = availabilityRepository.findByCompanyAndWeekDay(company, dayNumber);
+        
+        if (!dayOpt.isPresent()) {
+            //no Availability entry found for the spesific week day, so the company is closed for the entire day
+            return false;
+        } else {
+            Availability day = dayOpt.get();
+            LocalTime openTime = day.getOpenTime();
+            LocalTime closeTime = day.getCloseTime();
+            LocalTime requestedTime = appointmentTimestamp.toLocalTime();
+            
+            if (!openTime.isAfter(requestedTime) && closeTime.isAfter(requestedTime)) {
+                //open in the requested week day, AND inside working hours
+                return true;
+            } else {
+                //open in the requested week day, but outside working hours
+                return false;
+            }
+        }
+
+    }
+    
+    public void setPremiumStatus(Company company) {
+        companyRepository.savePremiumStatus(company.getId());
     }
 
 }
