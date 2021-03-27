@@ -204,7 +204,7 @@ public class ApiController {
         tempMessage.setConversationId(conv.getId());
         tempMessage.setUserId(tempClient.getUser().getId());
         jsonMessage.setSender(tempClient.getUser().getId()+"");
-        messagesService.save(tempMessage, jsonMessage);
+        messagesService.save(tempMessage, jsonMessage,conv);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -240,7 +240,7 @@ public class ApiController {
         tempMessage.setConversationId(conv.getId());
         tempMessage.setUserId(tempCompany.getUser().getId());
         jsonMessage.setSender(tempCompany.getUser().getId()+"");
-        messagesService.save(tempMessage,jsonMessage);
+        messagesService.save(tempMessage,jsonMessage,conv);
         return new ResponseEntity( HttpStatus.OK);
     }
 }
