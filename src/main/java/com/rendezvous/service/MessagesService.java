@@ -2,7 +2,6 @@ package com.rendezvous.service;
 
 import com.rendezvous.entity.Conversation;
 import com.rendezvous.entity.Messages;
-import com.rendezvous.model.JsonMessage;
 import com.rendezvous.repository.MessagesRepository;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,8 +14,7 @@ public class MessagesService {
 
     @Autowired
     private MessagesRepository messagesRepository;
-    @Autowired 
-    private ConversationService conversationService;
+    
     private final NotificationDispatcher dispatcher;
 
     @Autowired

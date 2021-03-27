@@ -1,7 +1,6 @@
 package com.rendezvous.service;
 
 import com.rendezvous.entity.Messages;
-import com.rendezvous.model.JsonMessage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
