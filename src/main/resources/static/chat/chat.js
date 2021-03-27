@@ -3,10 +3,9 @@ var you = {};
 me.avatar = "https://eu.ui-avatars.com/api/?name=" + $('#me').val() + "&background=90EE90";
 you.avatar = "https://eu.ui-avatars.com/api/?name=" + $('#you').val() + "&background=B0C4DE";
 var role = $('#userrole').val();
-var chatPartnerId = $('#partnerId').val(); //companyID or clientID, is used in url
 var myUserId = $('#myuid').val();
-var hisUserId = $('#hisuid').val();
 var convId = $('#convId').val();
+var partnerId = $('#partnerId').val();
 var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
 function insertChat(who, text, time) {
@@ -66,7 +65,7 @@ function loadMessages() {
             }
         }
     };
-    xhttp.open("GET", full + "/rendezvous/api/v1/" + role + "/history/" + chatPartnerId);
+    xhttp.open("GET", full + "/rendezvous/api/v1/" + role + "/history/" + partnerId);
     xhttp.send();
 }
 
@@ -101,7 +100,7 @@ jQuery(function ($) {
         stompClient.connect({}, function () {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it
                 var messageBody = JSON.parse(response.body);
-                if (messageBody.userId == myUserId || messageBody.userId == hisUserId) { //make sure it is the right conversation
+                if (messageBody.conversationId ==  convId) { //make sure it is the right conversation
                     insertChat(messageBody.userId == myUserId ? "me" : "you", messageBody.message, messageBody.timestamp);
                 }
             });
