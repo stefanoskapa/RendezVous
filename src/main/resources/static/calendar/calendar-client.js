@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             drawCalendar(calendarData);
         }
     };
-    xhttp.open("GET", full+"/rendezvous/api/v1/client/dates", true);
+    xhttp.open("GET", full + "/rendezvous/api/v1/client/dates", true);
     xhttp.send();
 
     function drawCalendar(calendarData) {
@@ -34,11 +34,16 @@ document.addEventListener('DOMContentLoaded', function () {
             displayEventTime: false,
             timeZone: 'Europe/Athens',
             eventClick: function (info) {
+                let startTime = new Date(info.event.start);
+                startTime.setHours(startTime.getHours() + (startTime.getTimezoneOffset() / 60));
+                let endTime = new Date(info.event.end);
+                endTime.setHours(endTime.getHours() + (endTime.getTimezoneOffset() / 60));
+
                 $(".modal-title").text(info.event.title);
                 $(".modal-body p").html(
-                        info.event.start.toLocaleTimeString() +
+                        startTime.toLocaleTimeString() +
                         " - " +
-                        info.event.end.toLocaleTimeString() +
+                        endTime.toLocaleTimeString() +
                         "<br/><br/>" +
                         info.event.extendedProps.addr_str +
                         info.event.extendedProps.addr_no +
