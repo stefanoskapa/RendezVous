@@ -19,7 +19,8 @@
         <input type="hidden" id="you" value="${you}"/>
         <input type="hidden" id="myuid" value="${myuid}"/>
         <input type="hidden" id="hisuid" value="${hisuid}"/>
-
+        <input type="hidden" id="convId" value="${convId}"/>
+        
         <div class="col-sm-3 col-sm-offset-4 frame">
             <ul></ul>
             <div>

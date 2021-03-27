@@ -1,5 +1,6 @@
 package com.rendezvous.service;
 
+import com.rendezvous.entity.Messages;
 import com.rendezvous.model.JsonMessage;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,7 @@ public class NotificationDispatcher {
         userAndSession.remove(sessionId);
     }
 
-    public void notifyUsers(List<String> users, JsonMessage message) {
+    public void notifyUsers(List<String> users, Messages message) {
         for (String user : users) {
             LOGGER.info("Sending notification to " + user);
             SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);

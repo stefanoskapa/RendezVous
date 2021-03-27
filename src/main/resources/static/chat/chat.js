@@ -6,6 +6,7 @@ var role = $('#userrole').val();
 var chatPartnerId = $('#partnerId').val(); //companyID or clientID, is used in url
 var myUserId = $('#myuid').val();
 var hisUserId = $('#hisuid').val();
+var convId = $('#convId').val();
 var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
 function insertChat(who, text, time) {
@@ -46,7 +47,7 @@ function convertDate(date) {
 
 function sendMessage(message) {
     $.ajax({
-        url: full+'/rendezvous/api/v1/' + role + '/history/' + chatPartnerId,
+        url: full+'/rendezvous/api/v1/' + role + '/history/',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -61,7 +62,7 @@ function loadMessages() {
         if (this.readyState === 4 && this.status === 200) {
             let prevMsgs = JSON.parse(this.responseText);
             for (let i = 0; i < prevMsgs.length; i++) {
-                insertChat(prevMsgs[i].sender === myUserId ? "me" : "you", prevMsgs[i].message, prevMsgs[i].timeStamp);
+                insertChat(prevMsgs[i].userId == myUserId ? "me" : "you", prevMsgs[i].message, prevMsgs[i].timestamp);
             }
         }
     };
@@ -76,7 +77,9 @@ $(".mytext").on("keydown", function (e) {
             var dateNow = new Date();
             var msgObj = {};
             msgObj.message = text;
-            msgObj.timeStamp = dateNow.toISOString();
+            msgObj.timestamp = dateNow.toISOString();
+            msgObj.userId = myUserId;
+            msgObj.conversationId = convId;
             sendMessage(msgObj);
             $(this).val('');
         }
@@ -98,8 +101,8 @@ jQuery(function ($) {
         stompClient.connect({}, function () {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it
                 var messageBody = JSON.parse(response.body);
-                if (messageBody.sender === myUserId || messageBody.sender === hisUserId) { //make sure it is the right conversation
-                    insertChat(messageBody.sender === myUserId ? "me" : "you", messageBody.message, messageBody.timeStamp);
+                if (messageBody.userId == myUserId || messageBody.userId == hisUserId) { //make sure it is the right conversation
+                    insertChat(messageBody.userId == myUserId ? "me" : "you", messageBody.message, messageBody.timestamp);
                 }
             });
             stompClient.send("/app/start", {});
