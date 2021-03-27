@@ -14,12 +14,11 @@
     </head>
     <body>
         <input type="hidden" id="userrole" value="${role}"/>
-        <input type="hidden" id="partnerId" value="${id}"/>
         <input type="hidden" id="me" value="${me}"/>
         <input type="hidden" id="you" value="${you}"/>
         <input type="hidden" id="myuid" value="${myuid}"/>
-        <input type="hidden" id="hisuid" value="${hisuid}"/>
         <input type="hidden" id="convId" value="${convId}"/>
+        <input type="hidden" id="partnerId" value="${id}"/>
         
         <div class="col-sm-3 col-sm-offset-4 frame">
             <ul></ul>
