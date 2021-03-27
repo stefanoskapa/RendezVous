@@ -16,23 +16,18 @@ import com.rendezvous.repository.ConversationRepository;
 import com.rendezvous.repository.UserRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
-import com.rendezvous.service.ConversationService;
 import com.rendezvous.service.MessagesService;
 import com.rendezvous.service.NotificationDispatcher;
-import com.rendezvous.service.UserService;
 import com.rendezvous.util.Conversion;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Controller
 public class ChatController {
@@ -61,17 +56,21 @@ public class ChatController {
     }
 
     @MessageMapping("/client/history")
-    public void addClientMessageToHistory(Messages message) {
-        Conversation conv = conversationRepository.findById(message.getConversationId()).get();
-        message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
-        messagesService.save(message, conv);
+    public void addClientMessageToHistory(Messages message, Principal principal) {
+        if (userRepository.findById(message.getUserId()).getEmail().equals(principal.getName())) {
+            Conversation conv = conversationRepository.findById(message.getConversationId()).get();
+            message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
+            messagesService.save(message, conv);
+        }
     }
 
     @MessageMapping("/company/history")
-    public void addCompanyMessageToHistory(Messages message) {
-        Conversation conv = conversationRepository.findById(message.getConversationId()).get();
-        message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
-        messagesService.save(message, conv);
+    public void addCompanyMessageToHistory(Messages message, Principal principal) {
+        if (userRepository.findById(message.getUserId()).getEmail().equals(principal.getName())) {
+            Conversation conv = conversationRepository.findById(message.getConversationId()).get();
+            message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
+            messagesService.save(message, conv);
+        }
     }
 
     @GetMapping("/chatnow/{partnerId}") //redirect client or company to the right controller
@@ -101,7 +100,6 @@ public class ChatController {
         model.addAttribute("role", "client");
         model.addAttribute("id", company_id);
         model.addAttribute("myuid", client.getUser().getId());
-        model.addAttribute("hisuid", company.getUser().getId());
         model.addAttribute("convId", conv.getId());
         return "chat";
     }
@@ -117,7 +115,6 @@ public class ChatController {
         model.addAttribute("role", "company");
         model.addAttribute("id", client_id);
         model.addAttribute("myuid", company.getUser().getId());
-        model.addAttribute("hisuid", client.getUser().getId());
         model.addAttribute("convId", conv.getId());
         return "chat";
     }

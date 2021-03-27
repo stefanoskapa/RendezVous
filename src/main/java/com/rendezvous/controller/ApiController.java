@@ -189,14 +189,7 @@ public class ApiController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-   /* @PostMapping("/client/history")
-    public ResponseEntity addClientMessageToHistory(@RequestBody Messages message, Principal principal) {            
-        Conversation conv = conversationRepository.findById(message.getConversationId()).get();
-        message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
-        messagesService.save(message, conv);
-        return new ResponseEntity(HttpStatus.OK);
-    }*/
-
+   
     @GetMapping("/company/history/{client_id}")
     public ResponseEntity<List<Messages>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
         List<Messages> messages = new LinkedList<>();
@@ -215,11 +208,4 @@ public class ApiController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-   /* @PostMapping("/company/history")
-    public ResponseEntity addCompanyMessageToHistory(@RequestBody Messages message, Principal principal) {
-        Conversation conv = conversationRepository.findById(message.getConversationId()).get();
-        message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
-        messagesService.save(message, conv);
-        return new ResponseEntity( HttpStatus.OK);
-    }*/
 }

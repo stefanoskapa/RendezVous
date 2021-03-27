@@ -16,10 +16,8 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @Service
 public class NotificationDispatcher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationDispatcher.class);
-
     private final SimpMessagingTemplate template;
-    private Map<String, String> userAndSession = new HashMap<>();
+    private final Map<String, String> userAndSession = new HashMap<>();
 
     public NotificationDispatcher(SimpMessagingTemplate template) {
         this.template = template;
@@ -35,15 +33,13 @@ public class NotificationDispatcher {
 
     public void notifyUsers(List<String> users, Messages message) {
         for (String user : users) {
-            LOGGER.info("Sending notification to " + user);
             SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
             headerAccessor.setSessionId(userAndSession.get(user));
             headerAccessor.setLeaveMutable(true);
             if (userAndSession.get(user) != null) {
                 template.convertAndSendToUser(
                         userAndSession.get(user),
-                        "/topic/messages",
-                        message,
+                        "/topic/messages",message,
                         headerAccessor.getMessageHeaders());
             }
         }
@@ -52,7 +48,6 @@ public class NotificationDispatcher {
     @EventListener
     public void sessionDisconnectionHandler(SessionDisconnectEvent event) {
         String sessionId = event.getUser().getName();
-        LOGGER.info("Disconnecting " + sessionId + "!");
         remove(sessionId);
     }
 }
