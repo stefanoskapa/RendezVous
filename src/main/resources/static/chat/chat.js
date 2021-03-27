@@ -8,6 +8,7 @@ var convId = $('#convId').val();
 var partnerId = $('#partnerId').val();
 var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
+
 function insertChat(who, text, time) {
 
     var control = "";
@@ -40,22 +41,23 @@ function resetChat() {
     $("ul").empty();
 }
 
+
+
 function convertDate(date) {
     return date.getDate() + "/" + (date.getMonth() + 1) + " " + date.getHours() + ":" + date.getMinutes();
 }
 
-function sendMessage(message) {
-    $.ajax({
-        url: full+'/rendezvous/api/v1/' + role + '/history/',
-        type: 'post',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify(message)
-    });
-
-}
+/*function sendMessage(message) {
+ $.ajax({
+ url: full+'/rendezvous/api/v1/' + role + '/history/',
+ type: 'post',
+ dataType: 'json',
+ contentType: 'application/json',
+ data: JSON.stringify(message)
+ });
+ } */
 function loadMessages() {
-    
+
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -69,25 +71,12 @@ function loadMessages() {
     xhttp.send();
 }
 
-$(".mytext").on("keydown", function (e) {
-    if (e.which == 13) {
-        var text = $(this).val();
-        if (text !== "") {
-            var dateNow = new Date();
-            var msgObj = {};
-            msgObj.message = text;
-            msgObj.timestamp = dateNow.toISOString();
-            msgObj.userId = myUserId;
-            msgObj.conversationId = convId;
-            sendMessage(msgObj);
-            $(this).val('');
-        }
-    }
-});
+
 
 $('body > div > div > div:nth-child(2) > span').click(function () {
     $(".mytext").trigger({type: 'keydown', which: 13, keyCode: 13});
 })
+
 
 resetChat();
 loadMessages();
@@ -100,12 +89,36 @@ jQuery(function ($) {
         stompClient.connect({}, function () {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it
                 var messageBody = JSON.parse(response.body);
-                if (messageBody.conversationId ==  convId) { //make sure it is the right conversation
+                if (messageBody.conversationId == convId) { //make sure it is the right conversation
                     insertChat(messageBody.userId == myUserId ? "me" : "you", messageBody.message, messageBody.timestamp);
                 }
             });
             stompClient.send("/app/start", {});
+
+
+            $(".mytext").on("keydown", function (e) {
+                if (e.which == 13) {
+                    var text = $(this).val();
+                    if (text !== "") {
+                        var dateNow = new Date();
+                        var msgObj = {};
+                        msgObj.message = text;
+                        msgObj.timestamp = dateNow.toISOString();
+                        msgObj.userId = myUserId;
+                        msgObj.conversationId = convId;
+                        stompClient.send("/app/"+role+"/history",{},JSON.stringify(msgObj));
+                        $(this).val('');
+                    }
+                }
+            });
+
         });
     }
 });
 
+
+
+
+
+
+ 

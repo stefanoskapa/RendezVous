@@ -15,7 +15,6 @@ import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
-import com.rendezvous.model.JsonMessage;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.ConversationRepository;
 import com.rendezvous.service.AppointmentService;
@@ -190,14 +189,13 @@ public class ApiController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-    @PostMapping("/client/history")
-    public ResponseEntity addClientMessageToHistory(@RequestBody Messages message, Principal principal) {    
-        
+   /* @PostMapping("/client/history")
+    public ResponseEntity addClientMessageToHistory(@RequestBody Messages message, Principal principal) {            
         Conversation conv = conversationRepository.findById(message.getConversationId()).get();
         message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
         messagesService.save(message, conv);
         return new ResponseEntity(HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/company/history/{client_id}")
     public ResponseEntity<List<Messages>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
@@ -217,11 +215,11 @@ public class ApiController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-    @PostMapping("/company/history")
+   /* @PostMapping("/company/history")
     public ResponseEntity addCompanyMessageToHistory(@RequestBody Messages message, Principal principal) {
         Conversation conv = conversationRepository.findById(message.getConversationId()).get();
         message.setTimestamp(Conversion.adjustTime(message.getTimestamp()));
         messagesService.save(message, conv);
         return new ResponseEntity( HttpStatus.OK);
-    }
+    }*/
 }
