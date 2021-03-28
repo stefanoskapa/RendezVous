@@ -13,7 +13,7 @@
     </head>
     <body>
          <!--URL: / (xoris tipota)-->
-        <h1>Hello World!!</h1>
+        <h1>Hello World!</h1>
         <a href="${pageContext.request.contextPath}/login">Login</a>
         <a href="${pageContext.request.contextPath}/client-register">Register as user</a>
         <a href="${pageContext.request.contextPath}/company-register">Company register</a>    
