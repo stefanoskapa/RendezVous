@@ -12,6 +12,12 @@
             <properties>
                 <exec.args>-classpath %classpath com.rendezvous.RendezvousApplication</exec.args>
                 <exec.executable>java</exec.executable>
+                <Env.SPRING_DATASOURCE_USERNAME>RendezAdmin</Env.SPRING_DATASOURCE_USERNAME>
+                <Env.SPRING_DATASOURCE_PASSWORD>8/n?"4}`5.*z84[nHNVq</Env.SPRING_DATASOURCE_PASSWORD>
+                
+                
+                
+                
             </properties>
         </action>
     </actions>
