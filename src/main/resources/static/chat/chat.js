@@ -49,7 +49,7 @@ function convertDate(date) {
 
 /*function sendMessage(message) {
  $.ajax({
- url: full+'/rendezvous/api/v1/' + role + '/history/',
+ url: full+'/api/v1/' + role + '/history/',
  type: 'post',
  dataType: 'json',
  contentType: 'application/json',
@@ -67,7 +67,7 @@ function loadMessages() {
             }
         }
     };
-    xhttp.open("GET", full + "/rendezvous/api/v1/" + role + "/history/" + partnerId);
+    xhttp.open("GET", full + "/api/v1/" + role + "/history/" + partnerId);
     xhttp.send();
 }
 
@@ -84,7 +84,7 @@ loadMessages();
 jQuery(function ($) {
     let stompClient;
     if (!stompClient) {
-        const socket = new SockJS(full + "/rendezvous/ws");
+        const socket = new SockJS(full + "/ws");
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function () {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it

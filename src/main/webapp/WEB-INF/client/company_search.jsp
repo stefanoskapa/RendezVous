@@ -56,7 +56,7 @@
                         }
                     }
                 };
-                xhttp.open("GET", full+"/rendezvous/api/v1/client/categories");
+                xhttp.open("GET", full+"/api/v1/client/categories");
                 xhttp.send();
             }
 
@@ -102,12 +102,12 @@
                             cell1.innerHTML = searchResults[i].addrStr + " " + searchResults[i].addrNo;
                             cell2.innerHTML = searchResults[i].addrCity;
                             cell3.innerHTML = searchResults[i].tel;
-                            cell4.innerHTML = "<a href='"+full+"/rendezvous/client/date-select?companyId=" + searchResults[i].id + "'>CHECK</a>";
+                            cell4.innerHTML = "<a href='"+full+"/client/date-select?companyId=" + searchResults[i].id + "'>CHECK</a>";
 
                         }
                     }
                 };
-                xhttp.open("GET", full+"/rendezvous/api/v1/client/comp-search?searchTerm=" + searchTerm + "&category=" + document.getElementById("category").value, true);
+                xhttp.open("GET", full+"/api/v1/client/comp-search?searchTerm=" + searchTerm + "&category=" + document.getElementById("category").value, true);
                 xhttp.send();
             }
 
