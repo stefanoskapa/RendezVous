@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             drawCalendar(calendarData);
         }
     };
-    xhttp.open("GET", full + "/rendezvous/api/v1/client/dates", true);
+    xhttp.open("GET", full + "/api/v1/client/dates", true);
     xhttp.send();
 
     function drawCalendar(calendarData) {

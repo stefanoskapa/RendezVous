@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(calendarData.businessHours);
         }
     };
-    xhttp.open("GET", full + "/rendezvous/api/v1/company/dates", true);
+    xhttp.open("GET", full + "/api/v1/company/dates", true);
     xhttp.send();
 
     function drawCalendar(calendarData) {

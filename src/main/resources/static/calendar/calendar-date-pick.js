@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
         };
-        xhttp.open("GET", full + "/rendezvous/api/v1/client/company/" + comp_id + "/availability", true);
+        xhttp.open("GET", full + "/api/v1/client/company/" + comp_id + "/availability", true);
         xhttp.send();
     }
 
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('html, body').css("cursor", "wait");
         var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
-        $.ajax(full + "/rendezvous/api/v1/client/request-app",
+        $.ajax(full + "/api/v1/client/request-app",
                 {type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(
