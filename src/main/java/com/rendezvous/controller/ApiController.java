@@ -175,17 +175,9 @@ public class ApiController {
         List<Messages> messages = new LinkedList<>();
 
         Client tempClient = clientService.findClientByEmail(principal.getName());
-        Company tempCompany = companyService.findCompanyById(company_id);
+        //Company tempCompany = companyService.findCompanyById(company_id);
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
-
-        if (tempConv == null) {
-            tempConv = new Conversation();
-            tempConv.setClient(tempClient);
-            tempConv.setCompany(tempCompany);
-            conversationRepository.save(tempConv); //create conversation
-        } else {
-            messages = messagesService.findByConversationId(tempConv.getId()).get();            
-        }
+        messages = messagesService.findByConversationId(tempConv.getId()).get();                   
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
@@ -194,17 +186,9 @@ public class ApiController {
     public ResponseEntity<List<Messages>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
         List<Messages> messages = new LinkedList<>();
         Company tempComp = companyService.findCompanyByEmail(principal.getName());
-        Client tempClient = clientService.findClientById(client_id);
+        //Client tempClient = clientService.findClientById(client_id);
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(client_id, tempComp.getId());
-
-        if (tempConv == null) {
-            tempConv = new Conversation();
-            tempConv.setClient(tempClient);
-            tempConv.setCompany(tempComp);
-            conversationRepository.save(tempConv); //create conversation
-        } else {
-            messages = messagesService.findByConversationId(tempConv.getId()).get();           
-        }
+        messages = messagesService.findByConversationId(tempConv.getId()).get();                 
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 

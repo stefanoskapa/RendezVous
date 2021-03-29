@@ -28,7 +28,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @Controller
 public class ChatController {
 
@@ -95,6 +94,12 @@ public class ChatController {
         Client client = clientService.findClientByEmail(principal.getName());
         Company company = companyService.findCompanyById(company_id);
         Conversation conv = conversationRepository.findByClientIdAndCompanyId(client.getId(), company_id);
+        if (conv == null) {
+            conv = new Conversation();
+            conv.setClient(client);
+            conv.setCompany(company);           
+            conversationRepository.save(conv); //create conversation
+        }
         model.addAttribute("me", client.getFname() + "-" + client.getLname());
         model.addAttribute("you", company.getFname() + "-" + company.getLname());
         model.addAttribute("role", "client");
@@ -110,12 +115,20 @@ public class ChatController {
         Company company = companyService.findCompanyByEmail(principal.getName());
         Client client = clientService.findClientById(client_id);
         Conversation conv = conversationRepository.findByClientIdAndCompanyId(client_id, company.getId());
+        if (conv == null) {
+            conv = new Conversation();
+            conv.setClient(client);
+            conv.setCompany(company);           
+            conversationRepository.save(conv); //create conversation
+        }
         model.addAttribute("you", client.getFname() + "-" + client.getLname());
         model.addAttribute("me", company.getFname() + "-" + company.getLname());
         model.addAttribute("role", "company");
         model.addAttribute("id", client_id);
         model.addAttribute("myuid", company.getUser().getId());
-        model.addAttribute("convId", conv.getId());
+        model.addAttribute("convId", conv.getId());   
+        
+
         return "chat";
     }
 
