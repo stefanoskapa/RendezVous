@@ -13,10 +13,11 @@ $(document).on("click", ".close-chat", function () {
 $(document).on("click", ".blantershow-chat", function () {
     $("#whatsapp-chat").addClass("show").removeClass("hide");
     $(".blantershow-chat").css("animation-play-state", "paused");
+    $("#msgframe").scrollTop($("#msgframe")[0].scrollHeight);
 });
 
 //the p* variables are loaded only on client's company_date_pick page
-let pCompId = $("#comp-id").val(); //has value only on client's company_date_pick page
+let pCompId = $("#comp-id").val(); 
 let pFName = $("#fname").val();
 let pLName = $("#lname").val();
 let pCompanyName = $("#displayName").val();
@@ -29,7 +30,6 @@ let myAvatar;
 let yourAvatar;
 
 let xhttp = new XMLHttpRequest();
-//alert(compId.val());
 
 xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
@@ -49,7 +49,6 @@ xhttp.onreadystatechange = function () {
                 let lname = whoAmI.convPartners[i].lname;
                 avatar = "https://eu.ui-avatars.com/api/?name=" + fname +
                         "-" + lname + "&background=B0C4DE";
-
                 showChatPartners += ("<a class='informasi' onclick='loadMessages(" +
                         whoAmI.convPartners[i].idByRole + ");'> <div class='info-avatar'>" +
                         "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
