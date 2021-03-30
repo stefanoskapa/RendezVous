@@ -38,12 +38,16 @@
         </style>
     </head>
     <body>
+       
         <h1>Pick a date for your appointment</h1>
         <h2>${comp_name}</h2>
         <div class="alert alert-dismissible fade show" role="alert" id="alert">
         </div>
 
         <input type="text" id="comp-id" value="${comp_id}" hidden  />
+        <input type="text" id="fname" value="${fname}" hidden  />
+        <input type="text" id="lname" value="${lname}" hidden  />
+        <input type="text" id="displayName" value="${comp_name}" hidden  />
 
         <div id='calendar'></div>
 

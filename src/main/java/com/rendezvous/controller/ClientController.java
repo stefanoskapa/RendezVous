@@ -7,6 +7,7 @@ package com.rendezvous.controller;
 
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
+import com.rendezvous.entity.Company;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
@@ -83,9 +84,13 @@ public class ClientController {
 
     @GetMapping("/date-select")
     public String showDateSelect(@RequestParam int companyId, Model model) {
-        model.addAttribute("comp_id", companyId);
+        
         try {
-            model.addAttribute("comp_name", companyService.findCompanyById(companyId).getDisplayName());
+            Company tempCompany = companyService.findCompanyById(companyId);
+            model.addAttribute("comp_id", tempCompany.getId());
+            model.addAttribute("comp_name", tempCompany.getDisplayName());
+            model.addAttribute("fname", tempCompany.getFname());
+            model.addAttribute("lname", tempCompany.getLname());
         } catch (CompanyIdNotFound ex) {
             // todo if exception occures company id is wrong and should be redirected to error page
         }

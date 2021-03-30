@@ -216,7 +216,7 @@ public class ApiController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
-    @GetMapping("/client/history/{company_id}")
+    @GetMapping("/client/history/{company_id}") //TODO create empty conversation in case tempConv==null
     public ResponseEntity<List<Messages>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal) throws CompanyIdNotFound {
         List<Messages> messages;
         Client tempClient = clientService.findClientByEmail(principal.getName());

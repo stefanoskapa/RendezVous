@@ -1,70 +1,94 @@
-
 $(document).on("click", ".informasi", function () {
-    document.getElementById("get-number").innerHTML = $(this).children(".my-number").text(),
-            $(".start-chat,.get-new").addClass("show").removeClass("hide"),
-            $(".home-chat,.head-home").addClass("hide").removeClass("show"),
-            document.getElementById("get-nama").innerHTML = $(this).children(".info-chat").children(".chat-nama").text(),
-            document.getElementById("get-label").innerHTML = $(this).children(".info-chat").children(".chat-label").text()
+    $("#get-number").html($(this).children(".my-number").text());
+    $(".start-chat,.get-new").addClass("show").removeClass("hide");
+    $(".home-chat,.head-home").addClass("hide").removeClass("show");
+    $("#get-nama").html($(this).children(".info-chat").children(".chat-nama").text());
+    $("#get-label").html($(this).children(".info-chat").children(".chat-label").text());
 });
+
 $(document).on("click", ".close-chat", function () {
-    $("#whatsapp-chat").addClass("hide").removeClass("show")
-    
+    $("#whatsapp-chat").addClass("hide").removeClass("show");
 });
+
 $(document).on("click", ".blantershow-chat", function () {
-    $("#whatsapp-chat").addClass("show").removeClass("hide")
+    $("#whatsapp-chat").addClass("show").removeClass("hide");
 });
 
-var myRole;
-var myUserId;
-var myConvId;
-var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-var xhttp = new XMLHttpRequest();
-var myAvatar;
-var yourAvatar;
+//the p* variables are loaded only on client's company_date_pick page
+let pCompId = $("#comp-id").val(); //has value only on client's company_date_pick page
+let pFName = $("#fname").val();
+let pLName = $("#lname").val();
+let pCompanyName = $("#displayName").val();
 
-function convertDate(date) {
-    return date.getDate() + "/" + (date.getMonth() + 1) + " " + date.getHours() + ":" + date.getMinutes();
-}
+let myRole;
+let myUserId;
+let myConvId;
+let full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+let myAvatar;
+let yourAvatar;
+
+let xhttp = new XMLHttpRequest();
+//alert(compId.val());
+
 xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-        var whoAmI = JSON.parse(this.responseText);
+        let whoAmI = JSON.parse(this.responseText);
         myRole = whoAmI.role;
         myUserId = whoAmI.userId;
         myAvatar = "https://eu.ui-avatars.com/api/?name=" + whoAmI.fname + "-" + whoAmI.lname + "&background=90EE90";
         let showChatPartners = "";
-        let companyName="";
-        for (let i = 0; i < (whoAmI.convPartners).length; i++) {
-            if (whoAmI.convPartners[i].companyName) {
-                companyName = whoAmI.convPartners[i].companyName;
+        let companyName = "";
+        let avatar;
+        if (!pCompId) {
+            for (let i = 0; i < (whoAmI.convPartners).length; i++) {
+                if (whoAmI.convPartners[i].companyName) {
+                    companyName = whoAmI.convPartners[i].companyName;
+                }
+                let fname = whoAmI.convPartners[i].fname;
+                let lname = whoAmI.convPartners[i].lname;
+                avatar = "https://eu.ui-avatars.com/api/?name=" + fname +
+                        "-" + lname + "&background=B0C4DE";
+
+                showChatPartners += ("<a class='informasi' onclick='loadMessages(" +
+                        whoAmI.convPartners[i].idByRole + ");'> <div class='info-avatar'>" +
+                        "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
+                        "<span class='chat-label'>" + companyName + "</span><span class='chat-nama'>"
+                        + fname + " " + lname + "</span>" + "</div></a>");
+
             }
-            var fname = whoAmI.convPartners[i].fname;
-            var lname = whoAmI.convPartners[i].lname;
-            var avatar = "https://eu.ui-avatars.com/api/?name=" + fname + "-" + lname + "&background=B0C4DE";
-            
-            showChatPartners += ("<a class='informasi' onclick='loadMessages(" + whoAmI.convPartners[i].idByRole + ");'> <div class='info-avatar'>" +
-                    "<img src='" + avatar + "'/>" +
-                    "</div><div class='info-chat'><span class='chat-label'>" + companyName + "</span><span class='chat-nama'>" + fname + " " + lname + "</span>" +
-                    "</div></a>")
+        } else {
+            companyName = pCompanyName;
+            fname = pFName;
+            lname = pLName;
+            avatar = "https://eu.ui-avatars.com/api/?name=" + fname +
+                        "-" + lname + "&background=B0C4DE";
+            showChatPartners += ("<a class='informasi' onclick='loadMessages(" +
+                    pCompId + ");'> <div class='info-avatar'>" +
+                    "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
+                    "<span class='chat-label'>" + companyName + "</span><span class='chat-nama'>"
+                    + fname + " " + lname + "</span>" + "</div></a>");
         }
         $('.home-chat').html(showChatPartners);
     }
 };
 xhttp.open("GET", full + "/api/v1/whoami");
 xhttp.send();
+
+function convertDate(date) {
+    return date.getDate() + "/" + (date.getMonth() + 1) + " " + date.getHours() + ":" + date.getMinutes();
+}
 function loadMessages(partnerId) {
 
-    var xhttp = new XMLHttpRequest();
+    xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            
-            let partnerName = $("#get-nama").html().replace(" ","-");
+            let partnerName = $("#get-nama").html().replace(" ", "-");
             yourAvatar = "https://eu.ui-avatars.com/api/?name=" + partnerName + "&background=B0C4DE";
             let prevMsgs = JSON.parse(this.responseText);
             myConvId = prevMsgs[0].conversationId;
             for (let i = 0; i < prevMsgs.length; i++) {
                 insertChat(prevMsgs[i].userId, prevMsgs[i].message, prevMsgs[i].timestamp);
             }
-            
         }
     };
     xhttp.open("GET", full + "/api/v1/" + myRole + "/history/" + partnerId);
@@ -72,20 +96,21 @@ function loadMessages(partnerId) {
 }
 
 function insertChat(uid, text, dateTime) {
- var date = new Date(dateTime);
-    var timeStamp = convertDate(date);
-    var speechBubble = $('#msgframe').html();
-    
-    if (uid==myUserId) {
-    $('#msgframe').html(speechBubble + "<div class='container1'><img src='"+myAvatar+"' style='width:100%;'><p>"+text+"</p>" +
-  "<span class='time-right'>"+timeStamp+"</span></div>"); 
+    let date = new Date(dateTime);
+    let timeStamp = convertDate(date);
+    let speechBubble = $('#msgframe').html();
+
+    if (uid == myUserId) {
+        $('#msgframe').html(speechBubble + "<div class='container1'><img src='" +
+                myAvatar + "' style='width:100%;'><p>" + text + "</p>" +
+                "<span class='time-right'>" + timeStamp + "</span></div>");
     } else {
-       $('#msgframe').html(speechBubble + "<div class='container1'><img src='"+yourAvatar+"' class='right' style='width:100%;'><p>"+text+"</p>" +
-  "<span class='time-left'>"+timeStamp+"</span></div>");  
+        $('#msgframe').html(speechBubble + "<div class='container1'><img src='" +
+                yourAvatar + "' class='right' style='width:100%;'><p>" + text + "</p>" +
+                "<span class='time-left'>" + timeStamp + "</span></div>");
 
     }
-    //$("#msgframe").scrollTop = $("#msgframe").scrollHeight;
-$("#msgframe").scrollTop($("#msgframe")[0].scrollHeight);
+    $("#msgframe").scrollTop($("#msgframe")[0].scrollHeight);
 
 }
 
@@ -100,7 +125,7 @@ jQuery(function ($) {
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function () {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it
-                var messageBody = JSON.parse(response.body);
+                let messageBody = JSON.parse(response.body);
                 if (messageBody.conversationId == myConvId) { //make sure it is the right conversation
                     insertChat(messageBody.userId, messageBody.message, messageBody.timestamp);
                 }
@@ -109,10 +134,10 @@ jQuery(function ($) {
 
             $("#chat-input").on("keydown", function (e) {
                 if (e.which == 13) {
-                    var text = $(this).val();
+                    let text = $(this).val();
                     if (text !== "") {
-                        var dateNow = new Date();
-                        var msgObj = {};
+                        let dateNow = new Date();
+                        let msgObj = {};
                         msgObj.message = text;
                         msgObj.timestamp = dateNow.toISOString();
                         msgObj.userId = myUserId;
