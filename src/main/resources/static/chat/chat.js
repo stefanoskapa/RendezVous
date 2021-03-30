@@ -12,6 +12,7 @@ $(document).on("click", ".close-chat", function () {
 
 $(document).on("click", ".blantershow-chat", function () {
     $("#whatsapp-chat").addClass("show").removeClass("hide");
+    $(".blantershow-chat").css("animation-play-state", "paused");
 });
 
 //the p* variables are loaded only on client's company_date_pick page
@@ -61,7 +62,7 @@ xhttp.onreadystatechange = function () {
             fname = pFName;
             lname = pLName;
             avatar = "https://eu.ui-avatars.com/api/?name=" + fname +
-                        "-" + lname + "&background=B0C4DE";
+                    "-" + lname + "&background=B0C4DE";
             showChatPartners += ("<a class='informasi' onclick='loadMessages(" +
                     pCompId + ");'> <div class='info-avatar'>" +
                     "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
@@ -125,6 +126,9 @@ jQuery(function ($) {
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function () {
             stompClient.subscribe('/user/topic/messages', function (response) { //recieve message from server and display it
+                if ($("#whatsapp-chat").hasClass("hide")) {
+                    $(".blantershow-chat").css("animation-play-state", "running");
+                }
                 let messageBody = JSON.parse(response.body);
                 if (messageBody.conversationId == myConvId) { //make sure it is the right conversation
                     insertChat(messageBody.userId, messageBody.message, messageBody.timestamp);
