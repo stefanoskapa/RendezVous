@@ -82,10 +82,10 @@ function insertChat(uid, text, dateTime) {
     } else {
        $('#msgframe').html(speechBubble + "<div class='container1'><img src='"+yourAvatar+"' class='right' style='width:100%;'><p>"+text+"</p>" +
   "<span class='time-left'>"+timeStamp+"</span></div>");  
- 
-        
-    }
 
+    }
+    //$("#msgframe").scrollTop = $("#msgframe").scrollHeight;
+$("#msgframe").scrollTop($("#msgframe")[0].scrollHeight);
 
 }
 

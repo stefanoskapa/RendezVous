@@ -30,8 +30,6 @@ public class ClientController {
     @Autowired
     private CompanyService companyService;
 
-    
-
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
 
