@@ -71,8 +71,9 @@ public class ChatController {
             messagesService.save(message, conv);
         }
     }
-
-    @GetMapping("/chatnow/{partnerId}") //redirect client or company to the right controller
+    
+  
+  /*  @GetMapping("/chatnow/{partnerId}") //redirect client or company to the right controller
     public String goToChatPage(@PathVariable int partnerId, Principal principal,
             Model model
     ) {
@@ -130,6 +131,6 @@ public class ChatController {
         
 
         return "chat";
-    }
+    } */
 
 }

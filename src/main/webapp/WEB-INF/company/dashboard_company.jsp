@@ -20,9 +20,12 @@
                 integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
         <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
         <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-company.js"></script>
+         <link rel="stylesheet" href="/chat/styles.css">
        
         <style>
             .fc-event-main:hover,
@@ -73,5 +76,27 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
         <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
+                
+        <!-- Chat starts here -->
+
+        <div id='whatsapp-chat' class='hide'>
+            <div class='header-chat'>
+                <div class='head-home'><h3>Hello!</h3>
+                    <p>Click one of your established conversations</p></div>
+                <div class='get-new hide'><div id='get-label'></div><div id='get-nama'></div></div></div>
+            <div class='home-chat'>
+                <!-- Active conversations -->                
+                </div>
+            <div class='start-chat hide'>
+                <div id="msgframe" style="overflow-y: scroll; height:300px;">
+                    <!-- messages go here -->
+                </div>
+                <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' row='1'></textarea>
+                    <a href='javascript:void;' id='send-it'>Send</a></div></div>
+            <div id='get-number'></div><a class='close-chat' href='javascript:void'>×</a>
+        </div>
+        <a class='blantershow-chat' href='javascript:void' title='Show Chat'>Chat</a>
+        <script src="${pageContext.request.contextPath}/chat/chat.js"></script>
+        <!-- Chat ends here -->
     </body>
 </html>

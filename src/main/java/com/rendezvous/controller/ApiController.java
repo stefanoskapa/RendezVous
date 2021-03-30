@@ -11,17 +11,21 @@ import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Conversation;
 import com.rendezvous.entity.Messages;
+import com.rendezvous.entity.User;
 import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
+import com.rendezvous.model.ConvStarter;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.ConversationRepository;
+import com.rendezvous.repository.UserRepository;
 import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import com.rendezvous.service.MessagesService;
+import com.rendezvous.service.UserService;
 import com.rendezvous.util.Conversion;
 import java.security.Principal;
 import java.util.LinkedList;
@@ -58,6 +62,51 @@ public class ApiController {
     private MessagesService messagesService;
     @Autowired
     private ConversationRepository conversationRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/whoami")
+    public ResponseEntity<ConvStarter> whoAmI(Principal principal) {
+        User tempUser = userRepository.findByEmail(principal.getName()).get();
+        ConvStarter myRoleAndId = new ConvStarter();
+        myRoleAndId.setUserId(tempUser.getId()+"");
+        if (tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY")) {
+                myRoleAndId.setRole("company");
+                Company tempCompany = companyService.findCompanyByEmail(principal.getName());
+                myRoleAndId.setFname(tempCompany.getFname());
+                myRoleAndId.setLname(tempCompany.getLname());
+                myRoleAndId.setIdByRole(tempCompany.getId()+"");
+                myRoleAndId.setCompanyName(tempCompany.getDisplayName()); 
+                List<Conversation> convList = conversationRepository.findByCompanyId(tempCompany.getId());
+                List<ConvStarter> partnerList = new LinkedList<>();
+                for (Conversation a: convList) {
+                    ConvStarter tempPartner = new ConvStarter();
+                    tempPartner.setFname(a.getClient().getFname());
+                    tempPartner.setLname(a.getClient().getLname());    
+                    tempPartner.setIdByRole(a.getClient().getId()+"");
+                    partnerList.add(tempPartner);
+                }
+                myRoleAndId.setConvPartners(partnerList);
+            } else {
+                myRoleAndId.setRole("client");
+                Client tempClient = clientService.findClientByEmail(principal.getName());
+                myRoleAndId.setFname(tempClient.getFname());
+                myRoleAndId.setLname(tempClient.getLname());
+                myRoleAndId.setIdByRole(tempClient.getId()+"");
+                List<Conversation> convList = conversationRepository.findByClientId(tempClient.getId());
+                List<ConvStarter> partnerList = new LinkedList<>();
+                for (Conversation a: convList) {
+                    ConvStarter tempPartner = new ConvStarter();
+                    tempPartner.setFname(a.getCompany().getFname());
+                    tempPartner.setLname(a.getCompany().getLname());
+                    tempPartner.setCompanyName(a.getCompany().getDisplayName());
+                    tempPartner.setIdByRole(a.getCompany().getId()+"");
+                    partnerList.add(tempPartner);
+                }
+                myRoleAndId.setConvPartners(partnerList);
+            }        
+        return new ResponseEntity<>(myRoleAndId, HttpStatus.OK);
+    }
 
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
@@ -172,23 +221,19 @@ public class ApiController {
 
     @GetMapping("/client/history/{company_id}")
     public ResponseEntity<List<Messages>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal) throws CompanyIdNotFound {
-        List<Messages> messages = new LinkedList<>();
-
+        List<Messages> messages;
         Client tempClient = clientService.findClientByEmail(principal.getName());
-        //Company tempCompany = companyService.findCompanyById(company_id);
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
-        messages = messagesService.findByConversationId(tempConv.getId()).get();                   
+        messages = messagesService.findByConversationId(tempConv.getId()).get();
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-   
     @GetMapping("/company/history/{client_id}")
     public ResponseEntity<List<Messages>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
-        List<Messages> messages = new LinkedList<>();
+        List<Messages> messages;
         Company tempComp = companyService.findCompanyByEmail(principal.getName());
-        //Client tempClient = clientService.findClientById(client_id);
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(client_id, tempComp.getId());
-        messages = messagesService.findByConversationId(tempConv.getId()).get();                 
+        messages = messagesService.findByConversationId(tempConv.getId()).get();
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 

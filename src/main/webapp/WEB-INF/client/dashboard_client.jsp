@@ -27,13 +27,15 @@
         <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
         <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <style>
             .fc-event-main:hover,
             .fc-daygrid-event:hover {
                 cursor: pointer;
             }
         </style>
+        <link rel="stylesheet" href="/chat/styles.css">
     </head>
     <body>
         dashboard client
@@ -47,7 +49,7 @@
         <a href="${pageContext.request.contextPath}/client/profile">Edit Profile</a>
         <a href="${pageContext.request.contextPath}/logout">Logout</a>        
 
-        
+
         <div id='calendar'></div>
 
         <!-- Modal content-->
@@ -71,5 +73,27 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+
+        <!-- Chat starts here -->
+
+        <div id='whatsapp-chat' class='hide'>
+            <div class='header-chat'>
+                <div class='head-home'><h3>Hello!</h3>
+                    <p>Click one of your established conversations</p></div>
+                <div class='get-new hide'><div id='get-label'></div><div id='get-nama'></div></div></div>
+            <div class='home-chat'>
+                <!-- Active conversations -->                
+                <div class='blanter-msg'>Call us to <b>+62123456789</b> from <i>0:00hs a 24:00hs</i></div></div>
+            <div class='start-chat hide'>
+                <div id="msgframe" style="overflow-y: scroll; height:300px;">
+                    <!-- messages go here -->
+                </div>
+                <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' row='1'></textarea>
+                    <a href='javascript:void;' id='send-it'>Send</a></div></div>
+            <div id='get-number'></div><a class='close-chat' href='javascript:void'>×</a>
+        </div>
+        <a class='blantershow-chat' href='javascript:void' title='Show Chat'>Chat</a>
+        <script src="${pageContext.request.contextPath}/chat/chat.js"></script>
+        <!-- Chat ends here -->
     </body>
 </html>
