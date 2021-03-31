@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         endTime.toLocaleTimeString() +
                         "<br/><br/>" +
                         info.event.extendedProps.addr_str +
+                        " " +
                         info.event.extendedProps.addr_no +
                         "<br/>" +
                         info.event.extendedProps.addr_city +
