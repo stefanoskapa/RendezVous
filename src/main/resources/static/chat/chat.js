@@ -24,6 +24,7 @@ let compEmail = $("#compEmail").val();
 
 connect();
 if (compEmail) {
+    $("a.blantershow-chat").html("Ask us a question");
     loadMessages(compEmail); //will create a new conversation
 }
 
@@ -120,7 +121,6 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function () {
         var url = stompClient.ws._transport.url;
-        console.log("_transport.url is: " + url);
         url = url.replace("ws://"+location.hostname + (location.port ? ':' + location.port : '')+ "/secured/room/", "");
         url = url.replace("/websocket", "");
         url = url.replace(/^[0-9]+\//, "");

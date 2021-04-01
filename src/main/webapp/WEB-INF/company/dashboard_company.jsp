@@ -25,21 +25,21 @@
         <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
         <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-company.js"></script>
-         <link rel="stylesheet" href="/chat/styles.css">
-       
+        <link rel="stylesheet" href="/chat/styles.css">
+
         <style>
             .fc-event-main:hover,
             .fc-daygrid-event:hover
             {
                 cursor: pointer;
             }
-            
+
 
         </style>
     </head>
     <body>
-      <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
-        
+        <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
+
 
         dashboard company
         <!--URL: company/dashboard-->
@@ -75,27 +75,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
-                
-     <!-- Chat starts here -->
-        <div id='whatsapp-chat' class='hide'>
-            <div class='header-chat'>
-                <div class='head-home'><!--<h3>Hello!</h3>-->
-                    <p>Active conversations</p></div>
-                <div class='get-new hide'><div id='get-label'></div><div id='get-nama'></div></div></div>
-            <div class='home-chat'>
-                <!-- Active conversations -->                
-                <div class='blanter-msg'></div></div>
-            <div class='start-chat hide'>
-                <div id="msgframe">
-                    <!-- messages go here -->
-                </div>
-                <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' rows='1'></textarea>
-                    <a id='send-it'>Send</a></div></div>
-            <div id='get-number'></div><a class='close-chat' >×</a>
-        </div>
-        <a class='blantershow-chat' title='Show Chat'>Chat</a>
-        <script src="${pageContext.request.contextPath}/chat/chat.js"></script>
-        <!-- Chat ends here -->
+        <jsp:include page="/WEB-INF/navbars/footer.jsp"/>               
+        <jsp:include page="/WEB-INF/chat.jsp"/>
     </body>
 </html>
