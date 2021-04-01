@@ -124,7 +124,7 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function () {
         var url = stompClient.ws._transport.url;
-        url = url.replace("ws://localhost:8080/secured/room/", "");
+        url = url.replace("ws://" + location.hostname + (location.port ? ':' + location.port : '') + "/secured/room/", "");
         url = url.replace("/websocket", "");
         url = url.replace(/^[0-9]+\//, "");
         console.log("Your current session is: " + url);
@@ -137,6 +137,8 @@ function subscribe() {
     stompClient.subscribe('/secured/user/queue/specific-user'
             + '-user' + sessionId, function (response) { //recieve message from server and display it
                 let messageBody = JSON.parse(response.body);
+                console.log("Incoming message!");
+                console.log(messageBody.from + "==" + partnerEmail);
                 if (messageBody.from == partnerEmail) {
                     insertChat(false, messageBody.text, messageBody.timestamp);
                 }
