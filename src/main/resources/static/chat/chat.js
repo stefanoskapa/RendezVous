@@ -122,6 +122,7 @@ function insertChat(side, text, dateTime) {
 function connect() {
     const socket = new SockJS("/secured/room");
     stompClient = Stomp.over(socket);
+    alert("so far so good");
     stompClient.connect({}, function () {
         var url = stompClient.ws._transport.url;
         console.log("_transport.url is: " + url);
