@@ -83,7 +83,7 @@
                 <div class='get-new hide'><div id='get-label'></div><div id='get-nama'></div></div></div>
             <div class='home-chat'>
                 <!-- Active conversations -->                
-                <div class='blanter-msg'>Call us to <b>+62123456789</b> from <i>0:00hs a 24:00hs</i></div></div>
+                <div class='blanter-msg'></div></div>
             <div class='start-chat hide'>
                 <div id="msgframe" style="overflow-y: scroll; height:300px;">
                     <!-- messages go here -->

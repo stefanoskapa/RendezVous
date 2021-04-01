@@ -91,11 +91,11 @@
                 <div id="msgframe" style="overflow-y: scroll; height:300px;">
                     <!-- messages go here -->
                 </div>
-                <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' row='1'></textarea>
-                    <a href='javascript:void;' id='send-it'>Send</a></div></div>
+                <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' rows='1'></textarea>
+                    <a id='send-it'>Send</a></div></div>
             <div id='get-number'></div><a class='close-chat' href='javascript:void'>×</a>
         </div>
-        <a class='blantershow-chat' href='javascript:void' title='Show Chat'>Chat</a>
+        <a class='blantershow-chat' title='Show Chat'>Chat</a>
         <script src="${pageContext.request.contextPath}/chat/chat.js"></script>
         <!-- Chat ends here -->
     </body>

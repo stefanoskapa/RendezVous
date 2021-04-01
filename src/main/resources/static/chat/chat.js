@@ -11,6 +11,7 @@ $(document).on("click", ".close-chat", function () {
 });
 $(document).on("click", ".blantershow-chat", function () {
     $("#whatsapp-chat").addClass("show").removeClass("hide");
+    fetchPartners();
 });
 
 
@@ -23,7 +24,13 @@ let yourAvatar;
 let sessionId;
 let xhttp;
 var stompClient = null;
+let compEmail = $("#compEmail").val();
+connect();
 
+if (compEmail) {
+    loadMessages(compEmail); //will create a new conversation
+}
+//get personal info
 xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
@@ -39,6 +46,7 @@ xhttp.open("GET", full + "/myprops");
 xhttp.send();
 
 //show partners
+function fetchPartners() {
 xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
@@ -66,6 +74,7 @@ xhttp.onreadystatechange = function () {
 }
 xhttp.open("GET", full + "/conv");
 xhttp.send();
+}
 
 function convertDate(date) {
     return date.getDate() + "/" + (date.getMonth() + 1) + " " + date.getHours() + ":" + date.getMinutes();
@@ -79,6 +88,7 @@ function loadMessages(pEmail) {
             partnerEmail = pEmail;
             yourAvatar = "https://eu.ui-avatars.com/api/?name=" + partnerName + "&background=B0C4DE";
             let prevMsgs = JSON.parse(this.responseText);
+            $("#msgframe").html("");
             for (let i = 0; i < prevMsgs.length; i++) {
                 insertChat(prevMsgs[i].from === myEmail, prevMsgs[i].text, prevMsgs[i].timestamp);
             }
@@ -156,7 +166,6 @@ $("#chat-input").on("keydown", function (e) {
     }
 });
 
-connect();
 
 
 
