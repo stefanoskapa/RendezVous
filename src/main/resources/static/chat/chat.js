@@ -7,7 +7,9 @@ $(document).on("click", ".close-chat", function () {
 });
 $(document).on("click", ".blantershow-chat", function () {
     $("#whatsapp-chat").addClass("show").removeClass("hide");
-    fetchPartners();
+    if (compName) {
+        $("a.informasi:contains('" + compName + "')").trigger("click");
+    }
 });
 
 
@@ -21,14 +23,19 @@ let sessionId;
 let xhttp;
 var stompClient = null;
 let compEmail = $("#compEmail").val();
+let compName = $("#displayName").val();
 
 connect();
+fetchMyInfo();
+fetchPartners();
+
 if (compEmail) {
-    $("a.blantershow-chat").html("Ask us a question");
+    $("a.blantershow-chat").html("Ask us a question!");
     loadMessages(compEmail); //will create a new conversation
 }
 
-fetchMyInfo();
+
+
 function fetchMyInfo() {
 //get personal info
     xhttp = new XMLHttpRequest();
@@ -71,6 +78,7 @@ function fetchPartners() {
             }
             $('.home-chat').html(showChatPartners);
         }
+
     }
     xhttp.open("GET", full + "/conv");
     xhttp.send();
@@ -116,12 +124,12 @@ function insertChat(side, text, dateTime) {
 }
 
 function connect() {
-    
-    const socket = new SockJS("/secured/room");   
+
+    const socket = new SockJS("/secured/room");
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function () {
         var url = stompClient.ws._transport.url;
-        url = url.replace("ws://"+location.hostname + (location.port ? ':' + location.port : '')+ "/secured/room/", "");
+        url = url.replace("ws://" + location.hostname + (location.port ? ':' + location.port : '') + "/secured/room/", "");
         url = url.replace("/websocket", "");
         url = url.replace(/^[0-9]+\//, "");
         console.log("Your current session is: " + url);
