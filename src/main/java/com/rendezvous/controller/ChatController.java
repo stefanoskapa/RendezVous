@@ -20,9 +20,7 @@ import com.rendezvous.service.MessagesService;
 import com.rendezvous.service.NotificationDispatcher;
 import com.rendezvous.util.Conversion;
 import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,21 +59,18 @@ public class ChatController {
             Principal user,
             @Header("simpSessionId") String sessionId) throws Exception {
         msg.setFrom(user.getName());
-       
+
         simpMessagingTemplate.convertAndSendToUser(
                 msg.getTo(), "/secured/user/queue/specific-user", msg);
-        System.out.println("Investigating " + user.getName() + ", "+ msg.getFrom());
-        User tempUser = userRepository.findByEmail(user.getName()).get();   
+        User tempUser = userRepository.findByEmail(user.getName()).get();
         User tempUser2 = userRepository.findByEmail(msg.getTo()).get();
-        System.out.println("Looking for conversations with userids " +tempUser.getId() + ", " +tempUser2.getId());
-       Conversation conv = conversationRepository.findConversation(tempUser.getId(), tempUser2.getId());
-        
+        Conversation conv = conversationRepository.findConversation(tempUser.getId(), tempUser2.getId());
+
         Messages tempMessage = new Messages();
         tempMessage.setMessage(msg.getText());
         tempMessage.setUserId(tempUser2.getId());
         tempMessage.setConversationId(conv.getId());
         tempMessage.setTimestamp(LocalDateTime.now());
-        
         messagesService.save(tempMessage, conv);
     }
 
@@ -111,7 +106,6 @@ public class ChatController {
             System.out.println(a.toString());
             boolean is_comp = tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY");
             if (is_comp) {
-                System.out.println("My partner is a client");
                 Client tempClient = clientRepository.findClientByUserId(a.getPartnerId(tempUser.getId()).getId());
                 UserProps up = new UserProps();
                 up.setFname(tempClient.getFname());
@@ -119,7 +113,6 @@ public class ChatController {
                 up.setEmail(tempClient.getUser().getEmail());
                 convPartners.add(up);
             } else {
-                System.out.println("My partner is a company");
                 Company tempCompany = companyRepository.findCompanyByUserId(a.getPartnerId(tempUser.getId()).getId());
                 UserProps up = new UserProps();
                 up.setFname(tempCompany.getFname());
@@ -159,25 +152,24 @@ public class ChatController {
         User otherUser = userRepository.findByEmail(userEmail).get();
         Conversation tempConv = conversationRepository.findConversation(tempUser.getId(), otherUser.getId());
         List<Message> msgsToSend = new LinkedList<>();
-        if (tempConv!=null) {
-        List<Messages> msgs = messagesService.findByConversationId(tempConv.getId()).get();
-        
-        for (Messages a : msgs) {
-            Message om = null;
-            if (tempUser.getId() == a.getUserId()) {
-                om = new Message(principal.getName(), a.getMessage(), a.getTimestamp().toString());
-            } else {
-              om = new Message(userEmail, a.getMessage(), a.getTimestamp().toString());
+        if (tempConv != null) {
+            List<Messages> msgs = messagesService.findByConversationId(tempConv.getId()).get();
+            for (Messages a : msgs) {
+                Message om = null;
+                if (tempUser.getId() == a.getUserId()) {
+                    om = new Message(principal.getName(), a.getMessage(), a.getTimestamp().toString());
+                } else {
+                    om = new Message(userEmail, a.getMessage(), a.getTimestamp().toString());
+                }
+                msgsToSend.add(om);
             }
-            msgsToSend.add(om);
-        }
         } else {
             tempConv = new Conversation();
             tempConv.setUser1Id(tempUser);
             tempConv.setUser2Id(otherUser);
-        conversationRepository.save(tempConv);
+            conversationRepository.save(tempConv);
         }
-            return new ResponseEntity<> (msgsToSend, HttpStatus.OK);
-        }
-    
+        return new ResponseEntity<>(msgsToSend, HttpStatus.OK);
     }
+
+}
