@@ -1,5 +1,6 @@
 package com.rendezvous.repository;
 
+import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     Optional<Company> findCompanyByUserEmail(String email);
-
+    Company findCompanyByUserId(int id);
     Optional<Company> findById(int id);
 
     List<Company> findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(String term1, String term2, String term3);

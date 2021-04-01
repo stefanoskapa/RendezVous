@@ -4,8 +4,8 @@ import com.rendezvous.entity.Messages;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
@@ -15,13 +15,10 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 @Service
 public class NotificationDispatcher {
-
-    private final SimpMessagingTemplate template;
+    
+    @Autowired
+    private SimpMessagingTemplate template;
     private final Map<String, String> userAndSession = new HashMap<>();
-
-    public NotificationDispatcher(SimpMessagingTemplate template) {
-        this.template = template;
-    }
 
     public void add(String user, String sessionId) {
         userAndSession.put(user, sessionId);
