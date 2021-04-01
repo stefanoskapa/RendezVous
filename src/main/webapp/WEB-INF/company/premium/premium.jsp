@@ -20,8 +20,6 @@
 
             main{
                background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/img/pro-bg.png');
-                /*background-image: url("/img/pro-bg.png");*/
-                /*opacity:*/ 
                 background-size: cover;
             }
 
