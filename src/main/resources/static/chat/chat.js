@@ -25,55 +25,59 @@ let sessionId;
 let xhttp;
 var stompClient = null;
 let compEmail = $("#compEmail").val();
+
 connect();
 
 if (compEmail) {
     loadMessages(compEmail); //will create a new conversation
 }
-//get personal info
-xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-        let myprops = JSON.parse(this.responseText);
-        let fname = myprops.fname;
-        let lname = myprops.lname;
-        myEmail = myprops.email;
-        myAvatar = "https://eu.ui-avatars.com/api/?name=" + fname +
-                "-" + lname + "&background=B0C4DE";
-    }
-};
-xhttp.open("GET", full + "/myprops");
-xhttp.send();
 
+fetchMyInfo();
+function fetchMyInfo() {
+//get personal info
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let myprops = JSON.parse(this.responseText);
+            let fname = myprops.fname;
+            let lname = myprops.lname;
+            myEmail = myprops.email;
+            myAvatar = "https://eu.ui-avatars.com/api/?name=" + fname +
+                    "-" + lname + "&background=B0C4DE";
+        }
+    };
+    xhttp.open("GET", full + "/myprops");
+    xhttp.send();
+}
 //show partners
 function fetchPartners() {
-xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-        let partners = JSON.parse(this.responseText);
-        let showChatPartners = "";
-        let companyName = "";
-        let avatar;
-        for (let i = 0; i < (partners).length; i++) {
-            if (partners[i].companyName) {
-                companyName = partners[i].companyName;
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let partners = JSON.parse(this.responseText);
+            let showChatPartners = "";
+            let companyName = "";
+            let avatar;
+            for (let i = 0; i < (partners).length; i++) {
+                if (partners[i].companyName) {
+                    companyName = partners[i].companyName;
+                }
+                let fname = partners[i].fname;
+                let lname = partners[i].lname;
+                let emailWrap = partners[i].email;
+                avatar = "https://eu.ui-avatars.com/api/?name=" + fname +
+                        "-" + lname + "&background=B0C4DE";
+                showChatPartners += ('<a class="informasi" onclick="loadMessages(\'' +
+                        emailWrap + '\');"> <div class="info-avatar">' +
+                        "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
+                        "<span class='chat-label'>" + companyName + "</span><span class='chat-nama'>"
+                        + fname + " " + lname + "</span>" + "</div></a>");
             }
-            let fname = partners[i].fname;
-            let lname = partners[i].lname;
-            let emailWrap = partners[i].email;
-            avatar = "https://eu.ui-avatars.com/api/?name=" + fname +
-                    "-" + lname + "&background=B0C4DE";
-            showChatPartners += ('<a class="informasi" onclick="loadMessages(\'' +
-                    emailWrap + '\');"> <div class="info-avatar">' +
-                    "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
-                    "<span class='chat-label'>" + companyName + "</span><span class='chat-nama'>"
-                    + fname + " " + lname + "</span>" + "</div></a>");
+            $('.home-chat').html(showChatPartners);
         }
-        $('.home-chat').html(showChatPartners);
     }
-}
-xhttp.open("GET", full + "/conv");
-xhttp.send();
+    xhttp.open("GET", full + "/conv");
+    xhttp.send();
 }
 
 function convertDate(date) {
@@ -124,6 +128,7 @@ function connect() {
     stompClient = Stomp.over(socket);
     alert("so far so good");
     stompClient.connect({}, function () {
+        alert("inside function");
         var url = stompClient.ws._transport.url;
         console.log("_transport.url is: " + url);
         url = url.replace("ws://rendezvouz.herokuapp.com/secured/room/", "");
