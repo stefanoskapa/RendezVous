@@ -34,7 +34,7 @@
             ${userExistsError}
         </c:if>
         <form:form action="${pageContext.request.contextPath}/company-register" 
-                       method="post" modelAttribute="newCompany">
+                   method="post" modelAttribute="newCompany">
             <!--todo: user sucessfully created-->
             <div id="container-register-company">
                 <div id="title">
@@ -46,71 +46,73 @@
                         <i class="material-icons">mail</i>
                     </div>
                     <form:input path="user.email" placeholder="Email" />
-                    <form:errors path="user.email"/>
-                    </div>
-                    <div class="input">
+                </div>
+                <div class="text-danger"><form:errors path="user.email"/></div>
+
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">vpn_key</i>
                     </div>
-                        <form:input path="user.password" placeholder="password"/>
-                        <form:errors path="user.password"/>
-                    </div>
-                    <div class="input">
+                    <form:input path="user.password" placeholder="password"/>
+                </div>
+                <div class="text-danger"><form:errors path="user.password"/></div>
+
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">spellcheck</i>
                     </div>
-                        <form:input path="displayName" placeholder="company name"/>
-                        <form:errors path="displayName"/>
-                        </div>
-                    <div class="input">
+                    <form:input path="displayName" placeholder="company name"/>
+                    <form:errors path="displayName"/>
+                </div>
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">spellcheck</i>
                     </div>
-                        <form:input path="lname" placeholder="last name"/>
-                        <form:errors path="lname"/>
-                        </div>
-                    <div class="input">
+                    <form:input path="lname" placeholder="last name"/>
+                    <form:errors path="lname"/>
+                </div>
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">phone</i>
                     </div>
-                        <form:input path="tel" placeholder="tel"/>
-                        <form:errors path="tel"/>
-                        </div>  
-                    <div class="input">
+                    <form:input path="tel" placeholder="tel"/>
+                    <form:errors path="tel"/>
+                </div>  
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">chrome_reader_mode</i>
                     </div>
-                        <form:input path="afm" placeholder="afm"/>
+                    <form:input path="afm" placeholder="afm"/>
                     <form:errors path="afm"/>
-                        </div>  
-                    <div class="input">
+                </div>  
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">location_city</i>
                     </div>
-                        <form:input path="addrStr" placeholder="Street"/>
+                    <form:input path="addrStr" placeholder="Street"/>
                     <form:errors path="addrStr"/>
-                        </div>  
-                    <div class="input">
+                </div>  
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">location_city</i>
                     </div>
-                        <form:input path="addrNo" placeholder="Number"/>
+                    <form:input path="addrNo" placeholder="Number"/>
                     <form:errors path="addrNo"/>
-                        </div>  
-                    <div class="input">
+                </div>  
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">location_city</i>
                     </div>
-                       <form:input path="addrCity" placeholder="City"/>
+                    <form:input path="addrCity" placeholder="City"/>
                     <form:errors path="addrCity"/>
-                        </div>
-                        <br>   
-                    <input type="submit" value="Register">
-                    <div class="register">
-                        <a href="${pageContext.request.contextPath}/client-register" id="register-link">Register as Client</a>
-                    </div>
-                </form:form>
+                </div>
+                <br>   
+                <input type="submit" value="Register">
+                <div class="register">
+                    <a href="${pageContext.request.contextPath}/client-register" id="register-link">Register as Client</a>
+                </div>
             </div>
+        </form:form>
         <br>
         <br>
         <br>

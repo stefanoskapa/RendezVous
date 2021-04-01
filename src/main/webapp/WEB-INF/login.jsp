@@ -8,18 +8,15 @@
     <head>
         <title>Login Page</title>
         <meta charset="utf-8">
-        <link rel="shortcut icon" href="Dakirby309-Simply-Styled-Calendar.ico"/>
+        <!--<link rel="shortcut icon" href="favicon.ico"/>-->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Reference Bootstrap files -->
-        <link rel="stylesheet"
-
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="login.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="login.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body style="background-color:#2f3438 ">
         <jsp:include page="navbars/loginNavbar.jsp"/>
@@ -38,17 +35,17 @@
                     <i class="material-icons lock">calendar_today</i> Login
                 </div> 
                 <br>
-                        <!-- Check for login error -->
-                        <c:if test="${param.error != null}">
-                            <div id="error" class="forgot-password">
-                                Invalid username and password.
-                            </div>
-                        </c:if>
-                        <!--		            
-                        <div class="alert alert-success col-xs-offset-1 col-xs-10">
-                                You have been logged out.
-                        </div>
-                        -->   
+                <!-- Check for login error -->
+                <c:if test="${param.error != null}">
+                    <div id="error" class="forgot-password">
+                        Invalid username and password.
+                    </div>
+                </c:if>
+                <!--		            
+                <div class="alert alert-success col-xs-offset-1 col-xs-10">
+                        You have been logged out.
+                </div>
+                -->   
                 <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">face</i>
