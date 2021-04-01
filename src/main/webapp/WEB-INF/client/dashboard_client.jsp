@@ -83,16 +83,16 @@
                 <div class='get-new hide'><div id='get-label'></div><div id='get-nama'></div></div></div>
             <div class='home-chat'>
                 <!-- Active conversations -->                
-                <div class='blanter-msg'>Call us to <b>+62123456789</b> from <i>0:00hs a 24:00hs</i></div></div>
+                <div class='blanter-msg'></div></div>
             <div class='start-chat hide'>
                 <div id="msgframe" style="overflow-y: scroll; height:300px;">
                     <!-- messages go here -->
                 </div>
-                <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' row='1'></textarea>
-                    <a href='javascript:void;' id='send-it'>Send</a></div></div>
-            <div id='get-number'></div><a class='close-chat' href='javascript:void'>×</a>
+                <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' rows='1'></textarea>
+                    <a id='send-it'>Send</a></div></div>
+            <div id='get-number'></div><a class='close-chat' >×</a>
         </div>
-        <a class='blantershow-chat' href='javascript:void' title='Show Chat'>Chat</a>
+        <a class='blantershow-chat' title='Show Chat'>Chat</a>
         <script src="${pageContext.request.contextPath}/chat/chat.js"></script>
         <!-- Chat ends here -->
     </body>

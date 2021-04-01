@@ -29,8 +29,8 @@ public class MessagesService {
     
     public void save(Messages message, Conversation conv) {
         List<String> users = new LinkedList<>();
-        users.add(conv.getClient().getUser().getEmail());
-        users.add(conv.getCompany().getUser().getEmail());   
+        //users.add(conv.getClient().getUser().getEmail());
+        //users.add(conv.getCompany().getUser().getEmail());   
         dispatcher.notifyUsers(users, message);        
         messagesRepository.save(message);     
     }

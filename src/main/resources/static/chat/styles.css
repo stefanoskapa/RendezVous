@@ -4,7 +4,9 @@ body {
 }
 
 a:link,a:visited { 
-    color:#444;text-decoration:none;transition:all .4s ease-in-out
+    color:#444;
+    text-decoration:none;
+    transition:all .4s ease-in-out;
 } 
 
 #whatsapp-chat {
@@ -19,7 +21,7 @@ a:link,a:visited {
     z-index:99;
     animation-name:showchat;
     animation-duration:1s;
-    transform:scale(1)
+    transform:scale(1);
 }
 a.blantershow-chat {
     background:linear-gradient(to right top,#6f96f3,#164ed2);
@@ -44,32 +46,32 @@ a.blantershow-chat:hover {
 
 a.blantershow-chat i {
     transform:scale(1.2);
-    margin:0 10px 0 0
+    margin:0 10px 0 0;
 }
 .header-chat {
     background:linear-gradient(to right top,#6f96f3,#164ed2);
     color:#fff;
-    padding:20px
+    padding:20px;
 }
 .header-chat h3 {
-    margin:0 0 10px
+    margin:0 0 10px;
 }
 
 .header-chat p {
     font-size:14px;
     line-height:1.7;
-    margin:0
+    margin:0;
 }
 
 .info-avatar {
-    position:relative
+    position:relative;
 }
 
 .info-avatar img {
     border-radius:100%;
     width:50px;
     float:left;
-    margin:0 10px 0 0
+    margin:0 10px 0 0;
 }
 
 a.informasi {
@@ -77,34 +79,34 @@ a.informasi {
     display:block;
     overflow:hidden;
     animation-name:showhide;
-    animation-duration:2.5s
+    animation-duration:2.5s;
 }
 
 a.informasi:hover {
-    background:#f1f1f1
+    background:#f1f1f1;
 }
 
 .info-chat span {
-    display:block
+    display:block;
 }
 
 #get-label,span.chat-label {
-    font-size:12px;color:#888
+    font-size:12px;color:#888;
 }
 
 #get-nama,span.chat-nama {
     margin:5px 0 0;
     font-size:15px;
     font-weight:700;
-    color:#222
+    color:#222;
 }
 
 #get-label,#get-nama {
-    color:#fff
+    color:#fff;
 }
 
 span.my-number {
-    display:none
+    display:none;
 }
 
 .blanter-msg {
@@ -112,7 +114,7 @@ span.my-number {
     padding:20px;
     font-size:12.5px;
     text-align:center;
-    border-top:1px solid #ddd
+    border-top:1px solid #ddd;
 }
 
 textarea#chat-input {
@@ -132,7 +134,7 @@ a#send-it {
     font-weight:700;
     padding:8px 8px 8px 8px;
     background:#eee;
-    border-radius:10px
+    border-radius:10px;
 }
 
 .first-msg {
@@ -154,11 +156,11 @@ a#send-it {
 }
 
 .start-chat .blanter-msg {
-    display:flex
+    display:flex;
 }
 
 #get-number{
-    display:none
+    display:none;
 }
 
 a.close-chat {
@@ -166,7 +168,7 @@ a.close-chat {
     top:5px;
     right:15px;
     color:#fff;
-    font-size:30px
+    font-size:30px;
 }
 
 .container1 {
@@ -240,8 +242,18 @@ a.close-chat {
 }
 
 
-@keyframes showhide{from{transform:scale(.5);opacity:0}}
-@keyframes showchat{from{transform:scale(0);opacity:0}}
+@keyframes showhide{
+    from{
+        transform:scale(.5);
+        opacity:0;
+    }
+}
+@keyframes showchat{
+    from{
+        transform:scale(0);
+        opacity:0;
+    }
+}
 @keyframes shake {
     80% { transform: translate(1px, 1px) rotate(0deg); }
     82% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -256,9 +268,25 @@ a.close-chat {
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 @media screen and (max-width:480px){
-    #whatsapp-chat{width:auto;left:5%;right:5%;font-size:80%}
+    #whatsapp-chat{width:auto;
+                   left:5%;
+                   right:5%;
+                   font-size:80%;
+    }
 }
 
-.hide{display:none;animation-name:showhide;animation-duration:1.5s;transform:scale(1);opacity:1}
-.show{display:block;animation-name:showhide;animation-duration:1.5s;transform:scale(1);opacity:1}
+.hide{
+    display:none;
+    animation-name:showhide;
+    animation-duration:1.5s;
+    transform:scale(1);
+    opacity:1;
+}
+.show{
+    display:block;
+    animation-name:showhide;
+    animation-duration:1.5s;
+    transform:scale(1);
+    opacity:1;
+}
 

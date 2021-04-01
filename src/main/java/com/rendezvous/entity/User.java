@@ -6,6 +6,7 @@
 package com.rendezvous.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,7 +21,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -48,7 +48,7 @@ public class User implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 6, max = 68)
+    @Size(min = 1, max = 68)
     @Column(name = "password")
     private String password;
 
@@ -58,11 +58,6 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roleList;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<Client> clientList;
-//    
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<Company> companyList;
     public User() {
     }
 
@@ -84,22 +79,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public List<Role> getRoleList() {
         return roleList;
     }
@@ -108,21 +87,6 @@ public class User implements Serializable {
         this.roleList = roleList;
     }
 
-//    public List<Client> getClientList() {
-//        return clientList;
-//    }
-//
-//    public void setClientList(List<Client> clientList) {
-//        this.clientList = clientList;
-//    }
-//
-//    public List<Company> getCompanyList() {
-//        return companyList;
-//    }
-//
-//    public void setCompanyList(List<Company> companyList) {
-//        this.companyList = companyList;
-//    }
     @Override
     public int hashCode() {
         int hash = 0;
@@ -147,7 +111,6 @@ public class User implements Serializable {
 //    public String toString() {
 //        return "com.rendezvous.entity.User[ id=" + id + " ]";
 //    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -158,7 +121,21 @@ public class User implements Serializable {
         sb.append('}');
         return sb.toString();
     }
-    
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }

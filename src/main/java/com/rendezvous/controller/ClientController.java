@@ -91,6 +91,7 @@ public class ClientController {
             model.addAttribute("comp_name", tempCompany.getDisplayName());
             model.addAttribute("fname", tempCompany.getFname());
             model.addAttribute("lname", tempCompany.getLname());
+            model.addAttribute("comp_email", tempCompany.getUser().getEmail());
         } catch (CompanyIdNotFound ex) {
             // todo if exception occures company id is wrong and should be redirected to error page
         }
