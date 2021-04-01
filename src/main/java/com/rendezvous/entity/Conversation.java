@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,36 +11,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "conversation")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Conversation.findAll", query = "SELECT c FROM Conversation c")})
+    @NamedQuery(name = "Conversation.findAll", query = "SELECT c FROM Conversation c")
+    , @NamedQuery(name = "Conversation.findById", query = "SELECT c FROM Conversation c WHERE c.id = :id")})
 public class Conversation implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
-    
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversationId")
-    private List<Messages> messagesList;
-    
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "user1_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Client client;
-    
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private User user1Id;
+    @JoinColumn(name = "user2_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Company company;
+    private User user2Id;
 
     public Conversation() {
     }
@@ -64,30 +50,28 @@ public class Conversation implements Serializable {
         this.id = id;
     }
 
-    public List<Messages> getMessagesList() {
-        return messagesList;
+    public User getUser1Id() {
+        return user1Id;
     }
 
-    public void setMessagesList(List<Messages> compMessagesList) {
-        this.messagesList = compMessagesList;
+    public void setUser1Id(User user1Id) {
+        this.user1Id = user1Id;
     }
 
-    
-
-    public Client getClient() {
-        return client;
+    public User getUser2Id() {
+        return user2Id;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUser2Id(User user2Id) {
+        this.user2Id = user2Id;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
+    public User getPartnerId(int userId) {
+        if (user1Id.getId() == userId) {
+            return user2Id;
+        } else {
+            return user1Id;
+        }
     }
 
     @Override
@@ -114,5 +98,5 @@ public class Conversation implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.Conversation[ id=" + id + " ]";
     }
-    
+
 }

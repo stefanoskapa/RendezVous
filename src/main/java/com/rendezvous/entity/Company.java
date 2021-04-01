@@ -98,8 +98,8 @@ public class Company implements Serializable {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
 //    private List<Availability> availabilityList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-    private List<Conversation> conversationList;
+  //  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+   // private List<Conversation> conversationList;
 
     public Company() {
     }
@@ -235,13 +235,9 @@ public class Company implements Serializable {
 //        this.availabilityList = availabilityList;
 //    }
 
-    public List<Conversation> getConversationList() {
-        return conversationList;
-    }
+    
 
-    public void setConversationList(List<Conversation> conversationList) {
-        this.conversationList = conversationList;
-    }
+    
 
     @Override
     public int hashCode() {

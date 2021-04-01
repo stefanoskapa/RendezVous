@@ -16,7 +16,7 @@ import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
-import com.rendezvous.model.ConvStarter;
+import com.rendezvous.model.UserProps;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.repository.ConversationRepository;
 import com.rendezvous.repository.UserRepository;
@@ -62,48 +62,51 @@ public class ApiController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/whoami")
-    public ResponseEntity<ConvStarter> whoAmI(Principal principal) {
+  /*  @GetMapping("/whoami")
+    public ResponseEntity<UserDetails> whoAmI(Principal principal) {
         User tempUser = userRepository.findByEmail(principal.getName()).get();
-        ConvStarter myRoleAndId = new ConvStarter();
-        myRoleAndId.setUserId(tempUser.getId()+"");
+        UserDetails convStarter = new UserDetails();
+        convStarter.setUserId(tempUser.getId()+"");
         if (tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY")) {
-                myRoleAndId.setRole("company");
+                convStarter.setRole("company");
                 Company tempCompany = companyService.findCompanyByEmail(principal.getName());
-                myRoleAndId.setFname(tempCompany.getFname());
-                myRoleAndId.setLname(tempCompany.getLname());
-                myRoleAndId.setIdByRole(tempCompany.getId()+"");
-                myRoleAndId.setCompanyName(tempCompany.getDisplayName()); 
+                convStarter.setFname(tempCompany.getFname());
+                convStarter.setLname(tempCompany.getLname());
+                convStarter.setIdByRole(tempCompany.getId()+"");
+                convStarter.setCompanyName(tempCompany.getDisplayName()); 
+                
                 List<Conversation> convList = conversationRepository.findByCompanyId(tempCompany.getId());
-                List<ConvStarter> partnerList = new LinkedList<>();
+                List<UserDetails> partnerList = new LinkedList<>();
                 for (Conversation a: convList) {
-                    ConvStarter tempPartner = new ConvStarter();
+                    UserDetails tempPartner = new UserDetails();
                     tempPartner.setFname(a.getClient().getFname());
                     tempPartner.setLname(a.getClient().getLname());    
                     tempPartner.setIdByRole(a.getClient().getId()+"");
+                    tempPartner.setPartnerEmail(a.getClient().getUser().getEmail());
                     partnerList.add(tempPartner);
                 }
-                myRoleAndId.setConvPartners(partnerList);
+                convStarter.setConvPartners(partnerList);
             } else {
-                myRoleAndId.setRole("client");
+                convStarter.setRole("client");
                 Client tempClient = clientService.findClientByEmail(principal.getName());
-                myRoleAndId.setFname(tempClient.getFname());
-                myRoleAndId.setLname(tempClient.getLname());
-                myRoleAndId.setIdByRole(tempClient.getId()+"");
+                convStarter.setFname(tempClient.getFname());
+                convStarter.setLname(tempClient.getLname());
+                convStarter.setIdByRole(tempClient.getId()+"");
                 List<Conversation> convList = conversationRepository.findByClientId(tempClient.getId());
-                List<ConvStarter> partnerList = new LinkedList<>();
+                List<UserDetails> partnerList = new LinkedList<>();
                 for (Conversation a: convList) {
-                    ConvStarter tempPartner = new ConvStarter();
+                    UserDetails tempPartner = new UserDetails();
                     tempPartner.setFname(a.getCompany().getFname());
                     tempPartner.setLname(a.getCompany().getLname());
                     tempPartner.setCompanyName(a.getCompany().getDisplayName());
                     tempPartner.setIdByRole(a.getCompany().getId()+"");
+                    tempPartner.setPartnerEmail(a.getCompany().getUser().getEmail());
                     partnerList.add(tempPartner);
                 }
-                myRoleAndId.setConvPartners(partnerList);
+                convStarter.setConvPartners(partnerList);
             }        
-        return new ResponseEntity<>(myRoleAndId, HttpStatus.OK);
-    }
+        return new ResponseEntity<>(convStarter, HttpStatus.OK);
+    }*/
 
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
@@ -215,7 +218,7 @@ public class ApiController {
         List<String> categories = categoryService.getAllCategoriesNames();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
-
+/*
     @GetMapping("/client/history/{company_id}") //TODO create empty conversation in case tempConv==null
     public ResponseEntity<List<Messages>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal) throws CompanyIdNotFound {
         List<Messages> messages;
@@ -232,6 +235,6 @@ public class ApiController {
         Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(client_id, tempComp.getId());
         messages = messagesService.findByConversationId(tempConv.getId()).get();
         return new ResponseEntity<>(messages, HttpStatus.OK);
-    }
+    }*/
 
 }
