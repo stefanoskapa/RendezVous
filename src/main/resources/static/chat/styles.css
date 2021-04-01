@@ -3,16 +3,16 @@ body {
     background:#f1f1f1;
 }
 
-a:link,a:visited { 
+/*a:link,a:visited { 
     color:#444;
     text-decoration:none;
     transition:all .4s ease-in-out;
-} 
+} */
 
 #whatsapp-chat {
     position:fixed;
     background:#fff;
-    width:350px;
+    width:300px;
     border-radius:10px;
     box-shadow:0 1px 15px rgba(32,33,36,.28);
     bottom:90px;
@@ -34,9 +34,11 @@ a.blantershow-chat {
     padding:10px 20px;
     border-radius:30px;
     box-shadow:0 1px 15px rgba(32,33,36,.28);
+    cursor: pointer;
     animation: shake 5s;
     animation-iteration-count: infinite;
     animation-play-state: paused;
+    
 }
 /*
 a.blantershow-chat:hover {
@@ -47,11 +49,13 @@ a.blantershow-chat:hover {
 a.blantershow-chat i {
     transform:scale(1.2);
     margin:0 10px 0 0;
+   
 }
 .header-chat {
     background:linear-gradient(to right top,#6f96f3,#164ed2);
     color:#fff;
-    padding:20px;
+    padding:10px;
+    
 }
 .header-chat h3 {
     margin:0 0 10px;
@@ -135,6 +139,7 @@ a#send-it {
     padding:8px 8px 8px 8px;
     background:#eee;
     border-radius:10px;
+    cursor: pointer;
 }
 
 .first-msg {
@@ -165,10 +170,11 @@ a#send-it {
 
 a.close-chat {
     position:absolute;
-    top:5px;
+    top:0px;
     right:15px;
     color:#fff;
     font-size:30px;
+    cursor: pointer;
 }
 
 .container1 {
@@ -178,7 +184,6 @@ a.close-chat {
     margin: 10px 0;
     word-wrap: break-word;
 }
-
 
 .darker {
     border-color: #ccc;
@@ -193,12 +198,12 @@ a.close-chat {
 
 .container1 img {
     float: left;
-    max-width: 60px;
+    max-width: 40px;
     width: 100%;
     margin-right: 20px;
     border-radius: 50%;
     
-}
+} 
 
 
 
@@ -222,6 +227,12 @@ a.close-chat {
 
 #msgframe {
     padding:10px;
+    overflow-y: scroll; 
+    height:300px;
+}
+.homechat {
+    overflow-y: scroll; 
+    height:300px;
 }
 
 #msgframe::-webkit-scrollbar-track
