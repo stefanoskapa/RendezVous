@@ -34,12 +34,17 @@ public class PaymentController {
     private CompanyService companyService;
     
     private double ammount=50; //50 currency(EUR)
-
+    
     @GetMapping("/pro")
     public String showPremium(Model model,Principal principal) {
         model.addAttribute("amount", ammount * 100); // In cents
         model.addAttribute("stripePublicKey", stripePublicKey);
-
+        if (principal != null) {
+            Company c = companyService.findCompanyByEmail(principal.getName());
+            model.addAttribute("company_name", c.getDisplayName());
+            model.addAttribute("company", c);
+        }
+        
         return "company/premium/premium";
     }
 

@@ -9,7 +9,7 @@
               href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
+
         <script	src="/js/search-company/pagination.js"></script>
         <script	src="/js/search-company/search-company.js"></script>
 
@@ -68,13 +68,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </main>
 
-</main>
-
-<footer>
-    <jsp:include page="../navbars/footer.jsp"/>
-</footer>
-</body>
+        <footer>
+            <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
+        </footer>
+    </body>
 </html>
