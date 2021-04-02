@@ -57,8 +57,9 @@ function fetchPartners() {
                         "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
                         "<span class='chat-label'>" + companyName + "</span><span class='chat-nama'>"
                         + fname + " " + lname + "</span>" + "</div></a>");
+                
             }
-            $('.home-chat').html(showChatPartners);
+            $('#partnerframe').html(showChatPartners);
             if (compName) {
                 $("a.informasi:contains('" + compName + "')").trigger("click");
             }

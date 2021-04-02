@@ -10,7 +10,9 @@
             <p>Active conversations</p></div>
         <div class='get-new hide'><div id='get-label'></div><div id='get-nama'></div></div></div>
     <div class='home-chat'>
-        <!-- Active conversations -->                
+        <div id="partnerframe">
+        <!-- Active conversations --> 
+        </div>
         <div class='blanter-msg'></div></div>
     <div class='start-chat hide'>
         <div id="msgframe">

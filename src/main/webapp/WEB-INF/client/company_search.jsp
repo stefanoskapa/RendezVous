@@ -5,14 +5,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Reference Bootstrap files -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
         <script	src="/js/search-company/pagination.js"></script>
         <script	src="/js/search-company/search-company.js"></script>
-
         <link rel="stylesheet" href="/css/search-company/pagination.css">
         <link rel="stylesheet" href="/css/search-company/search-company.css">
 
