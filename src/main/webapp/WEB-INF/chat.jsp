@@ -20,7 +20,7 @@
         </div>
         <div class='blanter-msg'><textarea id='chat-input' placeholder='Write a response' maxlength='120' rows='1'></textarea>
             <a id='send-it'>Send</a></div></div>
-    <div id='get-number'></div><a class='close-chat' >×</a>
+    <a class='close-chat' >×</a>
 </div>
 <a class='blantershow-chat' title='Show Chat'>Chat</a>
 <script src="${pageContext.request.contextPath}/chat/chat.js"></script>
