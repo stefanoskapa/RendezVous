@@ -36,11 +36,10 @@
         </style>
     </head>
     <body>
-        <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
+        <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
+        <br/>
+        <br/>
 
-
-        <h3> ${company_name} dashboard</h3>
-     
         <div id='calendar'></div>
 
         <!-- Modal content-->

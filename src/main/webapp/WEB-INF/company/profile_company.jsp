@@ -38,12 +38,12 @@
                 <div class="form-row profile-row">
                     <div class="col-md-8" style="width: 741px;">
                         <h1 style="color: rgb(255,255,255);"><i class="fas fa-building"></i>&nbsp;Company Profile Edit</h1><c:if test="${company.premium == true}"><h4 style="color: rgb(155,166,200);">Premium : Enabled</h4></c:if>
-                        <hr>
-                        <div class="form-row">
-                            <div class="col-sm-12 col-md-6">
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
+                            <hr>
+                            <div class="form-row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
                                     <form:label path="displayName"><i class="fa fa-user-circle" style="font-size: 24px;"></i>&nbsp;Display Name</form:label>
-                                    <form:input path="displayName" placeholder="company name" class="form-control" type="text" name="displayname" style="width:250px;" />
+                                    <form:input  path="displayName" placeholder="company name" class="form-control" type="text" name="displayname" style="width:250px;" />
                                     <form:errors path="displayName"/>
                                 </div>
                                 <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
@@ -53,13 +53,33 @@
                                     <form:errors path="fname"/>
                                 </div>
 
+                                <c:if test="${company.premium == true}">
+                                    <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
+                                        <form:label path="category"><i class="fas fa-spell-check" style="font-size: 24px;"></i>&nbsp;Category</form:label>
+                                        <form:select path="category" class="form-control" style="width:250px;">
+
+                                        <c:if test = "${company.category == null}">
+                                            <option disabled="true" selected="true">Select a category</option>
+                                        </c:if>
+                                        <c:if test = "${company.category != null}">
+                                            <option selected="true" value="${company.category.id}">${company.category.category}</option>
+                                        </c:if>
+
+                                        <c:forEach items="${listCategory}" var="category">
+                                            <c:if test = "${company.category.id != category.id}">
+                                                <option value="${category.id}">${category.category}</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </form:select>
+                                    </div>
+                                </c:if>
 
                                 <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
                                     <form:label path="tel"><i class="fas fa-phone" style="font-size: 24px;"></i>&nbsp;Telephone</form:label>
-                                    <form:input path="tel" placeholder="Telephone" class="form-control" type="phone" name="phone" style="width: 120px;"/>
+                                    <form:input path="tel" placeholder="Telephone" class="form-control" type="text" name="phone" style="width: 120px;"/>
                                     <form:errors path="tel" />
                                 </div>
-                             
+
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
@@ -78,32 +98,32 @@
                                 </div>
                                 <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
                                     <form:label path="addrCity"><i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;City</form:label>
-                                <form:input path="addrCity" placeholder="City" class="form-control" type="text" style="width: 250px;"/>
-                                <form:errors path="addrCity"/>
+                                    <form:input path="addrCity" placeholder="City" class="form-control" type="text" style="width: 250px;"/>
+                                    <form:errors path="addrCity"/>
                                 </div>
                                 <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
                                     <form:label path="addrNo">&nbsp;<i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;Street Number</form:label>
                                     <form:input path="addrNo" placeholder="Number" class="form-control" name="streetnumber"  style="width: 55px;"/>
                                     <form:errors path="addrNo"/>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="form-row">
                             <br>
                             <br>
-                           
+
                             <br
-                            <div class="form-row">
-                                <div class="col-md-12 content-right"> <br><button class="btn btn-primary form-btn" type="submit" style="color: rgb(255,255,255);background-color: #007a3d;">Save</button></div>
-    
-                            </div>
+                                <div class="form-row">
+                            <div class="col-md-12 content-right"> <br><button class="btn btn-primary form-btn" type="submit" style="color: rgb(255,255,255);background-color: #007a3d;">Save</button></div>
+
                         </div>
                     </div>
-                </form:form>
-                    
-            </div>
-            <br>
+                </div>
+            </form:form>
+
+        </div>
+        <br>
     </body>
     <footer><jsp:include page="/WEB-INF/navbars/footer.jsp"/></footer>
 
