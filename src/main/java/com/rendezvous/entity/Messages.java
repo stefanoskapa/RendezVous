@@ -13,14 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PostPersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name = "messages")
@@ -66,12 +62,19 @@ public class Messages implements Serializable {
     public Messages(Integer id) {
         this.id = id;
     }
-
+/*
     public Messages(Integer id, LocalDateTime timestamp, String message, int userId) {
         this.id = id;
         this.timestamp = timestamp;
         this.message = message;
         this.userId = userId;
+    }
+    */
+    public Messages(int userId, int conversationId, String message, LocalDateTime timestamp) {
+        this.userId = userId;
+        this.conversationId = conversationId;
+        this.message = message;
+        this.timestamp = timestamp;
     }
 
     public Integer getId() {

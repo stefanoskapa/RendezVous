@@ -53,7 +53,7 @@ public class ChatController {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @MessageMapping("/secured/room")
+    @MessageMapping("/secured/room") //send incoming message to the right user
     public void sendSpecific(
             @Payload Message msg,
             Principal user,
@@ -65,12 +65,7 @@ public class ChatController {
         User tempUser = userRepository.findByEmail(user.getName()).get();
         User tempUser2 = userRepository.findByEmail(msg.getTo()).get();
         Conversation conv = conversationRepository.findConversation(tempUser.getId(), tempUser2.getId());
-
-        Messages tempMessage = new Messages();
-        tempMessage.setMessage(msg.getText());
-        tempMessage.setUserId(tempUser.getId());
-        tempMessage.setConversationId(conv.getId());
-        tempMessage.setTimestamp(LocalDateTime.now());
+        Messages tempMessage = new Messages(tempUser.getId(), conv.getId(),msg.getText(),LocalDateTime.now());
         messagesService.save(tempMessage, conv);
     }
 
@@ -103,7 +98,6 @@ public class ChatController {
         List<Conversation> conv = conversationRepository.findByUserId(tempUser.getId());
         List<UserProps> convPartners = new LinkedList<>();
         for (Conversation a : conv) {
-            System.out.println(a.toString());
             boolean is_comp = tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY");
             if (is_comp) {
                 Client tempClient = clientRepository.findClientByUserId(a.getPartnerId(tempUser.getId()).getId());
