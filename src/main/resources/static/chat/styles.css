@@ -20,7 +20,7 @@ body {
     overflow:hidden;
     z-index:99;
     animation-name:showchat;
-    animation-duration:1s;
+    animation-duration:0s;
     transform:scale(1);
 }
 a.blantershow-chat {
@@ -83,7 +83,7 @@ a.informasi {
     display:block;
     overflow:hidden;
     animation-name:showhide;
-    animation-duration:2.5s;
+    animation-duration:0s;
 }
 
 a.informasi:hover {

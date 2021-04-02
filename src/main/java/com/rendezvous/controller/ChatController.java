@@ -68,7 +68,7 @@ public class ChatController {
 
         Messages tempMessage = new Messages();
         tempMessage.setMessage(msg.getText());
-        tempMessage.setUserId(tempUser2.getId());
+        tempMessage.setUserId(tempUser.getId());
         tempMessage.setConversationId(conv.getId());
         tempMessage.setTimestamp(LocalDateTime.now());
         messagesService.save(tempMessage, conv);
