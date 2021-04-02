@@ -21,6 +21,9 @@
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <style>
+            #calendar {
+                margin: 0px 50px 0px 50px;
+            }
             .fc-event-main:hover,
             .fc-daygrid-event:hover {
                 cursor: pointer;

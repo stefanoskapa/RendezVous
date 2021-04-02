@@ -29,7 +29,9 @@
             {
                 cursor: pointer;
             }
-
+            #calendar {
+                margin: 20px 50px 50px 50px;
+            }
 
         </style>
     </head>
@@ -37,7 +39,7 @@
         <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
         <br/>
         <br/>
-        
+
         <div id='calendar'></div>
 
         <!-- Modal content-->
