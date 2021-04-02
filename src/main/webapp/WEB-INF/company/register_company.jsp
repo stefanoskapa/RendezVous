@@ -9,10 +9,8 @@
         <meta charset="utf-8">
         <link rel="shortcut icon" href="Dakirby309-Simply-Styled-Calendar.ico"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
         <!-- Reference Bootstrap files -->
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="login.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -63,6 +61,13 @@
                     </div>
                     <form:input path="displayName" placeholder="company name"/>
                     <form:errors path="displayName"/>
+                </div>
+                <div class="input">
+                    <div class="input-addon">
+                        <i class="material-icons">spellcheck</i>
+                    </div>
+                    <form:input path="fname" placeholder="first name"/>
+                    <form:errors path="fname"/>
                 </div>
                 <div class="input">
                     <div class="input-addon">

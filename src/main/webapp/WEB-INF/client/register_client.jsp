@@ -12,7 +12,7 @@
 
         <!-- Reference Bootstrap files -->
         <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="login.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -46,49 +46,49 @@
                     </div>
                     <form:input path="user.email" placeholder="Email" />
                     <form:errors path="user.email"/>
-                    </div>
-                    <div class="input">
+                </div>
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">vpn_key</i>
                     </div>
-                        <form:input path="user.password" placeholder="password"/>
-                        <form:errors path="user.password"/>
-                    </div>
-                    <div class="input">
+                    <form:input path="user.password" placeholder="password"/>
+                    <form:errors path="user.password"/>
+                </div>
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">spellcheck</i>
                     </div>
-                        <form:input path="fname" placeholder="first name"/>
-                        <form:errors path="fname"/>
-                        </div>
-                    <div class="input">
+                    <form:input path="fname" placeholder="first name"/>
+                    <form:errors path="fname"/>
+                </div>
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">spellcheck</i>
                     </div>
-                        <form:input path="lname" placeholder="last name"/>
-                        <form:errors path="lname"/>
-                        </div>
-                    <div class="input">
+                    <form:input path="lname" placeholder="last name"/>
+                    <form:errors path="lname"/>
+                </div>
+                <div class="input">
                     <div class="input-addon">
                         <i class="material-icons">phone</i>
                     </div>
-                        <form:input path="tel" placeholder="tel"/>
-                        <form:errors path="tel"/>
-                        </div>
-                        <br>   
-                    <input type="submit" value="Register">
-                    <div class="register">
-                        <a href="${pageContext.request.contextPath}/company-register" id="register-link">Register as Company</a>
-                    </div>
-                </form:form>
-            </div>
+                    <form:input path="tel" placeholder="tel"/>
+                    <form:errors path="tel"/>
+                </div>
+                <br>   
+                <input type="submit" value="Register">
+                <div class="register">
+                    <a href="${pageContext.request.contextPath}/company-register" id="register-link">Register as Company</a>
+                </div>
+            </form:form>
+        </div>
         <br>
         <br>
         <br>
         <br>
-        
+
     </body>
     <footer>
-            <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
-        </footer>
+        <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
+    </footer>
 </html>
