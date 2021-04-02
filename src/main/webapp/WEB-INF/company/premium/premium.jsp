@@ -10,68 +10,67 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>RendezVouz | Pro</title>
-        <style>
-            body {
-                display: grid;
-                min-height: 100vh;
-                height: 100%;
-                grid-template-rows: auto 1fr auto;
-            }
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-            main{
-               background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/img/pro-bg.png');
-                background-size: cover;
-            }
-
-        </style>
+        <link rel="stylesheet" href="/css/purchase/pro/pro.css">
     </head>
     <body>
         <header>
             <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
         </header>
 
-        <main>
+        <main class="vertical-center">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <h1 class="text-white">Expand with us</h1>
+                    <div class="col-md-6 col-sm-12">
+                        <p class="text-white display-4 py-5 py-md-2">Expand your<br/>customer base</p>
+                        <h3 class="text-white lead py-2">Unlock the Pro package and let our users find your business when searching for a your specific category</h3>
+                        <h5 class="text-white lead py-2">
+                            <ul>
+                                <li>One time purchase</li>
+                                <li>No recurring fees</li>
+                            </ul>
+                        </h5>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        
+                    <div class="col-md-6 col-sm-12 my-auto">
+                        <div class="widget">
+                            <h4 class="widget-title">Order Summary</h4>
+                            <div class="summary-block">
+                                <div class="summary-content">
+                                    <div class="summary-head"><h5 class="summary-title">Pro Package</h5></div>
+                                    <div class="summary-price">
+                                        <h4 class="summary-text py-1">${amount/100} &euro;</h4>
+                                        <span class="summary-small-text pull-right">Lifetime</span>
+                                    </div>
+                                    <form action='${pageContext.request.contextPath}/company/pro/charge' method='POST' id='checkout-form'>
+                                        <script
+                                            src='https://checkout.stripe.com/checkout.js'
+                                            class='stripe-button'
+                                            data-key=${stripePublicKey}
+                                            data-amount=${amount}
+                                            data-currency=eur
+                                            data-name='RendezVous'
+                                            data-description='Unlock Pro'
+                                            data-image='/favicon.ico'
+                                            data-locale='auto'
+                                            data-zip-code='false'
+                                            >
+                                        </script>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            
-            <h3>Unlock our premium services</h3>
-            Unlock the option to customize your category and start getting found by more and more clients!
-
-            <h4>Order Form</h4>
-            <h4>Price: ${amount/100}</h4>
-
-            <form action='${pageContext.request.contextPath}/company/pro/charge' method='POST' id='checkout-form'>
-                <script
-                    src='https://checkout.stripe.com/checkout.js'
-                    class='stripe-button'
-                    data-key=${stripePublicKey}
-                    data-amount=${amount}
-                    data-name='RendezVous'
-                    data-description='Unlock Pro'
-                    data-image='/favicon.ico'
-                    data-locale='auto'
-                    data-zip-code='false'
-                    >
-                </script>
-            </form>
         </main>
 
         <footer>
             <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
         </footer>
-        <!--        i agora, provoli selidas epitixous (company/pro/success) agoras kai redirect sto company/profile, opou tha exei ksekleidosei i epilogi category-->
-        <!--me tin apotiximeni agora provoli selidas apotyxias (company/pro/rejected), kai redirect sto company/dashboard-->
-
     </body>
 </html>

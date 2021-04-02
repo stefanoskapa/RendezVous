@@ -1,0 +1,15 @@
+body {
+    display: grid;
+    min-height: 100vh;
+    height: 100%;
+    grid-template-rows: auto 1fr auto;
+}
+
+main{
+    background-color: #2f3438;
+}
+
+img{
+    display: block;
+    border: 0px;
+}
