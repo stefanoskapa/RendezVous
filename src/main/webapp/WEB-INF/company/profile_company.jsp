@@ -14,20 +14,30 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>Company Profile</title>
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body style="background-color: rgb(47,52,56);">
         <!--URL: company/profile-->
-        <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
+        <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
         <br>
         <div class="container profile profile-view" id="profile" style="color: rgb(36,40,43);">
             <form:form action="${pageContext.request.contextPath}/company/profile" 
                        method="post" modelAttribute="company">
                 <div class="form-row profile-row">
                     <div class="col-md-8" style="width: 741px;">
-                        <h1 style="color: rgb(255,255,255);"><i class="fas fa-building"></i>&nbsp;Company Profile Edit</h1>
+                        <h1 style="color: rgb(255,255,255);"><i class="fas fa-building"></i>&nbsp;Company Profile Edit</h1><c:if test="${company.premium == true}"><h4 style="color: rgb(155,166,200);">Premium : Enabled</h4></c:if>
                         <hr>
                         <div class="form-row">
                             <div class="col-sm-12 col-md-6">
@@ -49,6 +59,7 @@
                                     <form:input path="tel" placeholder="Telephone" class="form-control" type="phone" name="phone" style="width: 120px;"/>
                                     <form:errors path="tel" />
                                 </div>
+                             
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
@@ -65,31 +76,27 @@
                                     <form:input path="addrStr" placeholder="Street Name" class="form-control" type="text"  name="streetname" style="width: 250px;"/>
                                     <form:errors path="addrStr"/>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-12 col-md-6">
-                                <div class="form-group" style="color: rgb(255,255,255);font-size: 18px;">
-
-
+                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
+                                    <form:label path="addrCity"><i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;City</form:label>
+                                <form:input path="addrCity" placeholder="City" class="form-control" type="text" style="width: 250px;"/>
+                                <form:errors path="addrCity"/>
+                                </div>
+                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
                                     <form:label path="addrNo">&nbsp;<i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;Street Number</form:label>
                                     <form:input path="addrNo" placeholder="Number" class="form-control" name="streetnumber"  style="width: 55px;"/>
                                     <form:errors path="addrNo"/>
                                 </div>
+                                
                             </div>
-                            <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                <form:label path="addrCity"><i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;City</form:label>
-                                <form:input path="addrCity" placeholder="City" class="form-control" type="text" style="width: 250px;"/>
-                                <form:errors path="addrCity"/>
-                            </div>
+                        </div>
+                        <div class="form-row">
                             <br>
                             <br>
-                            <hr/>
+                           
                             <br
                             <div class="form-row">
                                 <div class="col-md-12 content-right"> <br><button class="btn btn-primary form-btn" type="submit" style="color: rgb(255,255,255);background-color: #007a3d;">Save</button></div>
-
-                                <div class="col-md-12 content-right"><br><button class="btn btn-primary form-btn" type="reset" style="background-color: rgb(62,71,103);width: 65px;">Reset</button></div>
+    
                             </div>
                         </div>
                     </div>
@@ -101,3 +108,5 @@
     <footer><jsp:include page="/WEB-INF/navbars/footer.jsp"/></footer>
 
 </html>
+
+
