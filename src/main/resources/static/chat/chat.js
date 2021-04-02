@@ -1,4 +1,3 @@
-
 let full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 let myEmail;
 let myFullName;
@@ -42,7 +41,6 @@ function fetchPartners() {
             let partners = JSON.parse(this.responseText);
             let showChatPartners = "";
             let companyName = "";
-            let avatar;
             for (let i = 0; i < partners.length; i++) {
                 if (partners[i].companyName) {
                     companyName = partners[i].companyName;
@@ -50,14 +48,14 @@ function fetchPartners() {
                 let fname = partners[i].fname;
                 let lname = partners[i].lname;
                 let emailWrap = partners[i].email;
-                avatar = "https://eu.ui-avatars.com/api/?name=" + fname +
-                        "-" + lname + "&background=B0C4DE";
+                let avatar = "https://eu.ui-avatars.com/api/?name=" + 
+                        fname + "-" + lname + "&background=B0C4DE";
                 showChatPartners += ('<a class="informasi" onclick="loadMessages(\'' +
-                        emailWrap + '\');"> <div class="info-avatar">' +
-                        "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
-                        "<span class='chat-label'>" + companyName + "</span><span class='chat-nama'>"
-                        + fname + " " + lname + "</span>" + "</div></a>");
-
+                        emailWrap + '\');"> <div class="info-avatar">' +"<img src='" + 
+                        avatar + "'/>" + "</div><div class='info-chat'>" +
+                        "<span class='chat-label'>" + companyName + 
+                        "</span><span class='chat-nama'>"+ fname + 
+                        " " + lname + "</span>" + "</div></a>");
             }
             $('#partnerframe').html(showChatPartners);
             if (compName) {
@@ -138,8 +136,8 @@ function subscribe() {
 }
 
 $(document).on("click", ".informasi", function () {
-    $(".start-chat,.get-new").addClass("show").removeClass("hide");
-    $(".home-chat,.head-home").addClass("hide").removeClass("show");
+    $(".start-chat,.get-new").addClass("showCh").removeClass("hideCh");
+    $(".home-chat,.head-home").addClass("hideCh").removeClass("showCh");
     document.getElementById("get-nama").innerHTML = $(this).children(".info-chat").children(".chat-nama").text();
     document.getElementById("get-label").innerHTML = $(this).children(".info-chat").children(".chat-label").text();
     $(".close-chat").html("<");
@@ -147,10 +145,10 @@ $(document).on("click", ".informasi", function () {
 
 $(document).on("click", ".close-chat", function () {
     if ($(".close-chat").html() == "×") {
-        $("#whatsapp-chat").addClass("hide").removeClass("show");
+        $("#whatsapp-chat").addClass("hideCh").removeClass("showCh");
     } else {
-        $(".start-chat,.get-new").addClass("hide").removeClass("show");
-        $(".home-chat,.head-home").addClass("show").removeClass("hide");
+        $(".start-chat,.get-new").addClass("hideCh").removeClass("showCh");
+        $(".home-chat,.head-home").addClass("showCh").removeClass("hideCh");
         $("get-nama, get-label").html("");
         $(".close-chat").html("×");
     }
@@ -158,7 +156,7 @@ $(document).on("click", ".close-chat", function () {
 $(document).on("click", ".blantershow-chat", function () {
     $("a.blantershow-chat").css("animation-play-state", "paused");
     fetchPartners();
-    $("#whatsapp-chat").addClass("show").removeClass("hide");
+    $("#whatsapp-chat").addClass("showCh").removeClass("hideCh");
 
 });
 
