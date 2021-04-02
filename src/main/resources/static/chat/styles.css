@@ -19,8 +19,11 @@ body {
 }
 
 a.blantershow-chat {
-    background:linear-gradient(to right top,#6f96f3,#164ed2);
-    color:#fff;
+    /*background:linear-gradient(to right top,#6f96f3,#164ed2);*/
+    color:white !important;
+    background: #212529;
+    
+  
     position:fixed;
     z-index:98;
     bottom:25px;
@@ -39,10 +42,12 @@ a.blantershow-chat {
 a.blantershow-chat i {
     transform:scale(1.2);
     margin:0 10px 0 0;   
+   
 }
 
 .header-chat {
-    background:linear-gradient(to right top,#6f96f3,#164ed2);
+    /*background:linear-gradient(to right top,#6f96f3,#164ed2);*/
+    background-color:#212529;
     color:#fff;
     padding:10px;   
 }
@@ -100,10 +105,6 @@ a.informasi:hover {
     color:#fff;
 }
 
-span.my-number {
-    display:none;
-}
-
 .blanter-msg {
     color:#444;
     padding:20px;
@@ -152,15 +153,11 @@ a#send-it {
     display:flex;
 }
 
-#get-number{
-    display:none;
-}
-
 a.close-chat {
     position:absolute;
     top:0px;
     right:15px;
-    color:#fff;
+    color:white !important;
     font-size:30px;
     cursor: pointer;
 }
@@ -170,7 +167,7 @@ a.close-chat {
     padding: 5px;
     margin: 10px;
     word-wrap: break-word;
-    box-shadow:0 1px 5px rgba(32,33,36,.28);
+    box-shadow:0 5px 5px rgba(32,33,36,.28);
     background-color: #FFFAFA;
 }
 

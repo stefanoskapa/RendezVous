@@ -57,7 +57,7 @@ function fetchPartners() {
                         "<img src='" + avatar + "'/>" + "</div><div class='info-chat'>" +
                         "<span class='chat-label'>" + companyName + "</span><span class='chat-nama'>"
                         + fname + " " + lname + "</span>" + "</div></a>");
-                
+
             }
             $('#partnerframe').html(showChatPartners);
             if (compName) {
@@ -138,11 +138,22 @@ function subscribe() {
 }
 
 $(document).on("click", ".informasi", function () {
-    document.getElementById("get-number").innerHTML = $(this).children(".my-number").text(), $(".start-chat,.get-new").addClass("show").removeClass("hide"), $(".home-chat,.head-home").addClass("hide").removeClass("show"), document.getElementById("get-nama").innerHTML = $(this).children(".info-chat").children(".chat-nama").text(), document.getElementById("get-label").innerHTML = $(this).children(".info-chat").children(".chat-label").text();
+    $(".start-chat,.get-new").addClass("show").removeClass("hide");
+    $(".home-chat,.head-home").addClass("hide").removeClass("show");
+    document.getElementById("get-nama").innerHTML = $(this).children(".info-chat").children(".chat-nama").text();
+    document.getElementById("get-label").innerHTML = $(this).children(".info-chat").children(".chat-label").text();
+    $(".close-chat").html("<");
 });
 
 $(document).on("click", ".close-chat", function () {
-    $("#whatsapp-chat").addClass("hide").removeClass("show");
+    if ($(".close-chat").html() == "×") {
+        $("#whatsapp-chat").addClass("hide").removeClass("show");
+    } else {
+        $(".start-chat,.get-new").addClass("hide").removeClass("show");
+        $(".home-chat,.head-home").addClass("show").removeClass("hide");
+        $("get-nama, get-label").html("");
+        $(".close-chat").html("×");
+    }
 });
 $(document).on("click", ".blantershow-chat", function () {
     $("a.blantershow-chat").css("animation-play-state", "paused");
