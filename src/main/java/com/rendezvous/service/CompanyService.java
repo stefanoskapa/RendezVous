@@ -117,7 +117,11 @@ public class CompanyService {
             if (hours != null) {
                 BusinessHoursGroup businessHoursGroup = new BusinessHoursGroup();
 
-                businessHoursGroup.getDaysOfWeek().add(weekDay);
+                if (weekDay == 7) {
+                    businessHoursGroup.getDaysOfWeek().add(0);
+                } else {
+                    businessHoursGroup.getDaysOfWeek().add(weekDay);
+                }
                 businessHoursGroup.setStartTime(hours.getStartTime());
                 businessHoursGroup.setEndTime(hours.getCloseTime());
 
@@ -237,28 +241,27 @@ public class CompanyService {
         return availabilityCalendarProperties;
     }
 
-
     public Set<SearchResult> companySearch(String searchTerm, String category) {
-        
+
         Set<SearchResult> results = new HashSet<>();
         List<Company> companies;
         if (searchTerm.trim().equals("")) {
             companies = companyRepository.findAll();
             for (Company comp : companies) {
-                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                if (category.equals("All") || (comp.getCategory() != null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
                     results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
                 }
             }
         } else {
-        String[] searchTerms = searchTerm.split(" ");
-        for (String a : searchTerms) {
-            companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
-            for (Company comp : companies) {
-                if (category.equals("All") || (comp.getCategory()!=null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
-                    results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+            String[] searchTerms = searchTerm.split(" ");
+            for (String a : searchTerms) {
+                companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
+                for (Company comp : companies) {
+                    if (category.equals("All") || (comp.getCategory() != null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                        results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
+                    }
                 }
             }
-        }
         }
         return results;
     }
@@ -276,9 +279,8 @@ public class CompanyService {
         //getDayOfWeek().getValue() output 1-7(starting Mondey), db saves 0-6(starting Sunday)
         int dayNumber = appointmentTimestamp.getDayOfWeek().getValue() == 7 ? 0 : appointmentTimestamp.getDayOfWeek().getValue();
 
-        
         Optional<Availability> dayOpt = availabilityRepository.findByCompanyAndWeekDay(company, dayNumber);
-        
+
         if (!dayOpt.isPresent()) {
             //no Availability entry found for the spesific week day, so the company is closed for the entire day
             return false;
@@ -287,7 +289,7 @@ public class CompanyService {
             LocalTime openTime = day.getOpenTime();
             LocalTime closeTime = day.getCloseTime();
             LocalTime requestedTime = appointmentTimestamp.toLocalTime();
-            
+
             if (!openTime.isAfter(requestedTime) && closeTime.isAfter(requestedTime)) {
                 //open in the requested week day, AND inside working hours
                 return true;
@@ -298,7 +300,7 @@ public class CompanyService {
         }
 
     }
-    
+
     public void setPremiumStatus(Company company) {
         companyRepository.savePremiumStatus(company.getId());
     }

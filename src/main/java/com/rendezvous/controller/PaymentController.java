@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
 @RequestMapping("/company")
 public class PaymentController {
-    
+
     @Value("${STRIPE_PUBLIC_KEY}")
     private String stripePublicKey;
 
@@ -32,11 +31,11 @@ public class PaymentController {
     private StripeService stripeService;
     @Autowired
     private CompanyService companyService;
-    
-    private double ammount=50; //50 currency(EUR)
-    
+
+    private double ammount = 19.99; //50 currency(EUR)
+
     @GetMapping("/pro")
-    public String showPremium(Model model,Principal principal) {
+    public String showPremium(Model model, Principal principal) {
         model.addAttribute("amount", ammount * 100); // In cents
         model.addAttribute("stripePublicKey", stripePublicKey);
         if (principal != null) {
@@ -44,14 +43,28 @@ public class PaymentController {
             model.addAttribute("company_name", c.getDisplayName());
             model.addAttribute("company", c);
         }
-        
+
         return "company/premium/premium";
     }
 
+//    //testing todo delete
+//    @GetMapping(value = "/pro/cuss")
+//    public String fou() {
+//
+//        return "company/premium/success_premium";
+//    }
+//
+//    //testing todo delete
+//    @GetMapping(value = "/pro/fail")
+//    public String fou2() {
+//
+//        return "company/premium/failed_premium";
+//    }
+
     @PostMapping(value = "/pro/charge")
-    public String chargeCard(HttpServletRequest request, Principal principal) throws Exception {
+    public String chargeCard(HttpServletRequest request, Principal principal, Model model) throws Exception {
         String token = request.getParameter("stripeToken");
-        
+
         //if charging fails then stripe.exception.CardException will be thrown
         stripeService.chargeNewCard(token, ammount);
 
@@ -59,14 +72,16 @@ public class PaymentController {
         if (principal != null) {
             Company c = companyService.findCompanyByEmail(principal.getName());
             companyService.setPremiumStatus(c);
+            model.addAttribute("company_name", c.getDisplayName());
+            model.addAttribute("company", c);
         }
-        
+
         return "company/premium/success_premium";
     }
-    
+
     @ExceptionHandler(com.stripe.exception.CardException.class)
     public String handleError() {
         return "company/premium/failed_premium";
     }
-    
+
 }
