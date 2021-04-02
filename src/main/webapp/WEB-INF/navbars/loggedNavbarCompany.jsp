@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button" style="height: 91px;background-color: #24273a;color: #ffffff;">
         <div class="container-fluid"><c:if test="${company.premium == false}"><i class="fa fa-calendar" data-aos="zoom-in" data-aos-once="true" style="font-size: 57px;padding: 2px;margin: -14px;"></i></c:if>
             <c:if test="${company.premium == true}"><img class="img-fluid" src="/img/k4bm47vmfvh5qch9tq8o3ju9s5.png" style="height: 59px;width: 59px;font-size: 27px;"></c:if>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/" style="height: 62px;margin: -6px;font-size: 25px;color: rgb(255,255,255);width: 220px;padding: 13px;">&nbsp;&nbsp;RendezVouz</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/company/dashboard" style="height: 62px;margin: -6px;font-size: 25px;color: rgb(255,255,255);width: 220px;padding: 13px;">&nbsp;&nbsp;RendezVouz</a>
             <button
                 data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1" style="background-color: #24273a;margin: 11px;">
