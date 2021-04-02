@@ -5,28 +5,19 @@
  */
 package com.rendezvous.controller;
 
-import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
-import com.rendezvous.entity.Conversation;
-import com.rendezvous.entity.Messages;
-import com.rendezvous.entity.User;
 import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
-import com.rendezvous.model.UserProps;
 import com.rendezvous.model.SearchResult;
-import com.rendezvous.repository.ConversationRepository;
-import com.rendezvous.repository.UserRepository;
 import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
-import com.rendezvous.service.MessagesService;
 import java.security.Principal;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api/v1/") //todo add /api/v1/client and /api/v1/company in Spring Security
 public class ApiController {
@@ -55,58 +45,6 @@ public class ApiController {
     private AppointmentService appointmentService;
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private MessagesService messagesService;
-    @Autowired
-    private ConversationRepository conversationRepository;
-    @Autowired
-    private UserRepository userRepository;
-
-  /*  @GetMapping("/whoami")
-    public ResponseEntity<UserDetails> whoAmI(Principal principal) {
-        User tempUser = userRepository.findByEmail(principal.getName()).get();
-        UserDetails convStarter = new UserDetails();
-        convStarter.setUserId(tempUser.getId()+"");
-        if (tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY")) {
-                convStarter.setRole("company");
-                Company tempCompany = companyService.findCompanyByEmail(principal.getName());
-                convStarter.setFname(tempCompany.getFname());
-                convStarter.setLname(tempCompany.getLname());
-                convStarter.setIdByRole(tempCompany.getId()+"");
-                convStarter.setCompanyName(tempCompany.getDisplayName()); 
-                
-                List<Conversation> convList = conversationRepository.findByCompanyId(tempCompany.getId());
-                List<UserDetails> partnerList = new LinkedList<>();
-                for (Conversation a: convList) {
-                    UserDetails tempPartner = new UserDetails();
-                    tempPartner.setFname(a.getClient().getFname());
-                    tempPartner.setLname(a.getClient().getLname());    
-                    tempPartner.setIdByRole(a.getClient().getId()+"");
-                    tempPartner.setPartnerEmail(a.getClient().getUser().getEmail());
-                    partnerList.add(tempPartner);
-                }
-                convStarter.setConvPartners(partnerList);
-            } else {
-                convStarter.setRole("client");
-                Client tempClient = clientService.findClientByEmail(principal.getName());
-                convStarter.setFname(tempClient.getFname());
-                convStarter.setLname(tempClient.getLname());
-                convStarter.setIdByRole(tempClient.getId()+"");
-                List<Conversation> convList = conversationRepository.findByClientId(tempClient.getId());
-                List<UserDetails> partnerList = new LinkedList<>();
-                for (Conversation a: convList) {
-                    UserDetails tempPartner = new UserDetails();
-                    tempPartner.setFname(a.getCompany().getFname());
-                    tempPartner.setLname(a.getCompany().getLname());
-                    tempPartner.setCompanyName(a.getCompany().getDisplayName());
-                    tempPartner.setIdByRole(a.getCompany().getId()+"");
-                    tempPartner.setPartnerEmail(a.getCompany().getUser().getEmail());
-                    partnerList.add(tempPartner);
-                }
-                convStarter.setConvPartners(partnerList);
-            }        
-        return new ResponseEntity<>(convStarter, HttpStatus.OK);
-    }*/
 
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
@@ -218,23 +156,5 @@ public class ApiController {
         List<String> categories = categoryService.getAllCategoriesNames();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
-/*
-    @GetMapping("/client/history/{company_id}") //TODO create empty conversation in case tempConv==null
-    public ResponseEntity<List<Messages>> getHistoryClientPerpective(@PathVariable int company_id, Principal principal) throws CompanyIdNotFound {
-        List<Messages> messages;
-        Client tempClient = clientService.findClientByEmail(principal.getName());
-        Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(tempClient.getId(), company_id);
-        messages = messagesService.findByConversationId(tempConv.getId()).get();
-        return new ResponseEntity<>(messages, HttpStatus.OK);
-    }
-
-    @GetMapping("/company/history/{client_id}")
-    public ResponseEntity<List<Messages>> getHistoryCompanyPerpective(@PathVariable int client_id, Principal principal) throws ClientIdNotFound {
-        List<Messages> messages;
-        Company tempComp = companyService.findCompanyByEmail(principal.getName());
-        Conversation tempConv = conversationRepository.findByClientIdAndCompanyId(client_id, tempComp.getId());
-        messages = messagesService.findByConversationId(tempConv.getId()).get();
-        return new ResponseEntity<>(messages, HttpStatus.OK);
-    }*/
 
 }

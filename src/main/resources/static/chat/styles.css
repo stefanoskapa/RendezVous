@@ -166,11 +166,12 @@ a.close-chat {
 }
 
 .container1 {
-    background-color: #f1f1f1;
     border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 5px;
+    margin: 10px;
     word-wrap: break-word;
+    box-shadow:0 1px 5px rgba(32,33,36,.28);
+    background-color: #FFFAFA;
 }
 
 .darker {
@@ -214,6 +215,7 @@ a.close-chat {
     padding:10px;
     overflow-y: scroll; 
     height:300px;
+    background-color:#F5F5F5;
 }
 
 #partnerframe {
