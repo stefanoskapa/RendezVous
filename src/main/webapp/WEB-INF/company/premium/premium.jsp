@@ -16,7 +16,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <link rel="stylesheet" href="/css/purchase/pro/pro.css">
+        <link rel="stylesheet" href="/css/company/purchase/pro/pro.css">
     </head>
     <body>
         <header>

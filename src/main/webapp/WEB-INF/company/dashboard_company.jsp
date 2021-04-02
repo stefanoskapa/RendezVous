@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Rendezvouz | Dashboard</title>
         <!--<link rel="stylesheet"
                       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
                 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

@@ -17,7 +17,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <link rel="stylesheet" href="/css/purchase/success/success.css">
+        <link rel="stylesheet" href="/css/company/purchase/success/success.css">
     </head>
     <body>
         <header>
