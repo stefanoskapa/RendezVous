@@ -29,7 +29,9 @@
             {
                 cursor: pointer;
             }
-
+            #calendar {
+                margin: 20px 50px 50px 50px;
+            }
 
         </style>
     </head>
@@ -37,18 +39,8 @@
         <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
 
 
-        dashboard company
-        <!--URL: company/dashboard-->
-
-        welcome ${company_name}
-        <br/>
-        <a href="${pageContext.request.contextPath}/company/business-hours">Working hours</a>
-        <a href="${pageContext.request.contextPath}/company/profile">Edit Profile</a>
-        <a href="${pageContext.request.contextPath}/company/pro">Buy Pro</a>
-        <a href="${pageContext.request.contextPath}/logout">Logout</a>
-
-
-
+        <h3> ${company_name} dashboard</h3>
+     
         <div id='calendar'></div>
 
         <!-- Modal content-->
