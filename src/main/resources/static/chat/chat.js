@@ -1,5 +1,4 @@
 
-
 let full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 let myEmail;
 let myFullName;
@@ -19,13 +18,6 @@ if (compEmail) {
     loadMessages(compEmail); //will create a new conversation
 }
 
-
-//fetchPartners();
-
-
-
-
-
 function fetchMyInfo() {
 //get personal info
     xhttp = new XMLHttpRequest();
@@ -44,7 +36,6 @@ function fetchMyInfo() {
 }
 //show partners
 function fetchPartners() {
-
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -52,7 +43,6 @@ function fetchPartners() {
             let showChatPartners = "";
             let companyName = "";
             let avatar;
-            //alert(partners.length + " partners found");
             for (let i = 0; i < partners.length; i++) {
                 if (partners[i].companyName) {
                     companyName = partners[i].companyName;
@@ -70,11 +60,8 @@ function fetchPartners() {
             }
             $('.home-chat').html(showChatPartners);
             if (compName) {
-                //console.log($("a.informasi:contains('" + compName + "')").val());
                 $("a.informasi:contains('" + compName + "')").trigger("click");
             }
-                
-            
         }
 
     }
@@ -140,8 +127,9 @@ function subscribe() {
     stompClient.subscribe('/secured/user/queue/specific-user'
             + '-user' + sessionId, function (response) { //recieve message from server and display it
                 let messageBody = JSON.parse(response.body);
-                console.log("Incoming message!");
-                console.log(messageBody.from + "==" + partnerEmail);
+                if ($("#whatsapp-chat").hasClass("hide")) {
+                    $("a.blantershow-chat").css("animation-play-state", "running");
+                }
                 if (messageBody.from == partnerEmail) {
                     insertChat(false, messageBody.text, messageBody.timestamp);
                 }
@@ -156,13 +144,10 @@ $(document).on("click", ".close-chat", function () {
     $("#whatsapp-chat").addClass("hide").removeClass("show");
 });
 $(document).on("click", ".blantershow-chat", function () {
+    $("a.blantershow-chat").css("animation-play-state", "paused");
     fetchPartners();
     $("#whatsapp-chat").addClass("show").removeClass("hide");
-    if (!compName) {
-        //console.log($("a.informasi:contains('" + compName + "')").val());
-        //$("a.informasi:contains('" + compName + "')").trigger("click");
-        
-    }
+
 });
 
 $('#send-it').click(function () {

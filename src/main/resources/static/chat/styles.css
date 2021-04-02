@@ -35,7 +35,7 @@ a.blantershow-chat {
     border-radius:30px;
     box-shadow:0 1px 15px rgba(32,33,36,.28);
     cursor: pointer;
-    animation: shake 5s;
+    animation: shakeChat 4s;
     animation-iteration-count: infinite;
     animation-play-state: paused;
     
@@ -265,7 +265,7 @@ a.close-chat {
         opacity:0;
     }
 }
-@keyframes shake {
+@keyframes shakeChat {
     80% { transform: translate(1px, 1px) rotate(0deg); }
     82% { transform: translate(-1px, -2px) rotate(-1deg); }
     84% { transform: translate(-3px, 0px) rotate(1deg); }
