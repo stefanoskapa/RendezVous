@@ -34,21 +34,10 @@
         </style>
     </head>
     <body>
-        <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
-
-
-        dashboard company
-        <!--URL: company/dashboard-->
-
-        welcome ${company_name}
+        <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
         <br/>
-        <a href="${pageContext.request.contextPath}/company/business-hours">Working hours</a>
-        <a href="${pageContext.request.contextPath}/company/profile">Edit Profile</a>
-        <a href="${pageContext.request.contextPath}/company/pro">Buy Pro</a>
-        <a href="${pageContext.request.contextPath}/logout">Logout</a>
-
-
-
+        <br/>
+        
         <div id='calendar'></div>
 
         <!-- Modal content-->
