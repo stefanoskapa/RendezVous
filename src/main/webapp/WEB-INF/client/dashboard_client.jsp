@@ -55,8 +55,6 @@
         <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/dashboard/dashboard.css">
-
-
     </head>
     <body>
         <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>

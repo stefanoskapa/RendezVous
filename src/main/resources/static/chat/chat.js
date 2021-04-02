@@ -126,7 +126,7 @@ function subscribe() {
     stompClient.subscribe('/secured/user/queue/specific-user'
             + '-user' + sessionId, function (response) { //recieve message from server and display it
                 let messageBody = JSON.parse(response.body);
-                if ($("#whatsapp-chat").hasClass("hide")) {
+                if ($("#whatsapp-chat").hasClass("hideCh")) {
                     $("a.blantershow-chat").css("animation-play-state", "running");
                 }
                 if (messageBody.from == partnerEmail) {
