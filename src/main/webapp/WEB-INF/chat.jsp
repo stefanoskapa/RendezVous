@@ -4,17 +4,17 @@
     Author     : Stefanos
 --%>
 
-<div id='whatsapp-chat' class='hide'>
+<div id='whatsapp-chat' class='hideCh'>
     <div class='header-chat'>
         <div class='head-home'>
             <p>Active conversations</p></div>
-        <div class='get-new hide'><div id='get-label'></div><div id='get-nama'></div></div></div>
+        <div class='get-new hideCh'><div id='get-label'></div><div id='get-nama'></div></div></div>
     <div class='home-chat'>
         <div id="partnerframe">
         <!-- Active conversations --> 
         </div>
         <div class='blanter-msg'></div></div>
-    <div class='start-chat hide'>
+    <div class='start-chat hideCh'>
         <div id="msgframe">
             <!-- messages go here -->
         </div>

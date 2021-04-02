@@ -14,16 +14,13 @@ body {
     overflow:hidden;
     z-index:99;
     animation-name:showchat;
-    animation-duration:0s;
+    animation-duration:1s;
     transform:scale(1);
 }
 
 a.blantershow-chat {
-    /*background:linear-gradient(to right top,#6f96f3,#164ed2);*/
     color:white !important;
     background: #212529;
-    
-  
     position:fixed;
     z-index:98;
     bottom:25px;
@@ -36,17 +33,14 @@ a.blantershow-chat {
     animation: shakeChat 2s;
     animation-iteration-count: infinite;
     animation-play-state: paused;
-    
 }
 
 a.blantershow-chat i {
     transform:scale(1.2);
     margin:0 10px 0 0;   
-   
 }
 
 .header-chat {
-    /*background:linear-gradient(to right top,#6f96f3,#164ed2);*/
     background-color:#212529;
     color:#fff;
     padding:10px;   
@@ -78,7 +72,7 @@ a.informasi {
     display:block;
     overflow:hidden;
     animation-name:showhide;
-    animation-duration:0s;
+    animation-duration:2s;
     cursor: pointer;
 }
 
@@ -286,14 +280,14 @@ a.close-chat {
     }
 }
 
-.hide{
+.hideCh{
     display:none;
     animation-name:showhide;
     animation-duration:1.5s;
     transform:scale(1);
     opacity:1;
 }
-.show{
+.showCh{
     display:block;
     animation-name:showhide;
     animation-duration:1.5s;
