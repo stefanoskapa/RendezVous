@@ -11,6 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         <title>RendezVouz | Business Hours</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <link rel="stylesheet"
@@ -20,7 +21,6 @@
 
         <link rel="stylesheet" href="/css/company/business-hours/hours.css">
         <script	src="/js/company/business-hours/hours.js"></script>
-
     </head>
     <body>
         <header>
