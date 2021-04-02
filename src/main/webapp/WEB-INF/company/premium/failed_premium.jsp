@@ -34,6 +34,7 @@
                         <div class="py-4 text-center"><a class="text-white btn btn-lg btn-outline-success" href="${pageContext.request.contextPath}/company/pro">Try again</a></div>
                     </div>
                 </div>
+            </div>
         </main>
 
         <footer>
