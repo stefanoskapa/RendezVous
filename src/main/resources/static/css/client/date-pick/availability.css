@@ -4,3 +4,8 @@
 #calendar .fc-non-business {
     background: #706b6b56;
 }
+
+#calendar {
+    margin: 50px !important;
+}
+

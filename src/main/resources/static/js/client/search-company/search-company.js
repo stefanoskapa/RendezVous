@@ -58,7 +58,7 @@ $(document).ready(function () {
                             '<div class="mycard-title"><p>' + searchResults[i].displayName + '</p></div>' +
                             '<div class="mycard-telephone"><p class="m-0">Tel: <a href="tel:' + searchResults[i].tel + '">' + searchResults[i].tel + '</a></p></div > ' +
                             '<div class="mycard-address"><p class="m-0">' + searchResults[i].addrStr + ' ' + searchResults[i].addrNo + ', ' + searchResults[i].addrCity + '</p></div>' +
-                            '<div class="mycard-link"><a class="btn btn-primary rounded-pill" href="' + full + '/client/date-select?companyId=' + searchResults[i].id + '">Close your appointment</a></div>' +
+                            '<div class="mycard-link"><a class="btn btn-primary rounded-pill" href="' + full + '/client/date-select?companyId=' + searchResults[i].id + '">Book appointment</a></div>' +
                             '</div></div>';
                     resultsData.push(card);
 
