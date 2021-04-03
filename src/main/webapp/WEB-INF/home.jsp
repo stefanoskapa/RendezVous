@@ -34,7 +34,6 @@
                 margin: auto;
                 padding: 16px 0;
                 text-align: center;
-               /* margin-top: 20px;*/
                 width: 85%;
                 
             }
