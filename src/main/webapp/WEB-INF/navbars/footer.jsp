@@ -1,6 +1,6 @@
 <div class="footer-dark">
     <div style="text-align:center;">
-        <h2 class="divider-style" style="margin-top:0px;"><span style="background-color:rgb(40, 45, 50);"><a href="#"><i class="fa fa-calendar" style="color: rgb(255,255,255);"></i></a>&nbsp;RendezVouz</span></h2>
+        <h2 class="divider-style" style="margin-top:0px;"><span style="background-color:#24273a;"><a href="#"><i class="fa fa-calendar" style="color: rgb(255,255,255);"></i></a>&nbsp;RendezVouz</span></h2>
     </div>
     <footer>
         <div class="container">

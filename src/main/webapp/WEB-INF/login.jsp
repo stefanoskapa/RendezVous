@@ -75,9 +75,7 @@
                 <br>
                 <!-- Login/Submit Button -->
                 <input type="submit" value="Login" />
-                <div class="forgot-password">
-                    <a href="#">Forgot your password?</a>
-                </div>
+                
                 <div class="register">
                     <a href="${pageContext.request.contextPath}/client-register" id="register-link">Register as User</a>
                     <div class="register">
