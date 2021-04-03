@@ -10,6 +10,21 @@ public class UserProps {
    
    public UserProps(){}
 
+    public UserProps(String fname, String lname, String email) {
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+    }
+
+    public UserProps(String fname, String lname, String email, String companyName) {
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+        this.companyName = companyName;
+    }
+    
+    
+
     public String getFname() {
         return fname;
     }

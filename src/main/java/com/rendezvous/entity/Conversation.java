@@ -42,6 +42,11 @@ public class Conversation implements Serializable {
         this.id = id;
     }
 
+    public Conversation(User user1Id, User user2Id) {
+        this.user1Id = user1Id;
+        this.user2Id = user2Id;
+    }
+
     public Integer getId() {
         return id;
     }
