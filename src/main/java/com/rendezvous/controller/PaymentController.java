@@ -47,19 +47,28 @@ public class PaymentController {
         return "company/premium/premium";
     }
 
-//    //testing todo delete
-//    @GetMapping(value = "/pro/cuss")
-//    public String fou() {
-//
-//        return "company/premium/success_premium";
-//    }
-//
-//    //testing todo delete
-//    @GetMapping(value = "/pro/fail")
-//    public String fou2() {
-//
-//        return "company/premium/failed_premium";
-//    }
+    //testing todo delete
+    @GetMapping(value = "/pro/cuss")
+    public String fou(Principal principal, Model model) {
+
+        if (principal != null) {
+            Company c = companyService.findCompanyByEmail(principal.getName());
+            model.addAttribute("company_name", c.getDisplayName());
+            model.addAttribute("company", c);
+        }
+        return "company/premium/success_premium";
+    }
+
+    //testing todo delete
+    @GetMapping(value = "/pro/fail")
+    public String fou2(Principal principal, Model model) {
+        if (principal != null) {
+            Company c = companyService.findCompanyByEmail(principal.getName());
+            model.addAttribute("company_name", c.getDisplayName());
+            model.addAttribute("company", c);
+        }
+        return "company/premium/failed_premium";
+    }
 
     @PostMapping(value = "/pro/charge")
     public String chargeCard(HttpServletRequest request, Principal principal, Model model) throws Exception {
@@ -80,7 +89,12 @@ public class PaymentController {
     }
 
     @ExceptionHandler(com.stripe.exception.CardException.class)
-    public String handleError() {
+    public String handleError(Principal principal, Model model) {
+        if (principal != null) {
+            Company c = companyService.findCompanyByEmail(principal.getName());
+            model.addAttribute("company_name", c.getDisplayName());
+            model.addAttribute("company", c);
+        }
         return "company/premium/failed_premium";
     }
 

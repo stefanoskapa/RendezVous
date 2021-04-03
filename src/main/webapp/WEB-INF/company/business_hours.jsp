@@ -13,34 +13,52 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>RendezVouz | Business Hours</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+                <link rel="stylesheet"
+                      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
+
+        <!--Bootstrap-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Navbar-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+        <script src="/navbar/bs-init.js"></script>
+
+        <!--Footer-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/footer/Dark-Footer.css">
+
+        <!--Current page-->
         <link rel="stylesheet" href="/css/company/business-hours/hours.css">
         <script	src="/js/company/business-hours/hours.js"></script>
     </head>
     <body>
         <header>
-            <jsp:include page="/WEB-INF/navbars/loginNavbar_1.jsp"/>
+        <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
         </header>
 
         <main>
             <c:if test="${IncorrectWorkingHours != null}">
-           
-                    <div class="alert alert-info alert-dismissible fade show d-flex justify-content-center">
+
+                <div class="alert alert-info alert-dismissible fade show d-flex justify-content-center">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong >${IncorrectWorkingHours}</strong>
                 </div>
-                    
+
             </c:if>
-            
+
             <div class="container text-white">
                 <form:form modelAttribute="weekHours" action="${pageContext.request.contextPath}/company/business-hours" 
                            method="post" >
-                    
+
                     <div class="row pt-md-3">
                         <div class="col-12 d-flex justify-content-center">
                             <h4 class="py-md-3">Monday</h4>
@@ -66,9 +84,9 @@
                             </div>
                         </div>
                     </div>
-                        
+
                     <hr>   
-                    
+
                     <div class="row pt-md-3">
                         <div class="col-12 d-flex justify-content-center">
                             <h4 class="py-md-3">Tuesday</h4>
@@ -96,7 +114,7 @@
                     </div>    
 
                     <hr>      
-                        
+
                     <div class="row pt-md-3">
                         <div class="col-12 d-flex justify-content-center">
                             <h4 class="py-md-3">Wednesday</h4>
@@ -124,7 +142,7 @@
                     </div>    
 
                     <hr>
-                    
+
                     <div class="row pt-md-3">
                         <div class="col-12 d-flex justify-content-center">
                             <h4 class="py-md-3">Thursday</h4>
@@ -150,9 +168,9 @@
                             </div>
                         </div>
                     </div>    
-                        
+
                     <hr>
-                        
+
                     <div class="row pt-md-3">
                         <div class="col-12 d-flex justify-content-center">
                             <h4 class="py-md-3">Friday</h4>
@@ -180,7 +198,7 @@
                     </div>  
 
                     <hr>
-                        
+
                     <div class="row pt-md-3">
                         <div class="col-12 d-flex justify-content-center">
                             <h4 class="py-md-3">Saturday</h4>
@@ -208,7 +226,7 @@
                     </div>    
 
                     <hr>
-                        
+
                     <div class="row pt-md-3">
                         <div class="col-12 d-flex justify-content-center">
                             <h4 class="py-md-3">Sunday</h4>
@@ -234,9 +252,9 @@
                             </div>
                         </div>
                     </div>
-                        
+
                     <hr>    
-                        
+
                     <div class="row">
                         <div class="col d-flex justify-content-center">
                             <input type="submit" class="btn btn-success btn-lg px-5 my-3" value="Submit">

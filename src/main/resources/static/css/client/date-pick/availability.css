@@ -1,0 +1,6 @@
+.fc-timegrid-slot:hover {
+    cursor: pointer;
+}
+#calendar .fc-non-business {
+    background: #706b6b56;
+}

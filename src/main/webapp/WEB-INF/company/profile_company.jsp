@@ -14,17 +14,38 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>Company Profile</title>
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!--        <link rel="stylesheet"
+                      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+                <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
+        <!--Bootstrap-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Navbar-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+        <script src="/navbar/bs-init.js"></script>
+
+        <!--Footer-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="/footer/Dark-Footer.css">
+
+        <!--Current page-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
@@ -37,7 +58,7 @@
                        method="post" modelAttribute="company">
                 <div class="form-row profile-row">
                     <div class="col-md-8" style="width: 741px;">
-                        <h1 style="color: rgb(255,255,255);"><i class="fas fa-building"></i>&nbsp;Company Profile Edit</h1><c:if test="${company.premium == true}"><h4 style="color: rgb(155,166,200);">Premium : Enabled</h4></c:if>
+                        <h1 style="color: rgb(255,255,255);"><i class="fas fa-building"></i>&nbsp;Profile</h1><c:if test="${company.premium == true}"><h4 style="color: rgb(155,166,200);">Premium : Enabled</h4></c:if>
                             <hr>
                             <div class="form-row">
                                 <div class="col-sm-12 col-md-6">
@@ -58,19 +79,19 @@
                                         <form:label path="category"><i class="fas fa-spell-check" style="font-size: 24px;"></i>&nbsp;Category</form:label>
                                         <form:select path="category" class="form-control" style="width:250px;">
 
-                                        <c:if test = "${company.category == null}">
-                                            <option disabled="true" selected="true">Select a category</option>
-                                        </c:if>
-                                        <c:if test = "${company.category != null}">
-                                            <option selected="true" value="${company.category.id}">${company.category.category}</option>
-                                        </c:if>
-
-                                        <c:forEach items="${listCategory}" var="category">
-                                            <c:if test = "${company.category.id != category.id}">
-                                                <option value="${category.id}">${category.category}</option>
+                                            <c:if test = "${company.category == null}">
+                                                <option disabled="true" selected="true">Select a category</option>
                                             </c:if>
-                                        </c:forEach>
-                                    </form:select>
+                                            <c:if test = "${company.category != null}">
+                                                <option selected="true" value="${company.category.id}">${company.category.category}</option>
+                                            </c:if>
+
+                                            <c:forEach items="${listCategory}" var="category">
+                                                <c:if test = "${company.category.id != category.id}">
+                                                    <option value="${category.id}">${category.category}</option>
+                                                </c:if>
+                                            </c:forEach>
+                                        </form:select>
                                     </div>
                                 </c:if>
 

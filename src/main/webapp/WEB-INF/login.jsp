@@ -6,22 +6,29 @@
 <html lang="en">
 
     <head>
-        <title>Login Page</title>
+        <title>RendezVouz | Login</title>
         <meta charset="utf-8">
-        <!--<link rel="shortcut icon" href="favicon.ico"/>-->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!--Bootstrap-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
+
         <!--Navbar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-        <script src="${pageContext.request.contextPath}/bs-init.js"></script>
-        
-        <link rel="stylesheet" href="login.css">
+        <script src="/navbar/bs-init.js"></script>
 
+        <!--Footer-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/footer/Dark-Footer.css">       
+
+        <!--Current page-->
+        <link rel="stylesheet" href="/css/login/login.css">
+        
     </head>
     <body style="background-color:#2f3438 ">
         <jsp:include page="navbars/loginNavbar.jsp"/>

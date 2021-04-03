@@ -1,0 +1,5 @@
+.fc-event-main:hover,
+.fc-daygrid-event:hover
+{
+    cursor: pointer;
+}

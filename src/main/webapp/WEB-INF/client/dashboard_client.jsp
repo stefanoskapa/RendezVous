@@ -11,35 +11,55 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Rendezvouz | Dashboard</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
+                <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
+                <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+                <style>
+                    .fc-event-main:hover,
+                    .fc-daygrid-event:hover {
+                        cursor: pointer;
+                    }
+                </style>
+                <link rel="stylesheet" href="/chat/styles.css">-->
+
+
+        <!--Bootstrap-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Navbar-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+        <script src="/navbar/bs-init.js"></script>
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">ti kanei?-->
+
+        <!--Footer-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/footer/Dark-Footer.css">
+
+        <!--Current page-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
         <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-        <style>
-            #calendar {
-                margin: 0px 50px 0px 50px;
-            }
-            .fc-event-main:hover,
-            .fc-daygrid-event:hover {
-                cursor: pointer;
-            }
-        </style>
         <link rel="stylesheet" href="/chat/styles.css">
+        <link rel="stylesheet" href="/css/client/dashboard/dashboard.css">
     </head>
     <body>
-        dashboard client
+        <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
         <br/>
-        <!--URL: client/dashboard-->
-        welcome ${username}
-        <br/>
-        <a href="${pageContext.request.contextPath}/client/comp-select">Close a rendezvous</a>
-        <a href="${pageContext.request.contextPath}/client/profile">Edit Profile</a>
-        <a href="${pageContext.request.contextPath}/logout">Logout</a>        
+
         <div id='calendar'></div>
 
         <!-- Modal content-->
@@ -56,13 +76,12 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
+        
+        <jsp:include page="/WEB-INF/navbars/footer.jsp"/>               
         <jsp:include page="/WEB-INF/chat.jsp"/>
-
     </body>
 </html>
