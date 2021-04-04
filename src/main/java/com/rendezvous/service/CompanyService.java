@@ -71,6 +71,18 @@ public class CompanyService {
         company.orElseThrow(() -> new CompanyIdNotFound("Company " + id + " not found!"));
         return company.get();
     }
+    
+    
+    public Company findCompanyByUserId(Integer userId) throws CompanyIdNotFound {
+        Optional<Company> comp = companyRepository.findCompanyByUserId(userId);
+        return comp.orElseThrow(() -> new CompanyIdNotFound("Company with userID=" + userId + " not found!"));
+    }     
+    
+    public Company findCompanyByUserEmail(String email) throws CompanyIdNotFound {
+        Optional<Company> comp = companyRepository.findCompanyByUserEmail(email);
+        return comp.orElseThrow(() -> new CompanyIdNotFound("Company with email=" + email + " not found!"));
+    }
+            
 
     public void saveCompany(Company company) {
         List<Role> roles = roleRepository.findAll();

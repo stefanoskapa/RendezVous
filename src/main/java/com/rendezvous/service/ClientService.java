@@ -46,12 +46,24 @@ public class ClientService {
         client.orElseThrow(() -> new UsernameNotFoundException("User " + email + " not found!"));
         return client.get();
     }
-    
+
     public Client findClientById(Integer id) throws ClientIdNotFound {
         Optional<Client> client = clientRepository.findById(id);
         client.orElseThrow(() -> new ClientIdNotFound("Client " + id + " not found!"));
         return client.get();
     }
+
+    public Client findClientByUserId(Integer userId) throws ClientIdNotFound {
+        Optional<Client> client = clientRepository.findClientByUserId(userId);
+        return client.orElseThrow(() -> new ClientIdNotFound("Client with userID=" + userId + " not found!"));
+    }
+    
+    public Client findClientByUserEmail(String email) throws ClientIdNotFound {
+        Optional<Client> client = clientRepository.findClientByUserEmail(email);
+        return client.orElseThrow(() -> new ClientIdNotFound("Client with email=" + email + " not found!"));
+    }
+    
+    
 
     public void saveClient(Client client) {
         List<Role> roles = roleRepository.findAll();
@@ -86,7 +98,7 @@ public class ClientService {
     public boolean isOccupied(Client client, LocalDateTime appointmentTimestamp) {
         LocalDate reqDate = appointmentTimestamp.toLocalDate();
         Integer timeslot = appointmentTimestamp.getHour();
-        
-        return appointmentRepository.existsByClientAndDateAndTimeslot(client,reqDate,timeslot);
+
+        return appointmentRepository.existsByClientAndDateAndTimeslot(client, reqDate, timeslot);
     }
 }
