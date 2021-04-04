@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Rendezvouz | Availability</title>        
 
         <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -51,6 +52,8 @@
         <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
         <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-date-pick.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/date-pick/availability.css">
     </head>
@@ -58,7 +61,7 @@
         <header>
             <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
         </header>
-        
+
         <h1>Pick a date for your appointment</h1>
         <h2>${comp_name}</h2>
         <div class="alert alert-dismissible fade show" role="alert" id="alert">
@@ -97,7 +100,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
+        <jsp:include page="/WEB-INF/chat.jsp"/>
         <footer>
             <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
         </footer>

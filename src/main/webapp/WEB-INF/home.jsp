@@ -49,19 +49,15 @@
                 cursor: pointer;
                 border-radius: 3px;
             }
-            
-
-
+            .buffer { margin:50px;}      
         </style>
 
     </head>
     <body>
         <jsp:include page="navbars/loginNavbar.jsp"/>
-        <!--<div class="container d-flex align-items-center flex-column">-->
-        <div class="container-fluid bg-dark">
-            <div class="row p-5">
-                <div class="col m-5">
-                    <br><br>
+               
+            <div class="row container-fluid bg-dark justify-content-around">
+                <div class="col-md-4 buffer">                   
                     <h1 class="text-white">All you need to do is show up at the right time!</h1> 
                     <br>
                     <p class="text-white">Make your day easier by booking all your appointments online using the best features in one tool</p>
@@ -71,25 +67,22 @@
                     <div class="register">
                         <a href="/company-register" id="register-link">Register as Company</a>
                     </div>
-
                 </div>
-
-                <div class="col m-5">
+                <div class="col-md-4 buffer">
                     <br><br>
-                    <img src="/img/rendezvous-landing_page-hero.png" alt="RendezVouz">
+                    <img src="/img/rendezvous-landing_page-hero.png" class="img-fluid mx-auto d-block" alt="RendezVouz">
                 </div>
             </div>
+        
 
-        </div>
-
-        <div class="container-fluid bg-white">
-            <div class="row p-5">
-                <div class="col m-5">
-
-                    <img src="/img/dashboard.jpg" alt="RendezVouz" style="width:400px; border-radius: 30px; box-shadow:10px 10px 8px #888888;">
+        
+            <div class="row container-fluid bg-white justify-content-around">               
+                <div class="col-md-4 buffer">
+                    <br><br>
+                    <img src="/img/dashboard.jpg" class="img-fluid mx-auto d-block" alt="RendezVouz"  style="width:100%; border-radius: 30px; box-shadow:10px 10px 8px #888888;">
                 </div>
-                <div class="col m-5">
-
+                <div class="col-md-4 buffer">
+                    <br>
                     <h1 class="text-dark">All you need to know about RendezVouz</h1> 
                     <br>
                     <p class="dark">RendezVouz is an easy and convenient way of booking and organizing appointments. As a company
@@ -97,33 +90,24 @@
                         navigate through a multitude of services, reach out for the company you are interested in and book an appointment.</p>
                 </div>         
             </div>
+        
 
-        </div>
-
-        <div class="container-fluid bg-light">
-            <div class="row p-5">
-
-                <div class="col m-5">
-
+       
+            <div class="row container-fluid bg-light justify-content-around">                
+                <div class="col-md-4 buffer">
                     <h2 class="text-dark">"It is really refreshing to work with this software which is
                         truly helpful in the client's preferences."</h2>
                     <br>
                     <h5 class="text-dark">Matt Calderon</h5>
                     <p class="text-dark">Head of Marketing, Apple Inc.</p>
                     <br>
-
                 </div>     
-
-                <div class="col m-5">
-
-                    <img src="/img/rendezvous-landing_page-testimonials.png" alt="RendezVouz">
+                <div class="col-md-4 buffer">
+                    <img src="/img/rendezvous-landing_page-testimonials.png" class="img-fluid mx-auto d-block" alt="RendezVouz2">
                 </div>
             </div>
-
-        </div>
-
-        <footer>
+         
         <jsp:include page="navbars/footer.jsp"/>
-        </footer>
+  
     </body>
 </html>
