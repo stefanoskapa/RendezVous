@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     Optional<Company> findCompanyByUserEmail(String email);
-    Company findCompanyByUserId(int id);
+    Optional<Company> findCompanyByUserId(int id);
     Optional<Company> findById(int id);
 
     List<Company> findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(String term1, String term2, String term3);
