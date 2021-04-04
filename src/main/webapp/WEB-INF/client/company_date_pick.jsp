@@ -73,7 +73,7 @@
         <input type="text" id="displayName" value="${comp_name}" hidden  />
         <input type="text" id="compEmail" value="${comp_email}" hidden />
 
-        <div id='calendar'></div>
+        <div id='calendar' class="container m-5 mx-auto"></div>
 
         <!-- Modal content-->
         <div class="modal fade" tabindex="-1" role="dialog" id="myModal">

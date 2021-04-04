@@ -11,6 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 
         <title>RendezVouz | Business Hours</title>
         <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -42,7 +44,7 @@
     </head>
     <body>
         <header>
-        <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
+            <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
         </header>
 
         <main>

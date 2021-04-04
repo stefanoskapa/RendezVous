@@ -30,25 +30,6 @@
 
         <!--Current page-->
         <style>
-
-            .register {
-                margin: auto;
-                padding: 16px 0;
-                text-align: center;
-                width: 85%;
-                
-            }
-            
-            #register-link {
-                margin-top: 10px;
-                padding: 6px 25px;
-                background: #373E4A;
-                color: #C1C3C6;
-                font-weight: bold;
-                border: 0 none;
-                cursor: pointer;
-                border-radius: 3px;
-            }
             .buffer { margin:50px;}      
         </style>
 
@@ -61,21 +42,17 @@
                     <h1 class="text-white">All you need to do is show up at the right time!</h1> 
                     <br>
                     <p class="text-white">Make your day easier by booking all your appointments online using the best features in one tool</p>
-                    <div class="register">
-                        <a href="/client-register" id="register-link">Register as User</a>
-                    </div>
-                    <div class="register">
-                        <a href="/company-register" id="register-link">Register as Company</a>
-                    </div>
+                   <a href="/client-register" class="btn btn-success btn-lg m-2">Register</a>
+                   <a href="/company-register" class="btn btn-success btn-lg m-2">Register as Company</a>
+
+                    
                 </div>
                 <div class="col-md-4 buffer">
                     <br><br>
                     <img src="/img/rendezvous-landing_page-hero.png" class="img-fluid mx-auto d-block" alt="RendezVouz">
                 </div>
             </div>
-        
-
-        
+               
             <div class="row container-fluid bg-white justify-content-around">               
                 <div class="col-md-4 buffer">
                     <br><br>
@@ -90,9 +67,7 @@
                         navigate through a multitude of services, reach out for the company you are interested in and book an appointment.</p>
                 </div>         
             </div>
-        
-
-       
+             
             <div class="row container-fluid bg-light justify-content-around">                
                 <div class="col-md-4 buffer">
                     <h2 class="text-dark">"It is really refreshing to work with this software which is
