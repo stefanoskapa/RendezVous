@@ -10,6 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Rendezvouz | Dashboard</title>
         <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
                 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -39,7 +40,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
         <script src="/navbar/bs-init.js"></script>
-<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">ti kanei?-->
+        <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">ti kanei?-->
 
         <!--Footer-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
@@ -60,7 +61,7 @@
         <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
         <br/>
 
-        <div id='calendar'></div>
+        <div id='calendar' class="container m-5 mx-auto"></div>
 
         <!-- Modal content-->
         <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
@@ -80,8 +81,8 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        
-        <jsp:include page="/WEB-INF/navbars/footer.jsp"/>               
         <jsp:include page="/WEB-INF/chat.jsp"/>
+        <jsp:include page="/WEB-INF/navbars/footer.jsp"/>               
+
     </body>
 </html>

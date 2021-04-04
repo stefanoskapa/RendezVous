@@ -9,6 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         <title>Rendezvouz | Dashboard</title>
         <!--<link rel="stylesheet"
                       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -51,9 +53,9 @@
     </head>
     <body>
         <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
-       
+
         <h3>${company_name} dashboard</h3>
-        <div id='calendar'></div>
+        <div id='calendar' class="container m-5 mx-auto"></div>
 
         <!-- Modal content-->
         <div class="modal fade" tabindex="-1" role="dialog" id="myModal">

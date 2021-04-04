@@ -6,7 +6,6 @@
 package com.rendezvous.controller;
 
 import com.rendezvous.entity.Company;
-import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.service.CompanyService;
 import com.rendezvous.service.StripeService;
 import java.security.Principal;
