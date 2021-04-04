@@ -1,71 +1,52 @@
 let full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-let myEmail;
-let myFullName;
-let partnerEmail;
-let myAvatar;
-let yourAvatar;
-let sessionId;
-let xhttp;
-var stompClient = null;
+let myEmail, myFullName, partnerEmail, myAvatar, yourAvatar, sessionId, xhttp, stompClient = null;
 let compEmail = $("#compEmail").val();
 let compName = $("#displayName").val();
 
 fetchMyInfo();
 connect();
-if (compEmail) {
+
+if (compEmail) { // ==true means we are in company_date_pick.jsp
     $("a.blantershow-chat").html("Ask us a question!");
     loadMessages(compEmail); //will create a new conversation
 }
 
-function fetchMyInfo() {
-//get personal info
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            let myprops = JSON.parse(this.responseText);
-            let fname = myprops.fname;
-            let lname = myprops.lname;
-            myEmail = myprops.email;
-            myAvatar = "https://eu.ui-avatars.com/api/?name=" + fname +
-                    "-" + lname + "&background=90EE90";
-        }
-    };
-    xhttp.open("GET", full + "/myprops");
-    xhttp.send();
+function fetchMyInfo() { //get personal info
+    $.getJSON(full + "/myprops", function (res) {
+        let fname = res.fname;
+        let lname = res.lname;
+        myEmail = res.email;
+        myAvatar = "https://eu.ui-avatars.com/api/?name=" + fname +
+                "-" + lname + "&background=90EE90";
+    }
+    );
 }
-//show partners
+
 function fetchPartners() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            let partners = JSON.parse(this.responseText);
-            let showChatPartners = "";
-            let companyName = "";
-            for (let i = 0; i < partners.length; i++) {
-                if (partners[i].companyName) {
-                    companyName = partners[i].companyName;
-                }
-                let fname = partners[i].fname;
-                let lname = partners[i].lname;
-                let emailWrap = partners[i].email;
-                let avatar = "https://eu.ui-avatars.com/api/?name=" + 
-                        fname + "-" + lname + "&background=B0C4DE";
-                showChatPartners += ('<a class="informasi" onclick="loadMessages(\'' +
-                        emailWrap + '\');"> <div class="info-avatar">' +"<img src='" + 
-                        avatar + "'/>" + "</div><div class='info-chat'>" +
-                        "<span class='chat-label'>" + companyName + 
-                        "</span><span class='chat-nama'>"+ fname + 
-                        " " + lname + "</span>" + "</div></a>");
+    $.getJSON(full + "/conv", function (res) {
+        let showChatPartners = "", companyName = "";
+        for (let i = 0; i < res.length; i++) {
+            if (res[i].companyName) {
+                companyName = res[i].companyName;
             }
-            $('#partnerframe').html(showChatPartners);
-            if (compName) {
-                $("a.informasi:contains('" + compName + "')").trigger("click");
-            }
+            let fname = res[i].fname;
+            let lname = res[i].lname;
+            let emailWrap = res[i].email;
+            let avatar = "https://eu.ui-avatars.com/api/?name=" +
+                    fname + "-" + lname + "&background=B0C4DE";
+            showChatPartners += ('<a class="informasi" onclick="loadMessages(\'' +
+                    emailWrap + '\');"> <div class="info-avatar">' + "<img src='" +
+                    avatar + "'/>" + "</div><div class='info-chat'>" +
+                    "<span class='chat-label'>" + companyName +
+                    "</span><span class='chat-nama'>" + fname +
+                    " " + lname + "</span>" + "</div></a>");
+        }
+        $('#partnerframe').html(showChatPartners);
+        if (compName) {
+            $("a.informasi:contains('" + compName + "')").trigger("click");
         }
 
-    }
-    xhttp.open("GET", full + "/conv");
-    xhttp.send();
+    });
 }
 
 function convertDate(date) {
@@ -73,21 +54,15 @@ function convertDate(date) {
 }
 
 function loadMessages(pEmail) {
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            let partnerName = $("#get-nama").html().replace(" ", "-");
+    $.getJSON(full + "/load/" + pEmail, function (res) {
+        let partnerName = $("#get-nama").html().replace(" ", "-");
             partnerEmail = pEmail;
             yourAvatar = "https://eu.ui-avatars.com/api/?name=" + partnerName + "&background=B0C4DE";
-            let prevMsgs = JSON.parse(this.responseText);
             $("#msgframe").html("");
-            for (let i = 0; i < prevMsgs.length; i++) {
-                insertChat(prevMsgs[i].from === myEmail, prevMsgs[i].text, prevMsgs[i].timestamp);
+            for (let i = 0; i < res.length; i++) {
+                insertChat(res[i].from === myEmail, res[i].text, res[i].timestamp);
             }
-        }
-    }
-    xhttp.open("GET", full + "/load/" + pEmail);
-    xhttp.send();
+    });
 }
 
 function insertChat(side, text, dateTime) {
@@ -102,7 +77,6 @@ function insertChat(side, text, dateTime) {
         $('#msgframe').html(speechBubble + "<div class='container1'><img src='" +
                 yourAvatar + "' class='right' style='width:100%;'><p>" + text + "</p>" +
                 "<span class='time-left'>" + timeStamp + "</span></div>");
-
     }
     $("#msgframe").scrollTop($("#msgframe")[0].scrollHeight);
 }
@@ -142,7 +116,6 @@ $(document).on("click", ".informasi", function () {
     document.getElementById("get-label").innerHTML = $(this).children(".info-chat").children(".chat-label").text();
     $(".close-chat").html("<");
 });
-
 $(document).on("click", ".close-chat", function () {
     if ($(".close-chat").html() == "×") {
         $("#whatsapp-chat").addClass("hideCh").removeClass("showCh");
@@ -157,13 +130,10 @@ $(document).on("click", ".blantershow-chat", function () {
     $("a.blantershow-chat").css("animation-play-state", "paused");
     fetchPartners();
     $("#whatsapp-chat").addClass("showCh").removeClass("hideCh");
-
 });
-
 $('#send-it').click(function () {
     $("#chat-input").trigger({type: 'keydown', which: 13, keyCode: 13});
 });
-
 $("#chat-input").on("keydown", function (e) {
     if (e.which == 13) {
         let text = $(this).val();

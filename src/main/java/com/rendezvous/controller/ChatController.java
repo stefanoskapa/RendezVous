@@ -31,6 +31,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ChatController {
@@ -81,13 +82,15 @@ public class ChatController {
         }
         return new ResponseEntity<>(convPartners, HttpStatus.OK);
     }
-
+    
+ 
     @GetMapping("/myprops") // send user information to himself
     public ResponseEntity<UserProps> fetchMyData(Principal principal) {
         User tempUser = userRepository.findByEmail(principal.getName()).get();
         UserProps up; 
         if (tempUser.getRoleList().get(0).getRole().equals("ROLE_CLIENT")) {
             Client tempClient = clientRepository.findClientByUserEmail(principal.getName()).get();
+            System.out.println("client found:" + tempClient.toString());
             up = new UserProps(tempClient.getFname(),tempClient.getLname(),tempClient.getUser().getEmail());
         } else {
             Company comp = companyRepository.findCompanyByUserEmail(principal.getName()).get();

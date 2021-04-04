@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>RendezVouz</title>
 
         <!--Bootstrap-->
@@ -106,8 +107,9 @@
 
                     <h2 class="text-dark">"It is really refreshing to work with this software which is
                         truly helpful in the client's preferences."</h2>
-                    <h4 class="text-dark">Matt Calderon</h4>
-                    <h5 class="text-dark">Head of Marketing, Apple Inc.</h5>
+                    <br>
+                    <h5 class="text-dark">Matt Calderon</h5>
+                    <p class="text-dark">Head of Marketing, Apple Inc.</p>
                     <br>
 
                 </div>     
@@ -120,7 +122,8 @@
 
         </div>
 
-
+        <footer>
         <jsp:include page="navbars/footer.jsp"/>
+        </footer>
     </body>
 </html>
