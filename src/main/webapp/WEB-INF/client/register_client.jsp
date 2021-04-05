@@ -94,10 +94,9 @@
                     <form:errors path="tel"/>
                 </div>
                 <br>   
-                <input type="submit" value="Register">
-                <div class="register">
-                    <a href="${pageContext.request.contextPath}/company-register" id="register-link">Register as Company</a>
-                </div>
+            
+                 <button type="submit" class="btn btn-success btn-lg m-2">Register</button>
+                
             </form:form>
         </div>
         <br>

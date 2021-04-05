@@ -70,7 +70,7 @@
                     <div class="input-addon">
                         <i class="material-icons">vpn_key</i>
                     </div>
-                    <input id="password" type="password" name="password" placeholder="Password"autocomplete="off"required >
+                    <input id="password" type="password" name="password" placeholder="Password" autocomplete="off" required >
                 </div>
                 <br>
                 <!-- Login/Submit Button -->
