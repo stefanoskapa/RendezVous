@@ -5,20 +5,32 @@
  */
 package com.rendezvous.controller;
 
+import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.customexception.CompanyIdNotFound;
+import com.rendezvous.customexception.ConversationNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
+import com.rendezvous.entity.Conversation;
+import com.rendezvous.entity.Messages;
+import com.rendezvous.entity.User;
 import com.rendezvous.model.AppointmentRequest;
 import com.rendezvous.model.AvailabilityCalendarProperties;
 import com.rendezvous.model.ClientCalendarProperties;
 import com.rendezvous.model.CompanyCalendarProperties;
+import com.rendezvous.model.Message;
 import com.rendezvous.model.SearchResult;
+import com.rendezvous.model.UserProps;
 import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
+import com.rendezvous.service.ConversationService;
+import com.rendezvous.service.MessagesService;
+import com.rendezvous.service.UserService;
 import java.security.Principal;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +57,12 @@ public class ApiController {
     private AppointmentService appointmentService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ConversationService conversationService;
+    @Autowired 
+    private MessagesService messagesService;
 
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
@@ -156,5 +174,60 @@ public class ApiController {
         List<String> categories = categoryService.getAllCategoriesNames();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
+    
+    @GetMapping("/conv") //returns list of conversation-partners
+    public ResponseEntity<List<UserProps>> fetchConvPartners(Principal principal) throws ClientIdNotFound, CompanyIdNotFound{
+        User tempUser = userService.findByEmail(principal.getName());
+        List<Conversation> conv = conversationService.findByUserId(tempUser.getId());
+        List<UserProps> convPartners = new LinkedList<>();
+        for (Conversation a : conv) {
+            UserProps up;
+            if (tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY")) {
+                Client tempClient = clientService.findClientByUserId(a.getPartnerId(tempUser.getId()).getId());
+                up = new UserProps(tempClient.getFname(),tempClient.getLname(),tempClient.getUser().getEmail());               
+            } else {
+                Company comp = companyService.findCompanyByUserId(a.getPartnerId(tempUser.getId()).getId());
+                up = new UserProps(comp.getFname(),comp.getLname(), comp.getUser().getEmail(),comp.getDisplayName());               
+            }
+            convPartners.add(up);
+        }
+        return new ResponseEntity<>(convPartners, HttpStatus.OK);
+    }
+    
+ 
+    @GetMapping("/myprops") // send user information to himself
+    public ResponseEntity<UserProps> fetchMyData(Principal principal) throws ClientIdNotFound, CompanyIdNotFound{
+        User tempUser = userService.findByEmail(principal.getName());
+        UserProps up; 
+        if (tempUser.getRoleList().get(0).getRole().equals("ROLE_CLIENT")) {
+            Client tempClient = clientService.findClientByUserEmail(principal.getName());
+            System.out.println("client found:" + tempClient.toString());
+            up = new UserProps(tempClient.getFname(),tempClient.getLname(),tempClient.getUser().getEmail());
+        } else {
+            Company comp = companyService.findCompanyByUserEmail(principal.getName());
+            up = new UserProps(comp.getFname(),comp.getLname(),comp.getUser().getEmail(),comp.getDisplayName());
+        }
+        return new ResponseEntity<>(up, HttpStatus.OK);
+    }
+
+    @GetMapping("/load/{userEmail}") // loads messages with particular conversation-partner
+    public ResponseEntity<List<Message>> fetchMessages(@PathVariable String userEmail, Principal principal) throws ConversationNotFound{
+        User tempUser = userService.findByEmail(principal.getName());
+        User otherUser = userService.findByEmail(userEmail);
+        Optional <Conversation> tempConv = conversationService.findConversation(tempUser.getId(), otherUser.getId());
+        List<Message> msgsToSend = new LinkedList<>();
+        if (tempConv.isPresent()) {
+            List<Messages> msgs = messagesService.findByConversationId(tempConv.get().getId()).get();
+            for (Messages a : msgs) {
+                String sender = tempUser.getId() == a.getUserId()? principal.getName() : userEmail;
+                Message om = new Message(sender, a.getMessage(), a.getTimestamp().toString());
+                msgsToSend.add(om);
+            }
+        } else {
+            conversationService.save(new Conversation(tempUser,otherUser));
+        }
+        return new ResponseEntity<>(msgsToSend, HttpStatus.OK);
+    }
+
 
 }
