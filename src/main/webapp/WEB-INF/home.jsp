@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>RendezVouz</title>
 
         <!--Bootstrap-->
@@ -36,24 +36,25 @@
     </head>
     <body>
         <jsp:include page="navbars/loginNavbar.jsp"/>
-               
-            <div class="row container-fluid bg-dark justify-content-around">
+
+        <div class="container-fluid">
+            <div class="row bg-dark justify-content-around">
                 <div class="col-md-4 buffer">                   
                     <h1 class="text-white">All you need to do is show up at the right time!</h1> 
                     <br>
                     <p class="text-white">Make your day easier by booking all your appointments online using the best features in one tool</p>
-                   <a href="/client-register" class="btn btn-success btn-lg m-2">Register</a>
-                   <a href="/company-register" class="btn btn-success btn-lg m-2">Register as Company</a>
+                    <a href="/client-register" class="btn btn-success btn-lg m-2">Register</a>
+                    <a href="/company-register" class="btn btn-success btn-lg m-2">Register as Company</a>
 
-                    
+
                 </div>
                 <div class="col-md-4 buffer">
                     <br><br>
                     <img src="/img/rendezvous-landing_page-hero.png" class="img-fluid mx-auto d-block" alt="RendezVouz">
                 </div>
             </div>
-               
-            <div class="row container-fluid bg-white justify-content-around">               
+
+            <div class="row bg-white justify-content-around">               
                 <div class="col-md-4 buffer">
                     <br><br>
                     <img src="/img/dashboard.jpg" class="img-fluid mx-auto d-block" alt="RendezVouz"  style="width:100%; border-radius: 30px; box-shadow:10px 10px 8px #888888;">
@@ -67,8 +68,8 @@
                         navigate through a multitude of services, reach out for the company you are interested in and book an appointment.</p>
                 </div>         
             </div>
-             
-            <div class="row container-fluid bg-light justify-content-around">                
+
+            <div class="row bg-light justify-content-around">                
                 <div class="col-md-4 buffer">
                     <h2 class="text-dark">"It is really refreshing to work with this software which is
                         truly helpful in the client's preferences."</h2>
@@ -81,8 +82,8 @@
                     <img src="/img/rendezvous-landing_page-testimonials.png" class="img-fluid mx-auto d-block" alt="RendezVouz2">
                 </div>
             </div>
-         
+        </div>
         <jsp:include page="navbars/footer.jsp"/>
-  
+
     </body>
 </html>
