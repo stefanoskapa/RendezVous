@@ -6,16 +6,16 @@
         <div class="container">
             <div class="row pt-2">
                 <div class="col-lg text-center">
-                    <a href="https://github.com/CoyasHarris" class="text-white"><i class="ion-social-github"></i> github.com/CoyasHarris</a>
+                    <a href="https://github.com/CoyasHarris"  target="_blank" class="text-white"><i class="ion-social-github"></i> github.com/CoyasHarris</a>
                 </div>
                 <div class="col-lg text-center">
-                    <a href="https://github.com/stefanoskapa" class="text-white"><i class="ion-social-github"></i> github.com/Stefanoskapa</a>
+                    <a href="https://github.com/stefanoskapa"  target="_blank" class="text-white"><i class="ion-social-github"></i> github.com/Stefanoskapa</a>
                 </div>
                 <div class="col-lg text-center">
-                    <a href="https://github.com/panoslns93" class="text-white"><i class="ion-social-github"></i> github.com/Panoslns93</a>
+                    <a href="https://github.com/panoslns93"  target="_blank" class="text-white"><i class="ion-social-github"></i> github.com/Panoslns93</a>
                 </div>
                 <div class="col-lg text-center">
-                    <a href="https://github.com/Leftetziv" class="text-white"><i class="ion-social-github"></i> github.com/Leftetziv</a>
+                    <a href="https://github.com/Leftetziv"  target="_blank" class="text-white"><i class="ion-social-github"></i> github.com/Leftetziv</a>
                 </div>
             </div>
             <div style="text-align:center;margin-top:-40px;">

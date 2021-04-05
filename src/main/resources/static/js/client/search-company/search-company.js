@@ -53,7 +53,7 @@ $(document).ready(function () {
 
                 var resultsData = [];
                 for (let i = 0; i < searchResults.length; i++) {
-                    let card = '<div class="row justify-content-center"><div class="col-11 mycard my-1 rounded">' +
+                    let card = '<div class="row justify-content-center"><div class="col-11 mycard my-1 rounded bg-white">' +
                             '<div class="mycard-img"><img src="/img/No_image_available.svg" alt="No-logo-available" /></div>' +
                             '<div class="mycard-title"><p>' + searchResults[i].displayName + '</p></div>' +
                             '<div class="mycard-telephone"><p class="m-0">Tel: <a href="tel:' + searchResults[i].tel + '">' + searchResults[i].tel + '</a></p></div > ' +

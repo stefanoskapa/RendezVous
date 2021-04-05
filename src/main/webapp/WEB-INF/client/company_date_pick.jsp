@@ -49,8 +49,8 @@
         <link rel="stylesheet" href="/footer/Dark-Footer.css">
 
         <!--Current page-->
-        <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
-        <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
+        <link href='${pageContext.request.contextPath}/calendar/lib/main.min.css' rel='stylesheet' />
+        <script src='${pageContext.request.contextPath}/calendar/lib/main.min.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-date-pick.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>

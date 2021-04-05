@@ -48,7 +48,7 @@
                     </div>
                 </div>
 
-                <div class="row py-5 px-2 bg-white rounded shadow">
+                <div class="row py-5 px-2 bg-light rounded shadow">
 
                     <div class="col-12 col-md-2 px-1">
                         <select class="form-control custom-select my-2" id="category">
@@ -66,7 +66,7 @@
                 </div>
 
 
-                <div class="row py-4 px-2 my-3 bg-white rounded shadow" id="results-area">
+                <div class="row py-4 px-2 my-3 bg-light rounded shadow" id="results-area">
                     <div class="container">
                         <div class="row">
                             <div class="col">

@@ -51,8 +51,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-        <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
-        <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
+        <link href='${pageContext.request.contextPath}/calendar/lib/main.min.css' rel='stylesheet' />
+        <script src='${pageContext.request.contextPath}/calendar/lib/main.min.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/dashboard/dashboard.css">
@@ -61,7 +61,14 @@
         <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
         <br/>
 
-        <div id='calendar' class="container m-5 mx-auto"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
+                </div>
+            </div>
+        </div>
+        
 
         <!-- Modal content-->
         <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
