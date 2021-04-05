@@ -131,10 +131,7 @@
                     <form:errors path="addrCity"/>
                 </div>
                 <br>   
-                <input type="submit" value="Register">
-                <div class="register">
-                    <a href="${pageContext.request.contextPath}/client-register" id="register-link">Register as Client</a>
-                </div>
+                 <button type="submit" class="btn btn-success btn-lg m-2">Register</button>
             </div>
         </form:form>
         <br>
