@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarData;
+    var calendar;
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
     document.getElementById('calendar').innerHTML = "Loading Calendar Data";
@@ -8,21 +9,22 @@ document.addEventListener('DOMContentLoaded', function () {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             calendarData = JSON.parse(this.responseText);
-            drawCalendar(calendarData);
+            drawCalendar();
         }
     };
     xhttp.open("GET", full + "/api/v1/client/dates", true);
     xhttp.send();
 
-    function drawCalendar(calendarData) {
+    function drawCalendar() {
         var calendarEl = document.getElementById('calendar');
         calendarEl.innerHTML = "";
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'timeGridWeek',
+        calendar = new FullCalendar.Calendar(calendarEl, {
+//            initialView: 'timeGridWeek',
+            initialView: $(window).width() < 765 ? 'timeGridDay' : 'timeGridWeek',
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                right: $(window).width() < 765 ? '' : 'dayGridMonth,timeGridWeek',
             },
             firstDay: 1,
             allDaySlot: false,
@@ -67,4 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+    $(window).on("orientationchange", function (event) {
+        setTimeout(drawCalendar, 100);
+    });
 });

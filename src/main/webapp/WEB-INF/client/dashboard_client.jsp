@@ -61,7 +61,14 @@
         <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
         <br/>
 
-        <div id='calendar' class="container m-5 mx-auto"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
+                </div>
+            </div>
+        </div>
+        
 
         <!-- Modal content-->
         <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
