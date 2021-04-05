@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //             scrollTime: '07:00:00',
             // slotLabelInterval: '03:00',
             expandRows: true,
-            contentHeight: 1000,
+            contentHeight: 1500,
             displayEventTime: false,
             timeZone: 'Europe/Athens',
             eventClick: function (info) {
