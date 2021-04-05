@@ -74,14 +74,11 @@
                 </div>
                 <br>
                 <!-- Login/Submit Button -->
-                <input type="submit" value="Login" />
+                <button type="submit" class="btn btn-success btn-lg m-2">Login</button>
+                <br>
+                <a href="/client-register" class="btn btn-secondary btn-lg m-2">Register</a><br>
+                <a href="/company-register" class="btn btn-secondary btn-lg m-2">Register as Company</a>
                 
-                <div class="register">
-                    <a href="${pageContext.request.contextPath}/client-register" id="register-link">Register as User</a>
-                    <div class="register">
-                        <a href="${pageContext.request.contextPath}/company-register" id="register-link">Register as Company</a>
-                    </div>
-                </div>
             </form:form>
         </div>
         <br>
