@@ -11,30 +11,30 @@ document.addEventListener('DOMContentLoaded', function () {
             if (calendarData.businessHours.length == 0) {
                 calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
             }
-            drawCalendar(calendarData);
+            drawCalendar();
             console.log(calendarData.businessHours);
         }
     };
     xhttp.open("GET", full + "/api/v1/company/dates", true);
     xhttp.send();
 
-    function drawCalendar(calendarData) {
+    function drawCalendar() {
         var calendarEl = document.getElementById('calendar');
         calendarEl.innerHTML = "";
         var calendar = new FullCalendar.Calendar(calendarEl, {
             // themeSystem: 'bootstrap',
-            initialView: 'timeGridWeek',
+            initialView: $(window).width() < 765 ? 'timeGridDay' : 'timeGridWeek',
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                right: $(window).width() < 765 ? '' : 'dayGridMonth,timeGridWeek',
             },
             firstDay: 1,
             allDaySlot: false,
             slotDuration: '01:00:00',
             // scrollTime: '07:00:00',
             expandRows: true,
-            contentHeight: 1000,
+            contentHeight: 1500,
             displayEventTime: false,
             timeZone: 'Europe/Athens',
             eventClick: function (info) {
@@ -63,4 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         calendar.render();
     }
+    
+    $(window).on("orientationchange", function (event) {
+        setTimeout(drawCalendar, 100);
+    });
 });

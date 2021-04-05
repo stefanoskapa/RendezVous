@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var calendarData = {};
     $("#alert").hide();
     document.getElementById('calendar').innerHTML = "Loading Calendar Data";
     getCalendarDataAndDrawCalendar();
+    
 
     function getCalendarDataAndDrawCalendar() {
         var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-        var calendarData;
         var comp_id = $("#comp-id").val();
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -15,17 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (calendarData.businessHours.length == 0) {
                     calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
                 }
-                console.log("RecievedfromServer>>>> ");
-                console.log(calendarData);
-                drawCalendar(calendarData);
-
+                drawCalendar();
             }
         };
         xhttp.open("GET", full + "/api/v1/client/company/" + comp_id + "/availability", true);
         xhttp.send();
     }
 
-    function drawCalendar(calendarData) {
+    function drawCalendar() {
         var calendarEl = document.getElementById('calendar');
         calendarEl.innerHTML = "";
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -34,18 +32,24 @@ document.addEventListener('DOMContentLoaded', function () {
 //                slotMaxTime: x.slotMaxTime,
             events: calendarData.blockDates,
             // themeSystem: 'bootstrap',
-            initialView: 'timeGridWeek',
+//            initialView: 'timeGridWeek',
+//            headerToolbar: {
+//                left: 'prev,next today',
+//                center: 'title',
+//                right: ''
+//            },
+            initialView: $(window).width() < 765 ? 'timeGridDay' : 'timeGridWeek',
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: ''
+                right: '',
             },
             firstDay: 1,
             allDaySlot: false,
             slotDuration: '01:00:00',
             // scrollTime: '07:00:00',
             expandRows: true,
-            // contentHeight: 1000,
+             contentHeight: 1500,
             // displayEventTime: false,
             selectConstraint: "businessHours",
             select: function (info) {
@@ -78,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         calendar.render();
     }
+    
+    $(window).on("orientationchange", function (event) {
+        setTimeout(drawCalendar, 100);
+    });
 
     $("#submitDateToServer").click(function () {
         $('html, body').css("cursor", "wait");

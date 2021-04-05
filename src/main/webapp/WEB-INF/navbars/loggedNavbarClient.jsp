@@ -21,7 +21,7 @@
                 <ul class="nav navbar-nav ml-auto">
 
                     <li class="nav-item" role="presentation" style="/*width: 132px;*/">
-                        <div class="nav-item dropdown" style="color: #ffffff;height: 35px;padding: 7px;"><a class="dropdown-toggle d-table-cell" data-toggle="dropdown" aria-expanded="false" style="color: rgb(255,255,255);font-size: 17px;height: 4px;width: 4px;margin: 5px;">&nbsp;<i class="fa fa-address-card"></i>&nbsp;${username}</a>
+                        <div class="nav-item dropdown" style="color: #ffffff;height: 35px;padding: 7px;"><a class="dropdown-toggle d-table-cell" data-toggle="dropdown" aria-expanded="false" style="color: rgb(255,255,255);font-size: 17px;height: 4px;width: 4px;margin: 5px; cursor: pointer;">&nbsp;<i class="fa fa-address-card"></i>&nbsp;${username}</a>
                             <div
                                 class="dropdown-menu dropdown-menu-right" role="menu" style="background-color: rgb(36,39,58);color: rgb(36,39,58);"><a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/client/profile" style="color: rgb(255,255,255);font-size: 16px;background-color: #24273a;"><i class="fa fa-user" data-bs-hover-animate="bounce"></i>&nbsp;Edit Profile</a>
                                 <a

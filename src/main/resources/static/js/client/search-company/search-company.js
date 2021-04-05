@@ -39,12 +39,12 @@ $(document).ready(function () {
         }
     });
     document.getElementById("srcBtn").addEventListener("click", function () {
-        $('*').css("cursor", "wait");
+        $('main *').css("cursor", "wait");
         let searchTerm = document.getElementById("searchbar").value;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                $('*').css("cursor", "auto");
+                $('main *').css("cursor", "auto");
                 let searchResults = JSON.parse(this.responseText);
                 searchResults.sort(compare); //sorting based on display name
 
