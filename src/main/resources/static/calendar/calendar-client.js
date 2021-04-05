@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendar;
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
-    document.getElementById('calendar').innerHTML = "Loading Calendar Data";
-
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -24,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: $(window).width() < 765 ? '' : 'dayGridMonth,timeGridWeek',
+                right: $(window).width() < 765 ? '' : 'dayGridMonth,timeGridWeek'
             },
             firstDay: 1,
             allDaySlot: false,
@@ -64,7 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             events: calendarData
         });
-
+        $("#loading-container").hide();
+        $("#calendar-container").fadeIn("slow");
         calendar.render();
     }
 

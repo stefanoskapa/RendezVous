@@ -31,7 +31,7 @@ public class PaymentController {
     @Autowired
     private CompanyService companyService;
 
-    private double ammount = 19.99; //50 currency(EUR)
+    private final double ammount = 19.99; //19.99 currency(EUR)
 
     @GetMapping("/pro")
     public String showPremium(Model model, Principal principal) {
