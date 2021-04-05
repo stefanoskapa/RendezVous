@@ -62,51 +62,65 @@
             <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
         </header>
 
-        <h1>Pick a date for your appointment</h1>
-        <h2>${comp_name}</h2>
-        <div class="alert alert-dismissible fade show" role="alert" id="alert">
-        </div>
+        <main>
+            
+            
+            
+            <h1>Pick a date for your appointment</h1>
+            <h2>${comp_name}</h2>
+            <div class="alert alert-dismissible fade show" role="alert" id="alert">
+            </div>
 
-        <input type="text" id="comp-id" value="${comp_id}" hidden  />
-        <input type="text" id="fname" value="${fname}" hidden  />
-        <input type="text" id="lname" value="${lname}" hidden  />
-        <input type="text" id="displayName" value="${comp_name}" hidden  />
-        <input type="text" id="compEmail" value="${comp_email}" hidden />
+            <input type="text" id="comp-id" value="${comp_id}" hidden  />
+            <input type="text" id="fname" value="${fname}" hidden  />
+            <input type="text" id="lname" value="${lname}" hidden  />
+            <input type="text" id="displayName" value="${comp_name}" hidden  />
+            <input type="text" id="compEmail" value="${comp_email}" hidden />
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
+            <div class="container h-100" id="loading-container">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="col-12">
+                        <img class="d-block mx-auto" src="/img/loading.gif"/>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Modal content-->
-        <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Modal title</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                    </div>
 
-                    <div class="modal-body">
-                        <p>One fine body&hellip;</p>
+            <div class="container-fluid" id="calendar-container">
+                <div class="row">
+                    <div class="col-12">
+                        <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="cancelModalBtn" data-dismiss="modal">Cancel</button>
-                        <form>
-                            <input type="text" hidden id="hdate" value="">
-                            <button type="button" class="btn btn-primary" id="submitDateToServer" data-dismiss="modal">
-                                Confirm
-                            </button>
-                        </form>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <jsp:include page="/WEB-INF/chat.jsp"/>
+                </div>
+            </div>
+
+            <!-- Modal content-->
+            <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal title</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>One fine body&hellip;</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="cancelModalBtn" data-dismiss="modal">Cancel</button>
+                            <form>
+                                <input type="text" hidden id="hdate" value="">
+                                <button type="button" class="btn btn-primary" id="submitDateToServer" data-dismiss="modal">
+                                    Confirm
+                                </button>
+                            </form>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <jsp:include page="/WEB-INF/chat.jsp"/>
+        </main>
+            
         <footer>
             <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
         </footer>

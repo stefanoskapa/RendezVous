@@ -52,39 +52,55 @@
         <link rel="stylesheet" href="/css/company/dashboard/dashboard.css">
     </head>
     <body>
-        <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
+        <header>
+            <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
+        </header>
 
-        <h3>${company_name} dashboard</h3>
-        
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
+        <main>
+            <h3>${company_name} dashboard</h3>
+            
+            <div class="container h-100" id="loading-container">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="col-12">
+                        <img class="d-block mx-auto" src="/img/loading.gif"/>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Modal content-->
-        <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Modal title</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    </div>
 
-                    <div class="modal-body">
-                        <p>One fine body&hellip;</p>
+            <div class="container-fluid" id="calendar-container">
+                <div class="row">
+                    <div class="col-12">
+                        <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <jsp:include page="/WEB-INF/navbars/footer.jsp"/>               
-        <jsp:include page="/WEB-INF/chat.jsp"/>
+                </div>
+            </div>
+
+            <!-- Modal content-->
+            <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal title</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>One fine body&hellip;</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <jsp:include page="/WEB-INF/chat.jsp"/>  
+        </main>
+
+        <footer>
+            <jsp:include page="/WEB-INF/navbars/footer.jsp"/> 
+        </footer>
     </body>
 </html>

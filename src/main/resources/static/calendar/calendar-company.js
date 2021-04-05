@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
             timeZone: 'Europe/Athens',
             eventClick: function (info) {
                 let startTime = new Date(info.event.start);
-                startTime.setHours(startTime.getHours()+(startTime.getTimezoneOffset()/60));
+                startTime.setHours(startTime.getHours() + (startTime.getTimezoneOffset() / 60));
                 let endTime = new Date(info.event.end);
-                endTime.setHours(endTime.getHours()+(endTime.getTimezoneOffset()/60)); 
-                
+                endTime.setHours(endTime.getHours() + (endTime.getTimezoneOffset() / 60));
+
                 $(".modal-title").text(info.event.title);
                 $(".modal-body p").html(
                         startTime.toLocaleTimeString() +
@@ -60,10 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
 //            slotMaxTime: "18:00:00", //na to allazoume dinamika me vasi to orario
             events: calendarData.events
         });
-
+        $("#loading-container").hide();
+        $("#calendar-container").fadeIn("slow");
         calendar.render();
     }
-    
+
     $(window).on("orientationchange", function (event) {
         setTimeout(drawCalendar, 100);
     });

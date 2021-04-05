@@ -5,4 +5,13 @@
     background: #706b6b56;
 }
 
+body {
+    display: grid;
+    min-height: 100vh;
+    height: 100%;
+    grid-template-rows: auto 1fr auto;
+}
 
+#calendar-container {
+    display: none;
+}

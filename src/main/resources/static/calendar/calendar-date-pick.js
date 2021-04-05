@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarData = {};
     $("#alert").hide();
-    document.getElementById('calendar').innerHTML = "Loading Calendar Data";
     getCalendarDataAndDrawCalendar();
-    
 
     function getCalendarDataAndDrawCalendar() {
         var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
@@ -49,21 +47,21 @@ document.addEventListener('DOMContentLoaded', function () {
             slotDuration: '01:00:00',
             // scrollTime: '07:00:00',
             expandRows: true,
-             contentHeight: 1500,
+            contentHeight: 1500,
             // displayEventTime: false,
             selectConstraint: "businessHours",
             select: function (info) {
                 let startTime = new Date(info.start);
-                startTime.setHours(startTime.getHours()+(startTime.getTimezoneOffset()/60));
+                startTime.setHours(startTime.getHours() + (startTime.getTimezoneOffset() / 60));
                 let endTime = new Date(info.end);
-                endTime.setHours(endTime.getHours()+(endTime.getTimezoneOffset()/60));          
-                
+                endTime.setHours(endTime.getHours() + (endTime.getTimezoneOffset() / 60));
+
                 $("#hdate").val(info.start);
                 $(".modal-title").text("Confirmation");
                 $(".modal-body p").html(
                         "Are you sure?" +
                         "<br/>" +
-                        startTime.toLocaleTimeString()+
+                        startTime.toLocaleTimeString() +
                         " - " +
                         endTime.toLocaleTimeString()
                         );
@@ -80,9 +78,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 return arg.event.title;
             },
         });
+        $("#loading-container").hide();
+        $("#calendar-container").fadeIn("slow");
         calendar.render();
     }
-    
+
     $(window).on("orientationchange", function (event) {
         setTimeout(drawCalendar, 100);
     });
