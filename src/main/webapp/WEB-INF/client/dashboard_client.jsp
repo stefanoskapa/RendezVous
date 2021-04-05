@@ -51,8 +51,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-        <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
-        <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
+        <link href='${pageContext.request.contextPath}/calendar/lib/main.min.css' rel='stylesheet' />
+        <script src='${pageContext.request.contextPath}/calendar/lib/main.min.js'></script>
         <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/dashboard/dashboard.css">
