@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (calendarData.businessHours.length == 0) {
                     calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
                 }
+                console.log(calendarData);
                 drawCalendar();
             }
         };
@@ -73,10 +74,16 @@ document.addEventListener('DOMContentLoaded', function () {
             eventBorderColor: 'gray',
             eventTextColor: 'white',
             timeZone: 'Europe/Athens',
-            // eventDisplay: 'block',
             eventContent: function (arg) {
-                return arg.event.title;
-            },
+                if (arg.event.title.startsWith("Appointment with")){
+                    arg.backgroundColor = "#3788D8"
+                } else if (arg.event.title.startsWith("Date Unavailable")){
+                    arg.backgroundColor = "gray"
+                } else {
+                    arg.backgroundColor = "#6fafed"
+                }
+                return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center">' + arg.event.title + '</p></div>'}
+            }
         });
         $("#loading-container").hide();
         $("#calendar-container").fadeIn("slow");

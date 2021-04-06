@@ -71,9 +71,6 @@ public class BlockDate {
             return false;
         }
         final BlockDate other = (BlockDate) obj;
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
         if (!Objects.equals(this.start, other.start)) {
             return false;
         }
