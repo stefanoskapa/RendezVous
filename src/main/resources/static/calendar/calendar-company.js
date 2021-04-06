@@ -58,7 +58,10 @@ document.addEventListener('DOMContentLoaded', function () {
             businessHours: calendarData.businessHours,
 //            slotMinTime: "08:00:00", //na to allazoume dinamika me vasi to orario
 //            slotMaxTime: "18:00:00", //na to allazoume dinamika me vasi to orario
-            events: calendarData.events
+            events: calendarData.events,
+            eventContent: function (arg) {
+                return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center">' + arg.event.title + '</p></div>'}
+            },
         });
         $("#loading-container").hide();
         $("#calendar-container").fadeIn("slow");

@@ -71,18 +71,16 @@ public class CompanyService {
         company.orElseThrow(() -> new CompanyIdNotFound("Company " + id + " not found!"));
         return company.get();
     }
-    
-    
+
     public Company findCompanyByUserId(Integer userId) throws CompanyIdNotFound {
         Optional<Company> comp = companyRepository.findCompanyByUserId(userId);
         return comp.orElseThrow(() -> new CompanyIdNotFound("Company with userID=" + userId + " not found!"));
-    }     
-    
+    }
+
     public Company findCompanyByUserEmail(String email) throws CompanyIdNotFound {
         Optional<Company> comp = companyRepository.findCompanyByUserEmail(email);
         return comp.orElseThrow(() -> new CompanyIdNotFound("Company with email=" + email + " not found!"));
     }
-            
 
     public void saveCompany(Company company) {
         List<Role> roles = roleRepository.findAll();
@@ -214,19 +212,10 @@ public class CompanyService {
         WorkWeek workWeek = findWorkingHoursByCompany(company);
         availabilityCalendarProperties.setBusinessHours(getBusinessHours(workWeek));
 
-        //finding and adding company events
+        
+        
+        //blockDates will hold all events in the calendar(client events and company's blocked events with other clients)
         List<BlockDate> blockDates = new ArrayList();
-
-        List<Appointment> companyAppointments = appointmentRepository.findByCompany(company);
-
-        for (Appointment ap : companyAppointments) {
-            LocalDateTime startTime = ap.getDate().atStartOfDay();
-            startTime = startTime.plusHours(ap.getTimeslot());
-
-            LocalDateTime endTime = startTime.plusHours(1);
-
-            blockDates.add(new BlockDate("Date Unavailable", startTime, endTime));
-        }
 
         //finding and adding client events
         List<Appointment> clientAppointments = appointmentRepository.findByClient(client);
@@ -239,13 +228,26 @@ public class CompanyService {
 
             String title = ap.getCompany().getDisplayName();
 
-            //testing if the client already have an appointment with the company, to make sure the 2 appointments wont show up at the same time
-            BlockDate alreadyExistingAppointment = new BlockDate("Date Unavailable", startTime, endTime);
-            if (blockDates.contains(alreadyExistingAppointment)) {
-                int indexOf = blockDates.indexOf(alreadyExistingAppointment);
-                blockDates.set(indexOf, new BlockDate("Appointment with " + title + " already exists", startTime, endTime));
+            if (title.equals(company.getDisplayName())) {
+                blockDates.add(new BlockDate("Appointment with " + title + " booked", startTime, endTime));
             } else {
                 blockDates.add(new BlockDate(title, startTime, endTime));
+            }
+        }
+        
+        
+        //finding and adding company events
+        List<Appointment> companyAppointments = appointmentRepository.findByCompany(company);
+
+        for (Appointment ap : companyAppointments) {
+            LocalDateTime startTime = ap.getDate().atStartOfDay();
+            startTime = startTime.plusHours(ap.getTimeslot());
+
+            LocalDateTime endTime = startTime.plusHours(1);
+            
+            //making sure client dates are showing above company dates
+            if (!blockDates.contains(new BlockDate("", startTime, endTime))) {
+                blockDates.add(new BlockDate("Unavailable", startTime, endTime));
             }
         }
 
