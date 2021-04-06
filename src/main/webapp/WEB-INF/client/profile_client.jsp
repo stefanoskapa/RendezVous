@@ -90,6 +90,8 @@
                         </div>
                     </div>
                 </div>
+                            <button class="btn btn-primary form-btn" type="submit">Save
+                            </button>
             </form:form>
         </div>
         <footer>
