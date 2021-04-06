@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -53,6 +55,10 @@
                     <div class="col-12 col-md-2 px-1">
                         <select class="form-control custom-select my-2" id="category">
                             <option selected="selected" value="All">All Categories</option>
+
+                            <c:forEach items="${listCategory}" var="category">         
+                                    <option value="${category.id}">${category.category}</option>                              
+                            </c:forEach>
                         </select>
                     </div>
 
