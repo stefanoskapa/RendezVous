@@ -1,5 +1,5 @@
 <%-- 
-    Document   : profile-company
+    Document   : profile-client
     Created on : Mar 8, 2021, 3:31:47 PM
     Author     : Leyteris
 --%>
@@ -46,59 +46,58 @@
         <link rel="stylesheet" href="/footer/Dark-Footer.css">
 
         <!--Current page-->
+        <link rel="stylesheet" href="/css/company/profile/company-profile.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
     </head>
-    <body style="background-color: rgb(47,52,56);">
+    <body>
         <!--URL: company/profile-->
-        <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
-        <br>
-        <div class="container profile profile-view" id="profile" style="color: rgb(36,40,43);">
+        <header>
+            <jsp:include page="/WEB-INF/navbars/loggedNavbarClient.jsp"/>
+        </header>
+        
+        <div class="container profile profile-view" id="profile">
             <form:form action="${pageContext.request.contextPath}/client/profile" method="post" modelAttribute="client">
-                <div class="form-row profile-row">
-                    <div class="col-md-8" style="width: 741px;">
-                        <h1 style="color: rgb(255,255,255);"><i class="fa fa-user"></i>&nbsp;Profile</h1>
-                        <hr>
-                        <div class="form-row">
-                            <div class="col-sm-12 col-md-6">
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="fname"><i class="fa fa-user-circle" style="font-size: 24px;"></i>&nbsp;First Name</form:label>
-                                    <form:input path="fname" placeholder="First Name" class="form-control" type="text" name="firstname" style="width:250px;" />
-                                    <form:errors path="fname"/>
-                                </div>
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="lname"><i class="fa fa-spell-check"></i>&nbsp;Last Name</form:label>
-                                    <form:input path="lname" placeholder="Last Name"  class="form-control" type="text" name="lastname" style="width:250px;"/>
-                                    <form:errors path="lname"/>
-                                </div>
+                <div class="row">
+                    <div class="col">
+                        <h1 id="h1"><i class="fa fa-user"></i>&nbsp;User Profile</h1>
+                    </div>
+                </div>
 
+                <hr>
 
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="tel"><i class="fa fa-phone" style="font-size: 24px;"></i>&nbsp;Telephone</form:label>
-                                    <form:input path="tel" placeholder="Telephone" class="form-control" type="phone" name="phone" style="width: 120px;"/>
-                                    <form:errors path="tel" />
-                                </div>
-
-                            </div>
-
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <form:label path="fname"><i class="fa fa-user-circle"></i>&nbsp;First Name</form:label>
+                            <form:input path="fname" placeholder="First Name" class="form-control" type="text" name="firstname" required="required" minlength="1" maxlength="20" />
+                            <form:errors path="fname"/>
                         </div>
-                        <div class="form-row">
-                            <br>
-                            <br>
-                            <p><a href="">Update Credentials</a></p>
-                            <br
-                                <div class="form-row">
-                            <div class="col-md-12 content-right"> <br><button class="btn btn-primary form-btn" type="submit" style="color: rgb(255,255,255);background-color: #007a3d;">Save</button></div>
-
+                        <div class="form-group">
+                                <form:label path="tel"><i class="fa fa-phone"></i>&nbsp;Telephone</form:label>
+                                <form:input path="tel" placeholder="Telephone" class="form-control" type="phone" name="phone" maxlength="10"/>
+                                <form:errors path="tel" />
+                            </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <form:label path="lname"><i class="fa fa-user-circle"></i>&nbsp;Last Name</form:label>
+                                <form:input path="lname" placeholder="Last Name"  class="form-control" type="text" name="lastname" required="required" minlength="1" maxlength="20"/>
+                                <form:errors path="lname"/>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </form:form>
-
         </div>
-        <br>
+        <footer>
+            <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
+        </footer>
+         <script src="${pageContext.request.contextPath}/js/validation/validation.js"></script>
     </body>
-    <footer><jsp:include page="/WEB-INF/navbars/footer.jsp"/></footer>
+
 
 </html>
 
