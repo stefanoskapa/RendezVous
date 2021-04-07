@@ -28,7 +28,7 @@
 
         <!--Current page-->
         <link rel="stylesheet" href="/css/login/login.css">
-        
+
     </head>
     <body style="background-color:#2f3438 ">
         <jsp:include page="navbars/loginNavbar.jsp"/>

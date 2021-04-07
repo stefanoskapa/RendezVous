@@ -8,6 +8,7 @@ package com.rendezvous.controller;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
+import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
@@ -30,6 +31,8 @@ public class ClientController {
     private ClientService clientService;
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private CategoryService categoryService;
 
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
@@ -47,7 +50,9 @@ public class ClientController {
     }
     
     @GetMapping("/dashboard")
-    public String showDashboard() {
+    public String showDashboard(Model model) {
+        model.addAttribute("listCategory", categoryService.getAllCategories());
+        System.out.println(categoryService.getAllCategories());
         return "client/dashboard_client";
     }
 

@@ -48,106 +48,182 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                display: grid;
+                min-height: 100vh;
+                height: 100%;
+                grid-template-rows: auto 1fr auto;
+                background-color: #2f3438;
+            }
+            .container profile profile-view{
+                color: rgb(36,40,43);
+            }
+
+            h1{
+                color: rgb(255,255,255);
+            }
+            h4{
+                color: rgb(155,166,200);
+            }
+            .form-group{
+                color: rgb(255,255,255);
+                font-size: 18px;
+            }
+            .fa fa-user-circle{
+                font-size: 24px;    
+            }
+            .fas fa-spell-check{
+                font-size: 24px;
+            }
+            .fas fa-address-book{
+                font-size: 24px;
+            }
+            .fas fa-phone{
+                font-size: 24px;
+            }
+
+            .fas fa-city{
+                font-size: 24px;
+            }
+
+            .btn btn-primary form-btn{
+                color: rgb(255,255,255);
+                background-color: #007a3d;
+            }
+        </style>
     </head>
-    <body style="background-color: rgb(47,52,56);">
+    <body>
         <!--URL: company/profile-->
-        <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
+        <header>
+            <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
+        </header>
         <br>
-        <div class="container profile profile-view" id="profile" style="color: rgb(36,40,43);">
+        <div class="container profile profile-view" id="profile">
             <form:form action="${pageContext.request.contextPath}/company/profile" 
                        method="post" modelAttribute="company">
-                <div class="form-row profile-row">
-                    <div class="col-md-8" style="width: 741px;">
-                        <h1 style="color: rgb(255,255,255);"><i class="fas fa-building"></i>&nbsp;Profile</h1><c:if test="${company.premium == true}"><h4 style="color: rgb(155,166,200);">Premium : Enabled</h4></c:if>
-                            <hr>
-                            <div class="form-row">
-                                <div class="col-sm-12 col-md-6">
-                                    <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="displayName"><i class="fa fa-user-circle" style="font-size: 24px;"></i>&nbsp;Display Name</form:label>
-                                    <form:input  path="displayName" placeholder="company name" class="form-control" type="text" name="displayname" style="width:250px;" />
-                                    <form:errors path="displayName"/>
-                                </div>
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <h1 id="h1"><i class="fas fa-building"></i>&nbsp;Profile</h1>
+                    </div>
+                </div>
 
-                                    <form:label path="fname"><i class="fas fa-spell-check" style="font-size: 24px;"></i>&nbsp;First Name</form:label>
-                                    <form:input path="fname" placeholder="First Name"  class="form-control" type="text" name="firstname" style="width:250px;"/>
-                                    <form:errors path="fname"/>
-                                </div>
+                <div class="row">
+                    <div class="col">
+                        <c:if test="${company.premium == true}">
+                            <h4>Premium : Enabled</h4>
+                        </c:if>
+                    </div>
+                </div>
 
-                                <c:if test="${company.premium == true}">
-                                    <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                        <form:label path="category"><i class="fas fa-spell-check" style="font-size: 24px;"></i>&nbsp;Category</form:label>
-                                        <form:select path="category" class="form-control" style="width:250px;">
+                <hr>
 
-                                            <c:if test = "${company.category == null}">
-                                                <option disabled="true" selected="true">Select a category</option>
-                                            </c:if>
-                                            <c:if test = "${company.category != null}">
-                                                <option selected="true" value="${company.category.id}">${company.category.category}</option>
-                                            </c:if>
-
-                                            <c:forEach items="${listCategory}" var="category">
-                                                <c:if test = "${company.category.id != category.id}">
-                                                    <option value="${category.id}">${category.category}</option>
-                                                </c:if>
-                                            </c:forEach>
-                                        </form:select>
-                                    </div>
-                                </c:if>
-
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="tel"><i class="fas fa-phone" style="font-size: 24px;"></i>&nbsp;Telephone</form:label>
-                                    <form:input path="tel" placeholder="Telephone" class="form-control" type="text" name="phone" style="width: 120px;"/>
-                                    <form:errors path="tel" />
-                                </div>
-
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="afm"><i class="fas fa-address-book" style="font-size: 24px;"></i>&nbsp;ΑΦΜ</form:label>
-                                    <form:input path="afm" placeholder="ΑΦΜ" disabled="true" class="form-control" style="width: 110px;"/>
-                                </div>
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="lname"><i class="fas fa-spell-check" style="font-size: 24px;"></i>&nbsp;Last Name</form:label>
-                                    <form:input path="lname" placeholder="Last Name" class="form-control" type="text" name="lastname" style="width: 250px;"/>
-                                    <form:errors path="lname"/>
-                                </div>
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="addrStr"><i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;Street Name</form:label>
-                                    <form:input path="addrStr" placeholder="Street Name" class="form-control" type="text"  name="streetname" style="width: 250px;"/>
-                                    <form:errors path="addrStr"/>
-                                </div>
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="addrCity"><i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;City</form:label>
-                                    <form:input path="addrCity" placeholder="City" class="form-control" type="text" style="width: 250px;"/>
-                                    <form:errors path="addrCity"/>
-                                </div>
-                                <div style="color: rgb(255,255,255);font-size: 18px;" class="form-group">
-                                    <form:label path="addrNo">&nbsp;<i class="fas fa-city" style="font-size: 24px;"></i>&nbsp;Street Number</form:label>
-                                    <form:input path="addrNo" placeholder="Number" class="form-control" name="streetnumber"  style="width: 55px;"/>
-                                    <form:errors path="addrNo"/>
-                                </div>
-
-                            </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <form:label path="displayName"><i class="fa fa-user-circle"></i>&nbsp;Display Name
+                            </form:label>
+                            <form:input path="displayName" placeholder="company name" class="form-control" type="text"
+                                        name="displayname" />
+                            <form:errors path="displayName" />
                         </div>
-                        <div class="form-row">
-                            <br>
-                            <br>
-
-                            <br
-                                <div class="form-row">
-                            <div class="col-md-12 content-right"> <br><button class="btn btn-primary form-btn" type="submit" style="color: rgb(255,255,255);background-color: #007a3d;">Save</button></div>
-
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <form:label path="afm"><i class="fas fa-address-book"></i>&nbsp;ΑΦΜ</form:label>
+                                <form:input path="afm" placeholder="ΑΦΜ" disabled="true" class="form-control afm" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </form:form>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <form:label path="fname"><i class="fas fa-spell-check"></i>&nbsp;First Name</form:label>
+                            <form:input path="fname" placeholder="First Name"  class="form-control" type="text" name="firstname"/>
+                            <form:errors path="fname"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <form:label path="lname"><i class="fas fa-spell-check"></i>&nbsp;Last Name</form:label>
+                                <form:input path="lname" placeholder="Last Name" class="form-control" type="text" name="lastname"/>
+                                <form:errors path="lname"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <form:label path="tel"><i class="fas fa-phone"></i>&nbsp;Telephone</form:label>
+                            <form:input path="tel" placeholder="Telephone" class="form-control tel" type="text" name="phone"/>
+                            <form:errors path="tel" />
+                        </div>
+                    </div>   
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <form:label path="addrStr"><i class="fas fa-city"></i>&nbsp;Street Name</form:label>
+                                <form:input path="addrStr" placeholder="Street Name" class="form-control" type="text"  name="streetname" />
+                                <form:errors path="addrStr"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-3">
 
-        </div>
-        <br>
+                        <c:if test="${company.premium == true}">
+                            <div class="form-group">
+                                <form:label path="category"><i class="fas fa-spell-check"></i>&nbsp;Category</form:label>
+                                <form:select path="category" class="form-control">
+                                    <c:if test = "${company.category == null}">
+                                        <option disabled="true" selected="true">Select a category</option>
+                                    </c:if>
+                                    <c:if test = "${company.category != null}">
+                                        <option selected="true" value="${company.category.id}">${company.category.category}</option>
+                                    </c:if>
+                                    <c:forEach items="${listCategory}" var="category">
+                                        <c:if test = "${company.category.id != category.id}">
+                                            <option value="${category.id}">${category.category}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </form:select>
+                            </div>
+                        </c:if>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <form:label path="addrCity"><i class="fas fa-city"></i>&nbsp;City</form:label>
+                                <form:input path="addrCity" placeholder="City" class="form-control" type="text"/>
+                                <form:errors path="addrCity"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <form:label path="addrNo">&nbsp;<i class="fas fa-city"></i>&nbsp;Street Number</form:label>
+                                <form:input path="addrNo" placeholder="Number" class="form-control strnumb" name="streetnumber" />
+                                <form:errors path="addrNo"/>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <button class="btn btn-primary form-btn" type="submit">Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form:form>
+        <footer><jsp:include page="/WEB-INF/navbars/footer.jsp"/></footer>
     </body>
-    <footer><jsp:include page="/WEB-INF/navbars/footer.jsp"/></footer>
-
 </html>
 
 

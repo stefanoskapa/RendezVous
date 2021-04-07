@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,6 +57,7 @@
         <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/dashboard/dashboard.css">
+
     </head>
     <body>
         <header>
@@ -72,6 +74,22 @@
             </div>
 
             <div class="container-fluid" id="calendar-container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mx-0 mx-md-5 my-5">
+                            Name search:
+                            <input type="text" id="search-by-name" />
+                            <br/>
+                            Category search:
+                            <select id="search-by-category">
+                                <option value="-1" selected="true">All Categories</option>
+                                <c:forEach items="${listCategory}" var="category">
+                                    <option value="${category.id}">${category.category}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
