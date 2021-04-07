@@ -56,6 +56,15 @@
                             </c:forEach>
                         </select>
                     </div>
+                    <div class="col-12 col-md-2 px-1">
+                        <select class="form-control custom-select my-2" id="city">
+                            <option selected="selected" value="All">All Cities</option>
+
+                            <c:forEach items="${listCities}" var="city">         
+                                    <option value="${city}">${city}</option>                              
+                            </c:forEach>
+                        </select>
+                    </div>
 
                     <div class="col-12 col-md-8 px-1">
                         <input type="text" id="searchbar" class="form-control my-2" placeholder="Search for..." >

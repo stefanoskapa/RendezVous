@@ -64,7 +64,7 @@ $(document).ready(function () {
                 })
             }
         };
-        xhttp.open("GET", full + "/api/v1/client/comp-search?searchTerm=" + searchTerm + "&category=" + document.getElementById("category").value, true);
+        xhttp.open("GET", full + "/api/v1/client/comp-search?searchTerm=" + searchTerm + "&category=" + document.getElementById("category").value+"&city=" +document.getElementById("city").value , true);
         xhttp.send();
     })
 });
