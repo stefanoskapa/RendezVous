@@ -315,5 +315,19 @@ public class CompanyService {
     public void setPremiumStatus(Company company) {
         companyRepository.savePremiumStatus(company.getId());
     }
+    
+    public Set<String> findAllCities() {
+        return companyRepository.findAllCities().orElseThrow(() -> new UsernameNotFoundException("Cities not found!"));
+    }
+    
+    public Set<SearchResult> filterByCity(Set<SearchResult> companies, String city) {
+        Set<SearchResult> comps = new HashSet<>();
+        for (SearchResult c: companies) {
+            if (c.getAddrCity().equals(city)) {
+                comps.add(c);
+            }
+        }
+        return comps;
+    }
 
 }

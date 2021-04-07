@@ -164,8 +164,11 @@ public class ApiController {
     }
 
     @GetMapping("client/comp-search")
-    public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm, @RequestParam String category) {
+    public ResponseEntity<Set<SearchResult>> findCompanies(@RequestParam String searchTerm, @RequestParam String category, @RequestParam String city) {
         Set<SearchResult> results = companyService.companySearch(searchTerm, category);
+        if (!"All".equals(city)) {
+            results = companyService.filterByCity(results, city);
+        }
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
