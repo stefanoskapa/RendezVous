@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegistrationController {
@@ -32,7 +33,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/client-register")
-    public String clientRegistration(@Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model) {
+    public String clientRegistration(@Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
         if (bindingResult.hasErrors()) {
             return "/client/register_client";
@@ -46,6 +47,7 @@ public class RegistrationController {
 
         clientService.saveClient(newClient);
         
+        attributes.addAttribute("registration", "true");
         return "redirect:/login";
     }
 
@@ -55,7 +57,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/company-register")
-    public String companyRegistration(@Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, Model model) {
+    public String companyRegistration(@Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
         if (bindingResult.hasErrors()) {
             return "company/register_company";
@@ -67,8 +69,8 @@ public class RegistrationController {
         }
         
         companyService.saveCompany(newCompany);
+        attributes.addAttribute("registration", "true");
         return "redirect:/login";
-
     }
 
 }

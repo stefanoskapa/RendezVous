@@ -212,8 +212,6 @@ public class CompanyService {
         WorkWeek workWeek = findWorkingHoursByCompany(company);
         availabilityCalendarProperties.setBusinessHours(getBusinessHours(workWeek));
 
-        
-        
         //blockDates will hold all events in the calendar(client events and company's blocked events with other clients)
         List<BlockDate> blockDates = new ArrayList();
 
@@ -234,8 +232,7 @@ public class CompanyService {
                 blockDates.add(new BlockDate(title, startTime, endTime));
             }
         }
-        
-        
+
         //finding and adding company events
         List<Appointment> companyAppointments = appointmentRepository.findByCompany(company);
 
@@ -244,7 +241,7 @@ public class CompanyService {
             startTime = startTime.plusHours(ap.getTimeslot());
 
             LocalDateTime endTime = startTime.plusHours(1);
-            
+
             //making sure client dates are showing above company dates
             if (!blockDates.contains(new BlockDate("", startTime, endTime))) {
                 blockDates.add(new BlockDate("Unavailable", startTime, endTime));
@@ -256,13 +253,13 @@ public class CompanyService {
     }
 
     public Set<SearchResult> companySearch(String searchTerm, String category) {
-
+        
         Set<SearchResult> results = new HashSet<>();
         List<Company> companies;
         if (searchTerm.trim().equals("")) {
             companies = companyRepository.findAll();
             for (Company comp : companies) {
-                if (category.equals("All") || (comp.getCategory() != null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                if (category.equals("All") || (comp.getCategory() != null && Integer.parseInt(category) == comp.getCategory().getId())) {
                     results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
                 }
             }
@@ -271,7 +268,7 @@ public class CompanyService {
             for (String a : searchTerms) {
                 companies = companyRepository.findByDisplayNameContainingIgnoreCaseOrAddrCityContainingIgnoreCaseOrTelContaining(a, a, a);
                 for (Company comp : companies) {
-                    if (category.equals("All") || (comp.getCategory() != null && category.equalsIgnoreCase(comp.getCategory().getCategory()))) {
+                    if (category.equals("All") || (comp.getCategory() != null && Integer.parseInt(category) == comp.getCategory().getId())) {
                         results.add(new SearchResult(comp.getId(), comp.getDisplayName(), comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel()));
                     }
                 }

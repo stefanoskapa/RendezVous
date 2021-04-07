@@ -169,11 +169,11 @@ public class ApiController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    @GetMapping("client/categories")
-    public ResponseEntity<List<String>> getAllCategories() {
-        List<String> categories = categoryService.getAllCategoriesNames();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
-    }
+//    @GetMapping("client/categories")
+//    public ResponseEntity<List<String>> getAllCategories() {
+//        List<String> categories = categoryService.getAllCategoriesNames();
+//        return new ResponseEntity<>(categories, HttpStatus.OK);
+//    }
     
     @GetMapping("/conv") //returns list of conversation-partners
     public ResponseEntity<List<UserProps>> fetchConvPartners(Principal principal) throws ClientIdNotFound, CompanyIdNotFound{

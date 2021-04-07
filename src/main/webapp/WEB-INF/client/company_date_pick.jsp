@@ -63,12 +63,6 @@
         </header>
 
         <main>
-            
-            <h1>Pick a date for your appointment</h1>
-            <h2>${comp_name}</h2>
-            <div class="alert alert-dismissible fade show" role="alert" id="alert">
-            </div>
-
             <input type="text" id="comp-id" value="${comp_id}" hidden  />
             <input type="text" id="fname" value="${fname}" hidden  />
             <input type="text" id="lname" value="${lname}" hidden  />
@@ -84,9 +78,26 @@
             </div>
 
             <div class="container-fluid" id="calendar-container">
-                <div class="row">
+                <div class="row mx-0 mx-md-5">
+                    <div class="col">
+                        <h1 class="text-center">${comp_name}</h1>
+                        <h5>Click on one of the available slots to close your appointment</h5>
+                        <h5>Confirm your appointment in the popup window</h5>
+                        <h6>Legend:</h6>
+                        <ul id="legend">
+                            <li><div id="slot-available" class="mr-1"></div><h6>Available for booking</h6></li>
+                            <li><div id="slot-existing-with-comp" class="mr-1"></div><h6>Appointment with the company already booked</h6></li>
+                            <li><div id="slot-existing-with-other-comp" class="mr-1"></div><h6>Appointment with another company booked</h6></li>
+                            <li><div id="slot-unavailable" class="mr-1"></div><h6>Company is unavailable on the specific slot</h6></li>
+                            <li><div id="slot-of-working-hours" class="mr-1"></div><h6>Slot belongs outside company's opening hours</h6></li>
+                        </ul>
+                        <div class="alert alert-dismissible fade show" role="alert" id="alert"></div>
+                    </div>
+                </div>
+
+                <div class="row mx-0 mx-md-5">
                     <div class="col-12">
-                        <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
+                        <div id='calendar' class="my-5"></div>
                     </div>
                 </div>
             </div>
@@ -118,7 +129,7 @@
             </div><!-- /.modal -->
             <jsp:include page="/WEB-INF/chat.jsp"/>
         </main>
-            
+
         <footer>
             <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
         </footer>

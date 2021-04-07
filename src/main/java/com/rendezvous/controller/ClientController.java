@@ -50,7 +50,9 @@ public class ClientController {
     }
     
     @GetMapping("/dashboard")
-    public String showDashboard() {
+    public String showDashboard(Model model) {
+        model.addAttribute("listCategory", categoryService.getAllCategories());
+        System.out.println(categoryService.getAllCategories());
         return "client/dashboard_client";
     }
 

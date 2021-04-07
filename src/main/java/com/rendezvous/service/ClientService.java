@@ -57,13 +57,11 @@ public class ClientService {
         Optional<Client> client = clientRepository.findClientByUserId(userId);
         return client.orElseThrow(() -> new ClientIdNotFound("Client with userID=" + userId + " not found!"));
     }
-    
+
     public Client findClientByUserEmail(String email) throws ClientIdNotFound {
         Optional<Client> client = clientRepository.findClientByUserEmail(email);
         return client.orElseThrow(() -> new ClientIdNotFound("Client with email=" + email + " not found!"));
     }
-    
-    
 
     public void saveClient(Client client) {
         List<Role> roles = roleRepository.findAll();
@@ -88,7 +86,13 @@ public class ClientService {
             Company comp = ap.getCompany();
             startTime = ap.getDate().atStartOfDay();
             startTime = startTime.plusHours(ap.getTimeslot());
-            ClientExtendedProps cep = new ClientExtendedProps(comp.getAddrStr(), comp.getAddrNo(), comp.getAddrCity(), comp.getTel());
+            ClientExtendedProps cep = new ClientExtendedProps(
+                    comp.getAddrStr(),
+                    comp.getAddrNo(),
+                    comp.getAddrCity(),
+                    comp.getTel(),
+                    comp.getCategory() != null ? comp.getCategory().getId() : null
+            );
             ClientCalendarProperties ccp = new ClientCalendarProperties(comp.getDisplayName(), startTime, startTime.plusHours(1), cep);
             ccpList.add(ccp);
         }

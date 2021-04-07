@@ -15,15 +15,17 @@ public class ClientExtendedProps {
     private String addr_no;
     private String addr_city;
     private String tel;
-
+    private Integer category;
+    
     public ClientExtendedProps() {
     }
 
-    public ClientExtendedProps(String addr_str, String addr_no, String addr_city, String tel) {
+    public ClientExtendedProps(String addr_str, String addr_no, String addr_city, String tel, Integer category) {
         this.addr_str = addr_str;
         this.addr_no = addr_no;
         this.addr_city = addr_city;
         this.tel = tel;
+        this.category = category;
     }
 
     public String getTel() {
@@ -57,6 +59,12 @@ public class ClientExtendedProps {
     public void setAddr_city(String addr_city) {
         this.addr_city = addr_city;
     }
-    
-    
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
 }

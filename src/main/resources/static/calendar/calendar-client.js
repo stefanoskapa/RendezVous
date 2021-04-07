@@ -1,24 +1,35 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarData;
+    var filteredCalendarData;
     var calendar;
+    var defDate;
+    var initialView;
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             calendarData = JSON.parse(this.responseText);
-            drawCalendar();
+            
+            filteredCalendarData = calendarData;
+            initialView = 'timeGridWeek';
+            defDate = new Date();
+            
+            initializeCalendar();
+            $("#loading-container").hide();
+            $("#calendar-container").fadeIn("slow");
+            calendar.render();
         }
     };
     xhttp.open("GET", full + "/api/v1/client/dates", true);
     xhttp.send();
 
-    function drawCalendar() {
+    function initializeCalendar() {
         var calendarEl = document.getElementById('calendar');
         calendarEl.innerHTML = "";
         calendar = new FullCalendar.Calendar(calendarEl, {
-//            initialView: 'timeGridWeek',
-            initialView: $(window).width() < 765 ? 'timeGridDay' : 'timeGridWeek',
+            initialDate: defDate,
+            initialView: $(window).width() < 765 ? 'timeGridDay' : initialView,
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
@@ -59,15 +70,40 @@ document.addEventListener('DOMContentLoaded', function () {
             eventContent: function (arg) {
                 return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center">' + arg.event.title + '</p></div>'}
             },
-            events: calendarData
+            events: filteredCalendarData
         });
-        $("#loading-container").hide();
-        $("#calendar-container").fadeIn("slow");
-        calendar.render();
     }
 
 
     $(window).on("orientationchange", function (event) {
-        setTimeout(drawCalendar, 100);
+        setTimeout(function () {
+            initializeCalendar();
+            calendar.render();
+        }, 200);
     });
+
+    $("#search-by-name").keyup(filterEvents);
+    $("#search-by-category").change(filterEvents);
+
+    function filterEvents() {
+        var searchText = $("#search-by-name").val();
+        var searchCat = $("#search-by-category").val();
+        filteredCalendarData = [];
+        calendarData.forEach(element => {
+            if (element.title.toLowerCase().includes(searchText.toLowerCase())) {
+                if (searchCat == -1) {
+                    filteredCalendarData.push(element);
+                } else if (element.extendedProps.category == searchCat) {
+                    filteredCalendarData.push(element);
+                }
+            }
+        });
+        console.log(calendar);
+        defDate = calendar.currentData.currentDate
+        initialView = calendar.currentData.currentViewType;
+        
+        initializeCalendar();
+        calendar.render();
+    }
+
 });
