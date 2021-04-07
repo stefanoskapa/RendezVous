@@ -56,6 +56,33 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/date-pick/availability.css">
+        <style>
+            ul li div{
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+            }
+            
+            ul li h6{
+                display: inline-block;
+            }
+            
+            #slot-available {
+                background-color: red
+            }
+            #slot-existing-with-comp {
+                
+            }
+            #slot-existing-with-other-comp {
+                
+            }
+            #slot-unavailable {
+                
+            }
+            #slot-of-working-hours {
+                
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -63,12 +90,6 @@
         </header>
 
         <main>
-            
-            <h1>Pick a date for your appointment</h1>
-            <h2>${comp_name}</h2>
-            <div class="alert alert-dismissible fade show" role="alert" id="alert">
-            </div>
-
             <input type="text" id="comp-id" value="${comp_id}" hidden  />
             <input type="text" id="fname" value="${fname}" hidden  />
             <input type="text" id="lname" value="${lname}" hidden  />
@@ -84,6 +105,23 @@
             </div>
 
             <div class="container-fluid" id="calendar-container">
+                <div class="row">
+                    <div class="col px-0 px-md-5">
+                        <h1 class="text-center">${comp_name}</h1>
+                        <h5>Click on one of the available slots to close your appointment</h5>
+                        <h5>Confirm your appointment in the popup window</h5>
+                        <h6>Legend:</h6>
+                        <ul >
+                            <li><div id="slot-available"></div><h6>White Slot belongs outside company's opening hours</h6></li>
+                            <li><div id="slot-existing-with-comp"></div><h6>Blue: Slot belongs outside company's opening hours</h6></li>
+                            <li><div id="slot-existing-with-other-comp"></div><h6>Light Blue: Slot belongs outside company's opening hours</h6></li>
+                            <li><div id="slot-unavailable"></div><h6>Dark Gray: Slot belongs outside company's opening hours</h6></li>
+                            <li><div id="slot-of-working-hours"></div><h6>Gray: Slot belongs outside company's opening hours</h6></li>
+                        </ul>
+                        <div class="alert alert-dismissible fade show" role="alert" id="alert"></div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-12">
                         <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
@@ -118,7 +156,7 @@
             </div><!-- /.modal -->
             <jsp:include page="/WEB-INF/chat.jsp"/>
         </main>
-            
+
         <footer>
             <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
         </footer>
