@@ -56,38 +56,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/date-pick/availability.css">
-        <style>
-            #legend{
-               list-style: none;
-            }
-            
-            #legend li div{
-                display: inline-block;
-                width: 18px;
-                height: 18px;
-            }
-            
-            #legend li h6{
-                display: inline-block;
-            }
-            
-            #slot-available {
-                border: 1px solid black;
-                background-color: #F1F1F1;
-            }
-            #slot-existing-with-comp {
-                background-color: #3788D8;
-            }
-            #slot-existing-with-other-comp {
-                background-color: #6FAFED;
-            }
-            #slot-unavailable {
-                background-color: #808080;
-            }
-            #slot-of-working-hours {
-                background-color: #C6C4C4;
-            }
-        </style>
     </head>
     <body>
         <header>
