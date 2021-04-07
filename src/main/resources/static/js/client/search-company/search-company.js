@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');   
-    
+  /*  
     function getCategories() {
 
         var xhttp = new XMLHttpRequest();
@@ -21,7 +21,7 @@ $(document).ready(function () {
         xhttp.send();
     }
     getCategories();
-
+*/
     function compare(a, b) {
         if (a.displayName < b.displayName) {
             return -1;

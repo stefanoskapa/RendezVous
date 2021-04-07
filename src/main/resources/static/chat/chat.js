@@ -12,7 +12,7 @@ if (compEmail) { // ==true means we are in company_date_pick.jsp
 }
 
 function fetchMyInfo() { //get personal info
-    $.getJSON(full + "/myprops", function (res) {
+    $.getJSON(full + "/api/v1/myprops", function (res) {
         let fname = res.fname;
         let lname = res.lname;
         myEmail = res.email;
@@ -23,7 +23,7 @@ function fetchMyInfo() { //get personal info
 }
 
 function fetchPartners() {
-    $.getJSON(full + "/conv", function (res) {
+    $.getJSON(full + "/api/v1/conv", function (res) {
         let showChatPartners = "", companyName = "";
         for (let i = 0; i < res.length; i++) {
             if (res[i].companyName) {
@@ -54,7 +54,7 @@ function convertDate(date) {
 }
 
 function loadMessages(pEmail) {
-    $.getJSON(full + "/load/" + pEmail, function (res) {
+    $.getJSON(full + "/api/v1/load/" + pEmail, function (res) {
         let partnerName = $("#get-nama").html().replace(" ", "-");
             partnerEmail = pEmail;
             yourAvatar = "https://eu.ui-avatars.com/api/?name=" + partnerName + "&background=B0C4DE";
@@ -145,7 +145,7 @@ $("#chat-input").on("keydown", function (e) {
             msgObj.from = myEmail;
             msgObj.timestamp = dateNow;
             insertChat(true, msgObj.text, dateNow);
-            stompClient.send("/app/secured/room", {}, JSON.stringify(msgObj));
+            stompClient.send("/chat/secured/room", {}, JSON.stringify(msgObj));
             $(this).val('');
         }
     }
