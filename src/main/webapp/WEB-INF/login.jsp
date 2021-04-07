@@ -30,61 +30,43 @@
         <link rel="stylesheet" href="/css/login/login.css">
 
     </head>
-    <body style="background-color:#2f3438 ">
-        <jsp:include page="navbars/loginNavbar.jsp"/>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>     
-        <!-- Login Form -->
-        <form:form action="${pageContext.request.contextPath}/authenticateTheUser" 
-                   method="POST">
-            <br>
-            <!-- User name -->
-            <div id="container-login">
-                <div id="title">
-                    <i class="material-icons lock">calendar_today</i> Login
+    <body>
+        <header>
+            <jsp:include page="navbars/loginNavbar.jsp"/>
+        </header>
+        <div class="login-dark">
+            <form:form action="${pageContext.request.contextPath}/authenticateTheUser" 
+                       method="POST">
+                
+                <div class="illustration">
+                    <i class="icon ion-ios-calendar"></i>
                 </div> 
-                <br>
-                <!-- Check for login error -->
-                <c:if test="${param.error != null}">
-                    <div id="error" class="forgot-password">
-                        Invalid username and password.
+                <c:if test="${not empty param.logout}">
+                    <div class="alert alert-success">
+                        You have been logged out successfully.
                     </div>
                 </c:if>
-                <!--		            
-                <div class="alert alert-success col-xs-offset-1 col-xs-10">
-                        You have been logged out.
+                <i class="material-icons">mail</i>
+                <div class="form-group">
+                    <input class="form-control" type="email" name="username" placeholder="Email" id="username" required="required" maxlength="45">
                 </div>
-                -->   
-                <div class="input">
-                    <div class="input-addon">
-                        <i class="material-icons">face</i>
-                    </div>
-                    <input id="username" type="text" name="username" placeholder="E-Mail" autocomplete="off" required>
-                </div>
-                <div class="clearfix"></div>
-                <!-- Password -->
-                <div class="input">
-                    <div class="input-addon">
-                        <i class="material-icons">vpn_key</i>
-                    </div>
-                    <input id="password" type="password" name="password" placeholder="Password" autocomplete="off" required >
-                </div>
-                <br>
-                <!-- Login/Submit Button -->
-                <button type="submit" class="btn btn-success btn-lg m-2">Login</button>
-                <br>
-                <a href="/client-register" class="btn btn-secondary btn-lg m-2">Register</a><br>
-                <a href="/company-register" class="btn btn-secondary btn-lg m-2">Register as Company</a>
                 
+                <i class="material-icons">vpn_key</i>
+                <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password" id="password" required="required" maxlength="68">
+                </div>
+                
+                <div class="form-group">
+                    <c:if test="${param.error != null}">
+                    <div class="error">
+                        Invalid Username And Password.
+                    </div>
+                </c:if>
+                <button class="btn btn-primary btn-block" value="Login" type="submit">Log In</button>
+                </div>
             </form:form>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
+
         <footer>
             <jsp:include page="navbars/footer.jsp"/>
         </footer>
