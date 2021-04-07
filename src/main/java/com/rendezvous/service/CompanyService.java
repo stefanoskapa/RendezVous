@@ -323,7 +323,7 @@ public class CompanyService {
     public Set<SearchResult> filterByCity(Set<SearchResult> companies, String city) {
         Set<SearchResult> comps = new HashSet<>();
         for (SearchResult c: companies) {
-            if (c.getAddrCity().equals(city)) {
+            if (c.getAddrCity().trim().equals(city.trim())) {
                 comps.add(c);
             }
         }
