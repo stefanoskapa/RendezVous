@@ -1,27 +1,6 @@
 $(document).ready(function () {
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');   
-  /*  
-    function getCategories() {
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let categories = JSON.parse(this.responseText);
-                categories.sort();
-                let catSelect = document.getElementById("category");
-                for (let i = 0; i < categories.length; i++) {
-                    let opt = document.createElement("option");
-                    opt.value = categories[i];
-                    opt.appendChild(document.createTextNode(categories[i]));
-                    catSelect.appendChild(opt);
-                }
-            }
-        };
-        xhttp.open("GET", full + "/api/v1/client/categories");
-        xhttp.send();
-    }
-    getCategories();
-*/
+  
     function compare(a, b) {
         if (a.displayName < b.displayName) {
             return -1;

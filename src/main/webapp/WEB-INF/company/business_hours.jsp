@@ -13,14 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
         <title>RendezVouz | Business Hours</title>
-        <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-                <link rel="stylesheet"
-                      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-                <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-
 
         <!--Bootstrap-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -259,7 +252,7 @@
 
                     <div class="row">
                         <div class="col d-flex justify-content-center">
-                            <input type="submit" class="btn btn-success btn-lg px-5 my-3" value="Submit">
+                            <input type="submit" class="btn btn-success btn-lg px-5 my-3" value="Save">
                         </div>
                     </div>
                 </form:form>

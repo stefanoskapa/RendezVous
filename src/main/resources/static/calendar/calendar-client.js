@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
-        console.log(calendar);
         defDate = calendar.currentData.currentDate
         initialView = calendar.currentData.currentViewType;
         

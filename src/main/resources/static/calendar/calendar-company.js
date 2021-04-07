@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
             }
             drawCalendar();
-            console.log(calendarData.businessHours);
         }
     };
     xhttp.open("GET", full + "/api/v1/company/dates", true);
