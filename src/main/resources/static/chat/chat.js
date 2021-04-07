@@ -90,7 +90,7 @@ function connect() {
         url = url.replace("ws://" + location.hostname + (location.port ? ':' + location.port : '') + "/secured/room/", "");
         url = url.replace("/websocket", "");
         url = url.replace(/^[0-9]+\//, "");
-        console.log("Your current session is: " + url);
+//        console.log("Your current session is: " + url);
         sessionId = url;
         subscribe();
     });

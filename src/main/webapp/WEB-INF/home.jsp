@@ -44,7 +44,7 @@
                     <br>
                     <p class="text-white">Make your day easier by booking all your appointments online using the best features in one tool</p>
                     <a href="/client-register" class="btn btn-success btn-lg m-2">Register</a>
-                    <a href="/company-register" class="btn btn-success btn-lg m-2">Register as Company</a>
+                    <a href="/company-register" class="btn btn-success btn-lg m-2">Register as Partner</a>
 
 
                 </div>
@@ -63,8 +63,8 @@
                     <br>
                     <h1 class="text-dark">All you need to know about RendezVouz</h1> 
                     <br>
-                    <p class="dark">RendezVouz is an easy and convenient way of booking and organizing appointments. As a company
-                        you can control you availability 24/7 and appear in our category-based search function. As a client you can quickly
+                    <p class="dark">RendezVouz is an easy and convenient way of booking and organizing appointments. As a partner
+                        you can control you availability 24/7 and appear in our category-based search function. As a user you can quickly
                         navigate through a multitude of services, reach out for the company you are interested in and book an appointment.</p>
                 </div>         
             </div>

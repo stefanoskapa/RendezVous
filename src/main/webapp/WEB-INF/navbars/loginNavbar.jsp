@@ -11,7 +11,7 @@
                             <div
                                 class="dropdown-menu dropdown-menu-right" role="menu" style="background-color: rgb(36,39,58);color: rgb(36,39,58);"><a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/client-register" style="color: rgb(255,255,255);font-size: 16px;background-color: #24273a;"><i class="fa fa-user" data-bs-hover-animate="bounce"></i>&nbsp;As User</a>
                                 <a
-                                    class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/company-register" style="color: rgb(255,255,255);font-size: 16px;background-color: #24273a;"><i class="fa fa-building-o" data-bs-hover-animate="bounce"></i>&nbsp;As Company</a>
+                                    class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/company-register" style="color: rgb(255,255,255);font-size: 16px;background-color: #24273a;"><i class="fa fa-building-o" data-bs-hover-animate="bounce"></i>&nbsp;As Partner</a>
                             </div>
                         </div>
                     </li>

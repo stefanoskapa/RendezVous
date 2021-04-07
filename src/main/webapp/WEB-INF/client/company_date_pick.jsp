@@ -1,9 +1,3 @@
-<%-- 
-    Document   : company_date_pick
-    Created on : Mar 8, 2021, 10:12:42 PM
-    Author     : Leyteris
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,25 +5,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Rendezvouz | Availability</title>        
-
-        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                <link href='${pageContext.request.contextPath}/calendar/lib/main.css' rel='stylesheet' />
-                <script src='${pageContext.request.contextPath}/calendar/lib/main.js'></script>
-                <script src="${pageContext.request.contextPath}/calendar/calendar-date-pick.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-                <link rel="stylesheet" href="/chat/styles.css">
-                <style>
-                    .fc-timegrid-slot:hover {
-                        cursor: pointer;
-                    }
-                    #calendar .fc-non-business {
-                        background: #706b6b56;
-                    }
-                </style>-->
 
         <!--Bootstrap-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
