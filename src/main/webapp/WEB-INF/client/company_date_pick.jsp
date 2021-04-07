@@ -57,30 +57,35 @@
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/date-pick/availability.css">
         <style>
-            ul li div{
-                display: inline-block;
-                width: 20px;
-                height: 20px;
+            #legend{
+               list-style: none;
             }
             
-            ul li h6{
+            #legend li div{
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+            }
+            
+            #legend li h6{
                 display: inline-block;
             }
             
             #slot-available {
-                background-color: red
+                border: 1px solid black;
+                background-color: #F1F1F1;
             }
             #slot-existing-with-comp {
-                
+                background-color: #3788D8;
             }
             #slot-existing-with-other-comp {
-                
+                background-color: #6FAFED;
             }
             #slot-unavailable {
-                
+                background-color: #808080;
             }
             #slot-of-working-hours {
-                
+                background-color: #C6C4C4;
             }
         </style>
     </head>
@@ -105,26 +110,26 @@
             </div>
 
             <div class="container-fluid" id="calendar-container">
-                <div class="row">
-                    <div class="col px-0 px-md-5">
+                <div class="row mx-0 mx-md-5">
+                    <div class="col">
                         <h1 class="text-center">${comp_name}</h1>
                         <h5>Click on one of the available slots to close your appointment</h5>
                         <h5>Confirm your appointment in the popup window</h5>
                         <h6>Legend:</h6>
-                        <ul >
-                            <li><div id="slot-available"></div><h6>White Slot belongs outside company's opening hours</h6></li>
-                            <li><div id="slot-existing-with-comp"></div><h6>Blue: Slot belongs outside company's opening hours</h6></li>
-                            <li><div id="slot-existing-with-other-comp"></div><h6>Light Blue: Slot belongs outside company's opening hours</h6></li>
-                            <li><div id="slot-unavailable"></div><h6>Dark Gray: Slot belongs outside company's opening hours</h6></li>
-                            <li><div id="slot-of-working-hours"></div><h6>Gray: Slot belongs outside company's opening hours</h6></li>
+                        <ul id="legend">
+                            <li><div id="slot-available" class="mr-1"></div><h6>Available for booking</h6></li>
+                            <li><div id="slot-existing-with-comp" class="mr-1"></div><h6>Appointment with the company already booked</h6></li>
+                            <li><div id="slot-existing-with-other-comp" class="mr-1"></div><h6>Appointment with another company booked</h6></li>
+                            <li><div id="slot-unavailable" class="mr-1"></div><h6>Company is unavailable on the specific slot</h6></li>
+                            <li><div id="slot-of-working-hours" class="mr-1"></div><h6>Slot belongs outside company's opening hours</h6></li>
                         </ul>
                         <div class="alert alert-dismissible fade show" role="alert" id="alert"></div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mx-0 mx-md-5">
                     <div class="col-12">
-                        <div id='calendar' class="mx-0 mx-md-5 my-5"></div>
+                        <div id='calendar' class="my-5"></div>
                     </div>
                 </div>
             </div>
