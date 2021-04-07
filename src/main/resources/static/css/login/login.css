@@ -8,14 +8,14 @@ body {
 }
 
 .login-dark {
-    height:1000px;
+    /*height:800px;*/
     background-size:cover;
-    position:relative;
+    /*position:relative;*/
 }
 
 .login-dark form {
     max-width:320px;
-    width:90%;
+    /*width:90%;*/
     background: rgb(36,39,58);
     background: -moz-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
     background: -webkit-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
@@ -23,10 +23,10 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#24273a",endColorstr="#212529",GradientType=1);
     padding:40px;
     border-radius:4px;
-    transform:translate(-50%, -50%);
-    position:absolute;
-    top:50%;
-    left:50%;
+    /*transform:translate(-50%, -50%);*/
+    /*position:absolute;*/
+    /*top:50%;*/
+    /*left:50%;*/
     color:#fff;
     box-shadow:3px 3px 4px rgba(0,0,0,0.2);
 }

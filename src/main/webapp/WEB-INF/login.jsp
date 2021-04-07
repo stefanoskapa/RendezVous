@@ -33,38 +33,48 @@
         <header>
             <jsp:include page="navbars/loginNavbar.jsp"/>
         </header>
-        <div class="login-dark">
-            <form:form action="${pageContext.request.contextPath}/authenticateTheUser" 
-                       method="POST">
-                
-                <div class="illustration">
-                    <i class="icon ion-ios-calendar"></i>
-                </div> 
-                <c:if test="${not empty param.logout}">
-                    <div class="alert alert-success">
-                        You have been logged out successfully.
+
+        <main>
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col d-flex justify-content-center">
+                        <div class="login-dark my-3">
+                            <form:form action="${pageContext.request.contextPath}/authenticateTheUser" 
+                                       method="POST">
+
+                                <div class="illustration">
+                                    <i class="icon ion-ios-calendar"></i>
+                                </div> 
+                                <c:if test="${param.registration!=null}">
+                                    <div class="text-center py-1 text-success">
+                                        Your account have been created!
+                                    </div>
+                                </c:if>
+                                <i class="material-icons">mail</i>
+                                <div class="form-group">
+                                    <input class="form-control" type="email" name="username" placeholder="Email" id="username" required="required" maxlength="45">
+                                </div>
+
+                                <i class="material-icons">vpn_key</i>
+                                <div class="form-group">
+                                    <input class="form-control" type="password" name="password" placeholder="Password" id="password" required="required" maxlength="68">
+                                </div>
+
+                                <div class="form-group">
+                                    <c:if test="${param.error != null}">
+                                        <div class="error">
+                                            Invalid Username And Password.
+                                        </div>
+                                    </c:if>
+                                    <button class="btn btn-primary btn-block" value="Login" type="submit">Log In</button>
+                                </div>
+                            </form:form>
+                        </div>
                     </div>
-                </c:if>
-                <i class="material-icons">mail</i>
-                <div class="form-group">
-                    <input class="form-control" type="email" name="username" placeholder="Email" id="username" required="required" maxlength="45">
                 </div>
-                
-                <i class="material-icons">vpn_key</i>
-                <div class="form-group">
-                <input class="form-control" type="password" name="password" placeholder="Password" id="password" required="required" maxlength="68">
-                </div>
-                
-                <div class="form-group">
-                    <c:if test="${param.error != null}">
-                    <div class="error">
-                        Invalid Username And Password.
-                    </div>
-                </c:if>
-                <button class="btn btn-primary btn-block" value="Login" type="submit">Log In</button>
-                </div>
-            </form:form>
-        </div>
+            </div>
+        </main>
+
 
         <footer>
             <jsp:include page="navbars/footer.jsp"/>
