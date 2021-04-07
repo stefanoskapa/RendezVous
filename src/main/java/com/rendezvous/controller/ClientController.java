@@ -79,6 +79,7 @@ public class ClientController {
     @GetMapping("/comp-select")
     public String showCompanySelect(Model model) {
           model.addAttribute("listCategory", categoryService.getAllCategories());
+          model.addAttribute("listCities", companyService.findAllCities());
         return "client/company_search";
     }
 
