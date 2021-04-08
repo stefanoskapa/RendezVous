@@ -34,5 +34,5 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
             value = "SELECT DISTINCT addr_City from company",
             nativeQuery = true
     )
-    Optional <Set<String>> findAllCities();
+    Optional <List<String>> findAllCities();
 }

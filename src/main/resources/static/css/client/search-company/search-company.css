@@ -60,6 +60,10 @@ main{
     justify-items: center;
 }
 
+.fa-info-circle {
+    color:white;
+}
+
 @media only screen and (max-width: 800px) {
     .mycard-img{
         display: none;
@@ -77,4 +81,9 @@ main{
             "link";
         padding: 10px 0;
     }
+}
+
+img{
+    padding: 10px;
+    border-radius: 20%;
 }
