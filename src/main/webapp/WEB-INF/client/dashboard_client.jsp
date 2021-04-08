@@ -66,9 +66,9 @@
                     </div>
                 </div>
 
-                <div class="row d-flex  py-1 mb-2 mx-0 mx-md-5" id="search-row">
+                <div class="row d-flex  pt-1 mx-0 mx-md-5" id="search-row">
                     <div class="col-12 col-md-2 px-1">
-                        <select class="form-control custom-select my-2 text-light bg-dark" id="search-by-category">
+                        <select class="form-control custom-select my-2" id="search-by-category">
                             <option selected="selected" value="-1" >All Categories</option>
                             <c:forEach items="${listCategory}" var="category">         
                                 <option value="${category.id}">${category.category}</option>                              
@@ -77,7 +77,13 @@
                     </div>
 
                     <div class="col-12 col-md-4 px-1">
-                        <input type="text" id="search-by-name" class="form-control my-2 text-light bg-dark" placeholder="Filter your appointments by their name" >
+                        <input type="text" id="search-by-name" class="form-control my-2" placeholder="Company name" >
+                    </div>
+                </div>
+
+                <div class="row mb-4 mx-0 mx-md-5">
+                    <div class="col-12 px-1">
+                        <p>Filter your appointments by their category and/or the name of the company</p>
                     </div>
                 </div>
 
