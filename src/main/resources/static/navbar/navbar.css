@@ -1,0 +1,96 @@
+#nav{
+    height: 91px;
+    background-color: #24273a;
+    color: #ffffff;  
+}
+#calendar-logo{
+    font-size: 57px;
+    padding: 2px;
+    margin: -14px;  
+}
+#navcol-1{
+    background-color: #24273a;
+    margin: 11px;   
+}
+#navlink1{
+    color: #ffffff;
+    height: 35px;
+    padding: 7px;
+}
+#nav-item-dropdown1{
+    color: #ffffff;
+    height: 35px;
+    padding: 7px;    
+}
+#dropdown-toggle1{
+    color: rgb(255,255,255);
+    font-size: 17px;
+    height: 4px;
+    width: 4px;
+    margin: 5px; 
+    cursor: pointer;    
+}
+#navbar-brand1{
+    height: 62px;
+    margin: -6px;
+    font-size: 25px;
+    color: rgb(255,255,255);
+    width: 220px;
+    padding: 13px;  
+}
+#dropdown-menu1{
+    background-color: rgb(36,39,58);
+    color: rgb(36,39,58);    
+}
+#dropdownitem1{
+    color: rgb(255,255,255);
+    font-size: 16px;
+    background-color: #24273a;    
+}
+#dropdown-item2{
+    color: rgb(255,255,255);
+    font-size: 16px;
+    background-color: #24273a;   
+}
+#calendar-logo:hover{
+    color:#52a5bb;
+    cursor:pointer;
+}
+#adress-card:hover{
+    color:#52a5bb;  
+}
+#navlink1:hover{
+    color:#52a5bb;  
+}
+#dropdown-toggle1:hover{
+    color:#52a5bb; 
+}
+#dropdownitem1:hover{
+    color:#52a5bb;  
+}
+#dropdown-item2:hover{
+    color:#52a5bb;  
+}
+#navbar-brand1:hover{
+    color:#52a5bb;
+}
+
+#prem-logo{
+    height: 59px;
+    width: 59px;
+    font-size: 27px;     
+}
+#nav-link-prem{
+    color: #ffffff;
+    font-size: 17px;
+    padding: 7px;
+    height: 42px;
+    margin: 2px;   
+}
+#nav-link-prem:hover{
+    color:#52a5bb;  
+}
+
+
+
+

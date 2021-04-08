@@ -18,15 +18,6 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<String> getAllCategoriesNames() {
-        List<String> categories = new LinkedList<>();
-        List<CompCategory> compCategories = categoryRepository.findAll();
-
-        compCategories.stream().forEach(c -> categories.add(c.getCategory()));
-
-        return categories;
-    }
-
     public List<CompCategory> getAllCategories() {
         return categoryRepository.findAll();
     }

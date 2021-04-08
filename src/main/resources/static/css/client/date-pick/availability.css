@@ -17,7 +17,7 @@ body {
 }
 
 .legend-box {
-        display: inline-block;
+    display: inline-block;
     width: 18px;
     height: 18px;
 }
@@ -42,3 +42,25 @@ p{
 #slot-of-working-hours {
     background-color: #C6C4C4;
 }
+.modal-content{
+    background-color: #24273a;
+    color:white;
+}
+#xButton {
+    color:white
+}
+#submitDateToServer{
+    background-color: green;
+    color:white;
+    border-color: green;
+}
+#cancelModalBtn{
+    color:white;
+}
+.modal-footer{
+    border-top:none;
+}
+
+
+
+
