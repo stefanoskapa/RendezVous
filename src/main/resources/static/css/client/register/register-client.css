@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+body {
+    display: grid;
+    min-height: 100vh;
+    height: 100%;
+    grid-template-rows: auto 1fr auto;
+    background-color: #2f3438;
+}
+
+.login-dark {
+    /*height:800px;*/
+    background-size:cover;
+    /*position:relative;*/
+}
+
+.login-dark form {
+    max-width:320px;
+    /*width:90%;*/
+    background: rgb(36,39,58);
+    background: -moz-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
+    background: -webkit-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
+    background: linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#24273a",endColorstr="#212529",GradientType=1);
+    padding:40px;
+    border-radius:4px;
+    /*transform:translate(-50%, -50%);*/
+    /*position:absolute;*/
+    /*top:50%;*/
+    /*left:50%;*/
+    color:#fff;
+    box-shadow:3px 3px 4px rgba(0,0,0,0.2);
+}
+
+.login-dark .illustration {
+    text-align:center;
+    padding:15px 0 20px;
+    font-size:100px;
+    color:#2980ef;
+}
+
+.login-dark form .form-control {
+    background:none;
+    border:none;
+    border-bottom:1px solid #434a52;
+    border-radius:0;
+    box-shadow:none;
+    outline:none;
+    color:inherit;
+}
+
+.login-dark form .btn-primary {
+    background:#268f47;
+    border:none;
+    border-radius:4px;
+    padding:11px;
+    box-shadow:none;
+    margin-top:26px;
+    text-shadow:none;
+    outline:none;
+}
+
+.login-dark form .btn-primary:hover, .login-dark form .btn-primary:active {
+    background:#214a80;
+    outline:none;
+}
+
+
+.login-dark form .btn-primary:active {
+    transform:translateY(1px);
+}
+.error{
+    color: red; 
+    font-size: 16px;
+}
+i.icon.ion-ios-calendar {
+    color: white;
+}
+
+.login-dark .title{
+    font-size: 25px;
+    text-align: center;
+}
+.showpwd {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+

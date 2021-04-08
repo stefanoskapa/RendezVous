@@ -15,23 +15,17 @@ public class MessagesService {
     @Autowired
     private MessagesRepository messagesRepository;
     
-    private final NotificationDispatcher dispatcher;
+   
 
-    @Autowired
-    public MessagesService(NotificationDispatcher dispatcher) {
-        this.dispatcher = dispatcher;
-    }
+   
     
     public Optional<List<Messages>> findByConversationId(int conversationId) {
         return messagesRepository.findByConversationId(conversationId);
 
     }
     
-    public void save(Messages message, Conversation conv) {
-        List<String> users = new LinkedList<>();
-        //users.add(conv.getClient().getUser().getEmail());
-        //users.add(conv.getCompany().getUser().getEmail());   
-        dispatcher.notifyUsers(users, message);        
+    public void save(Messages message) {
+               
         messagesRepository.save(message);     
     }
 }
