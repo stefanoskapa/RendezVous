@@ -160,6 +160,6 @@
             </div>
         </form:form>
         <footer><jsp:include page="/WEB-INF/navbars/footer.jsp"/></footer>
-        <script src="${pageContext.request.contextPath}/js/validation/validation.js"></script>
+       
     </body>
 </html>
