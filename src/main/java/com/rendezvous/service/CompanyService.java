@@ -23,7 +23,6 @@ import com.rendezvous.model.WorkDayHours;
 import com.rendezvous.model.WorkWeek;
 import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.repository.AvailabilityRepository;
-import com.rendezvous.repository.ClientRepository;
 import com.rendezvous.repository.CompanyRepository;
 import com.rendezvous.repository.RoleRepository;
 import java.time.LocalDate;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,7 +39,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -316,14 +313,14 @@ public class CompanyService {
         companyRepository.savePremiumStatus(company.getId());
     }
     
-    public Set<String> findAllCities() {
+    public List<String> findAllCities() {
         return companyRepository.findAllCities().orElseThrow(() -> new UsernameNotFoundException("Cities not found!"));
     }
     
     public Set<SearchResult> filterByCity(Set<SearchResult> companies, String city) {
         Set<SearchResult> comps = new HashSet<>();
         for (SearchResult c: companies) {
-            if (c.getAddrCity().equals(city)) {
+            if (c.getAddrCity().trim().equals(city.trim())) {
                 comps.add(c);
             }
         }

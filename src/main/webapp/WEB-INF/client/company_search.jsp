@@ -10,6 +10,7 @@
         <title>Rendezvouz | Search</title>
 
         <!--Bootstrap-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
@@ -39,14 +40,15 @@
 
         <main>
             <div class="container">
+                
                 <div class="row ">
                     <div class="col-12 p-5 mx-auto text-white text-center">
-                        <h1>Find the company you are interested in closing an appointment</h1>
+                        <h1>Find a company that suits your needs</h1>
                     </div>
                 </div>
 
-                <div class="row py-5 px-2 bg-light rounded shadow">
-
+                <div class="row py-5 px-2">
+                    
                     <div class="col-12 col-md-2 px-1">
                         <select class="form-control custom-select my-2" id="category">
                             <option selected="selected" value="All">All Categories</option>
@@ -56,31 +58,29 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="col-12 col-md-2 px-1">
-                        <select class="form-control custom-select my-2" id="city">
+                    <div class="col-12 col-md-2">
+                        <select class="form-control custom-select my-2 px-1" id="city">
                             <option selected="selected" value="All">All Cities</option>
-
                             <c:forEach items="${listCities}" var="city">         
                                     <option value="${city}">${city}</option>                              
                             </c:forEach>
                         </select>
                     </div>
-
                     <div class="col-12 col-md-8 px-1">
-                        <input type="text" id="searchbar" class="form-control my-2" placeholder="Search for..." >
+                        <input type="text" id="searchbar" class="form-control my-2" placeholder="Search for..." maxlength="100">
+                        <div id="searchInfo" class="fa fa-info-circle float-right"></div>
                     </div>
-
-                    <div class="col-12 col-md-2 px-1 d-flex justify-content-center">
-                        <input type="button" class="btn btn-success rounded w-75 h-100" value="search" id="srcBtn"/>
-                    </div>
+                    <div class="col-12 col-md-3 my-2 px-1">
+                        <input type="button" class="btn btn-success btn-md rounded" value="search" id="srcBtn"/>
+                    </div>                  
                 </div>
 
 
-                <div class="row py-4 px-2 my-3 bg-light rounded shadow" id="results-area">
+                <div class="row py-4 px-2 my-1" id="results-area">
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                <p class="text-center" id="results-number"></p>
+                                <p class="text-center text-light" id="results-number"></p>
                             </div>
                         </div>
                         <div class="row">

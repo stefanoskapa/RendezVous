@@ -7,11 +7,15 @@ package com.rendezvous.controller;
 
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.entity.Client;
+import com.rendezvous.entity.CompCategory;
 import com.rendezvous.entity.Company;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +52,7 @@ public class ClientController {
     public String redirectToDashboard() {
         return "redirect:/client/dashboard";
     }
-    
+
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         model.addAttribute("listCategory", categoryService.getAllCategories());
@@ -78,8 +82,12 @@ public class ClientController {
 
     @GetMapping("/comp-select")
     public String showCompanySelect(Model model) {
-          model.addAttribute("listCategory", categoryService.getAllCategories());
-          model.addAttribute("listCities", companyService.findAllCities());
+        List<String> allCities = companyService.findAllCities();
+        List<CompCategory> allCategories = categoryService.getAllCategories();
+        Collections.sort(allCities);
+        Collections.sort(allCategories, Comparator.comparing(CompCategory::getCategory));
+        model.addAttribute("listCategory", allCategories);
+        model.addAttribute("listCities", allCities);
         return "client/company_search";
     }
 
@@ -88,10 +96,9 @@ public class ClientController {
 //        model.addAttribute("comp_id", companyId); //comp_id will be used by company_date_pick
 //        return "client/company_date_pick";
 //    }
-
     @GetMapping("/date-select")
     public String showDateSelect(@RequestParam int companyId, Model model) {
-        
+
         try {
             Company tempCompany = companyService.findCompanyById(companyId);
             model.addAttribute("comp_id", tempCompany.getId());
