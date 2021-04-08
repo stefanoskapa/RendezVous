@@ -58,7 +58,7 @@
                                 <div class="form-group row">
                                     <i class="col-sm-2 material-icons">vpn_key</i>
                                     <div class="col-sm-10">
-                                        <form:input path="user.password" class="form-control" type="password" name="password" placeholder="Password" id="password" required="required"/>
+                                        <form:input path="user.password" class="form-control" type="password" name="password" placeholder="Password" id="password" required="required" minlength="5" maxlength="200" />
                                         <i class="fa fa-eye showpwd"></i>
                                         <form:errors path="user.password" />
                                     </div>
