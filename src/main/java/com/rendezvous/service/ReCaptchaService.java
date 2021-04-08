@@ -23,8 +23,7 @@ public class ReCaptchaService  {
         URI verifyURI=URI.create(String.format("https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s",reCaptchaKeys.getSecret(), response));
         ReCaptchaResponse reCaptchaResponse = restTemplate.getForObject(verifyURI, ReCaptchaResponse.class);
         System.out.println(reCaptchaResponse);
-        
-        return null;
+        return reCaptchaResponse;
     }
 
 }

@@ -85,7 +85,7 @@
 
                                     <button class="btn btn-primary btn-block g-recaptcha" value="Register" type="submit" data-sitekey="6Lfe3aAaAAAAAA2eogoecmMRNClD1euKJHpR6xQB" 
                                             data-callback='onSubmit' 
-                                            data-action='submit'>Register</button>
+                                            data-action='registerClient'>Register</button>
                                 </div>
                             </form:form>
                         </div>

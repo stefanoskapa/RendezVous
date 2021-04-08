@@ -2,14 +2,12 @@ package com.rendezvous.controller;
 
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
+import com.rendezvous.recaptcha.ReCaptchaResponse;
 import com.rendezvous.repository.UserRepository;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import com.rendezvous.service.ReCaptchaService;
-
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class RegistrationController {
 
-    private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
+   
 
     @Autowired
     private UserRepository userRepository;
@@ -40,11 +38,17 @@ public class RegistrationController {
     }
 
     @PostMapping("/client-register")
-    public String clientRegistration(@RequestParam(name = "g-recaptcha-response") String captchaResponse, @Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
-        
-        reCaptchaRegisterService.verify(captchaResponse);
+    public String clientRegistration(@RequestParam(name = "g-recaptcha-response") String captchaResponse, 
+            @Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model, 
+            RedirectAttributes attributes) {
+
+        ReCaptchaResponse rcr = reCaptchaRegisterService.verify(captchaResponse);
+        if (!rcr.isSuccess() || !rcr.getAction().equals("registerClient") || rcr.getScore() <= 0.5) {
+            model.addAttribute("userExistsError", "Bad captcha, please try again");
+            return "client/register_client";
+        }
         if (bindingResult.hasErrors()) {
-            return "/client/register_client";
+            return "client/register_client";
         }
         if (userRepository.findByEmail(newClient.getUser().getEmail()).isPresent()) {
             model.addAttribute("userExistsError", "This email is already being used!");
@@ -64,8 +68,16 @@ public class RegistrationController {
     }
 
     @PostMapping("/company-register")
-    public String companyRegistration(@Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
-
+    public String companyRegistration(@RequestParam(name = "g-recaptcha-response") String captchaResponse,
+            @Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, 
+            Model model, RedirectAttributes attributes) {
+        
+        ReCaptchaResponse rcr = reCaptchaRegisterService.verify(captchaResponse);
+        if (!rcr.isSuccess() || !rcr.getAction().equals("registerCompany") || rcr.getScore() <= 0.5) {
+            model.addAttribute("userExistsError", "Bad captcha, please try again");
+            return "company/register_company";
+        }
+        
         if (bindingResult.hasErrors()) {
             return "company/register_company";
         }
