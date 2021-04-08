@@ -13,8 +13,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Rendezvouz | Dashboard</title>
-        
+
         <!--Bootstrap-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
@@ -35,12 +36,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-        <link href='${pageContext.request.contextPath}/calendar/lib/main.min.css' rel='stylesheet' />
-        <script src='${pageContext.request.contextPath}/calendar/lib/main.min.js'></script>
-        <script src="${pageContext.request.contextPath}/calendar/calendar-client.js"></script>
+        <link href='/calendar/lib/main.min.css' rel='stylesheet' />
+        <script src='/calendar/lib/main.min.js'></script>
+        <script src="/calendar/calendar-client.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/dashboard/dashboard.css">
-
+        <script src="/js/client/dashboard/popover.js"></script>
     </head>
     <body>
         <header>
@@ -58,9 +59,16 @@
 
             <div class="container-fluid" id="calendar-container">
 
-                <div class="row d-flex  py-1 mt-5 mb-2 mx-0 mx-md-5" id="search-row">
+                <div class="row mx-0 mt-5 mb-2 mx-md-5">
+                    <div class="col-12">
+                        <div><p class="h3">My Dashboard</p></div>
+                        <div id="popover" class="fa fa-info-circle fa-lg float-right"></div>
+                    </div>
+                </div>
+
+                <div class="row d-flex  pt-1 mx-0 mx-md-5" id="search-row">
                     <div class="col-12 col-md-2 px-1">
-                        <select class="form-control custom-select my-2 text-light bg-dark" id="search-by-category">
+                        <select class="form-control custom-select my-2" id="search-by-category">
                             <option selected="selected" value="-1" >All Categories</option>
                             <c:forEach items="${listCategory}" var="category">         
                                 <option value="${category.id}">${category.category}</option>                              
@@ -69,10 +77,15 @@
                     </div>
 
                     <div class="col-12 col-md-4 px-1">
-                        <input type="text" id="search-by-name" class="form-control my-2 text-light bg-dark" placeholder="Filter your appointments by their name" >
+                        <input type="text" id="search-by-name" class="form-control my-2" placeholder="Company name" >
                     </div>
                 </div>
 
+                <div class="row mb-4 mx-0 mx-md-5">
+                    <div class="col-12 px-1">
+                        <p>Filter your appointments by their category and/or the name of the company</p>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-12">
