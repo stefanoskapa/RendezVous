@@ -47,7 +47,7 @@
                                 </div> 
                                 <c:if test="${param.registration!=null}">
                                     <div class="text-center py-1 text-success">
-                                        Your account have been created!
+                                        Your account has been created!
                                     </div>
                                 </c:if>
                                 <i class="material-icons">mail</i>

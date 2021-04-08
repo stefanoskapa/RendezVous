@@ -5,11 +5,7 @@
  */
 package com.rendezvous.controller;
 
-import com.rendezvous.customexception.ClientIdNotFound;
-import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.customexception.ConversationNotFound;
-import com.rendezvous.entity.Client;
-import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Conversation;
 import com.rendezvous.entity.Messages;
 import com.rendezvous.entity.User;
@@ -53,7 +49,7 @@ public class ChatController {
         Optional<Conversation> conv = conversationService.findConversation(tempUser.getId(), tempUser2.getId());
         if (!conv.isPresent()) throw new ConversationNotFound("Conversation between userID=" + tempUser.getId()+ " iserID="+tempUser2.getId()+" not found!");
         Messages tempMessage = new Messages(tempUser.getId(), conv.get().getId(),msg.getText(),LocalDateTime.now());
-        messagesService.save(tempMessage, conv.get());
+        messagesService.save(tempMessage);
     }
 
     

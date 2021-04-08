@@ -9,6 +9,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
         <!--Bootstrap-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
@@ -26,9 +29,11 @@
         <link rel="stylesheet" href="/footer/Dark-Footer.css">       
 
         <!--Current page-->
-        <link rel="stylesheet" href="/css/login/login.css">
+        <script src="/js/client/register/register.js"></script>
+        <script src="/js/validation/validation.js"></script>
+        <link rel="stylesheet" href="/css/client/register/register-client.css">
     </head>
-    <body style="background-color:#2f3438 ">
+    <body>
         <jsp:include page="/WEB-INF/navbars/loginNavbar.jsp"/>
 
         <main>
@@ -37,9 +42,10 @@
                     <div class="col d-flex justify-content-center">
                         <div class="login-dark my-3">
                             <form:form action="${pageContext.request.contextPath}/client-register" 
-                                       method="POST" modelAttribute="newClient">
-
+                                       method="POST" modelAttribute="newClient" id="register-form">
+                                <div class="title">Client Register</div>
                                 <div class="illustration">
+
                                     <i class="icon ion-ios-calendar"></i>
                                 </div> 
                                 <c:if test="${userExistsError != null}">
@@ -53,17 +59,33 @@
 
                                 <i class="material-icons">vpn_key</i>
                                 <div class="form-group">
-                                    <form:input path="user.password" class="form-control" type="password" name="password" placeholder="Password" id="password" required="required"/>
-                                    <form:errors path="user.password"/>
+                                    <form:input path="user.password" class="form-control" type="password" name="password" placeholder="Password" id="password" required="required" maxlength="45" />
+                                    <i class="fa fa-eye showpwd"></i>
+                                    <form:errors path="user.password" />
+
+                                </div>
+
+                                <i class="material-icons">spellcheck</i>
+                                <div class="form-group">
+                                    <form:input path="fname" class="form-control" type="text" name="fname" placeholder="First Name" id="fname" required="required" maxlength="20"/>
+                                    <form:errors path="fname"/>
+                                </div>
+                                <i class="material-icons">spellcheck</i>
+                                <div class="form-group">
+                                    <form:input path="lname" class="form-control" type="text" name="lname" placeholder="Last Name" id="lname" required="required" maxlength="20" />
+                                    <form:errors path="lname"/>
+                                </div>
+                                <i class="material-icons">phone</i>
+                                <div class="form-group">
+                                    <form:input path="tel" class="form-control" type="text" name="tel" placeholder="Telephone" id="tel" required="required" maxlength="10"/>
+                                    <form:errors path="tel"/>
                                 </div>
 
                                 <div class="form-group">
-                                    <c:if test="${param.error != null}">
-                                        <div class="error">
-                                            Invalid Username And Password.
-                                        </div>
-                                    </c:if>
-                                    <button class="btn btn-primary btn-block" value="Login" type="submit">Log In</button>
+
+                                    <button class="btn btn-primary btn-block g-recaptcha" value="Register" type="submit" data-sitekey="6Lfe3aAaAAAAAA2eogoecmMRNClD1euKJHpR6xQB" 
+                                            data-callback='onSubmit' 
+                                            data-action='registerClient'>Register</button>
                                 </div>
                             </form:form>
                         </div>
@@ -72,56 +94,6 @@
             </div>
         </main>
 
-        <!--old-->
-        <form:form action="${pageContext.request.contextPath}/client-register" 
-                   method="POST" modelAttribute="newClient">
-            <!--todo: user sucessfully created-->
-            <div id="container-register">
-                <div id="title">
-                    <i class="material-icons lock">calendar_today</i> Client Register
-                </div> 
-                <div class="input">
-                    <div class="input-addon">
-                        <i class="material-icons">mail</i>
-                    </div>
-                    <form:input path="user.email" placeholder="Email" />
-                    <form:errors path="user.email"/>
-                </div>
-                <div class="input">
-                    <div class="input-addon">
-                        <i class="material-icons">vpn_key</i>
-                    </div>
-                    <form:input path="user.password" placeholder="password"/>
-                    <form:errors path="user.password"/>
-                </div>
-                <div class="input">
-                    <div class="input-addon">
-                        <i class="material-icons">spellcheck</i>
-                    </div>
-                    <form:input path="fname" placeholder="first name"/>
-                    <form:errors path="fname"/>
-                </div>
-                <div class="input">
-                    <div class="input-addon">
-                        <i class="material-icons">spellcheck</i>
-                    </div>
-                    <form:input path="lname" placeholder="last name"/>
-                    <form:errors path="lname"/>
-                </div>
-                <div class="input">
-                    <div class="input-addon">
-                        <i class="material-icons">phone</i>
-                    </div>
-                    <form:input path="tel" placeholder="tel"/>
-                    <form:errors path="tel"/>
-                </div>
-                <br>   
-
-                <button type="submit" class="btn btn-success btn-lg m-2">Register</button>
-
-            </form:form>
-        </div>
-        <!--old-->
     </body>
     <footer>
         <jsp:include page="/WEB-INF/navbars/footer.jsp"/>
