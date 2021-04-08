@@ -37,7 +37,7 @@
         <main>
             <div class="container">
                 <div class="row justify-content-center ">
-                    <div class="col-5 justify-content-center">
+                    <div class="col-12 col-md-5 justify-content-center">
                         <div class="login-dark my-3">
                             <form:form action="${pageContext.request.contextPath}/company-register" 
                                        method="post" modelAttribute="newCompany" id="register-form">
