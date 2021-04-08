@@ -36,7 +36,7 @@
             <jsp:include page="/WEB-INF/navbars/loggedNavbarCompany.jsp"/>
         </header>
         <br>
-        <div class="container profile profile-view" id="profile">
+       <div class="container profile profile-view my-4 p-5" id="profile">
             <form:form action="${pageContext.request.contextPath}/company/profile" 
                        method="post" modelAttribute="company">
                 <div class="row">
@@ -152,7 +152,7 @@
                 <div class="col-12 col-sm-6 col-lg-3">
                     <div class="form-group">
                         <div class="form-group">
-                            <button class="btn btn-primary form-btn" type="submit">Save
+                            <button class="btn btn-success form-btn" type="submit">Save
                             </button>
                         </div>
                     </div>
@@ -160,6 +160,6 @@
             </div>
         </form:form>
         <footer><jsp:include page="/WEB-INF/navbars/footer.jsp"/></footer>
-        <script src="${pageContext.request.contextPath}/js/validation/validation.js"></script>
+       
     </body>
 </html>
