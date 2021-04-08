@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>RendezVouz | Pro Purchased</title>
+        <title>RendezVouz | Premium Purchased</title>
 
         <!--Bootstrap-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -41,7 +41,7 @@
                     <div class="col-md-8 col-sm-12">
                         <img class="mx-auto" src="/img/checked.png" alt="payment successfull" width="125" height="120" />
                         <h1 class="text-white py-2 text-center">Thank You For Your Purchase!</h1>
-                        <h3 class="text-white py-2 text-center">You have successfully unlocked the Pro package</h3>
+                        <h3 class="text-white py-2 text-center">You have successfully unlocked the Premium package</h3>
                         <h3 class="text-white py-2 text-center" >You can now select your company's category, and showing up in user's searches of your category</h3>
                         <h5 class="text-white py-2 text-center">Category field have been enabled in your Profile Customization page</h5>
                         <div class="py-4 text-center"><a class="text-white btn btn-lg btn-outline-success" href="${pageContext.request.contextPath}/company/profile">Continue to your Profile</a></div>

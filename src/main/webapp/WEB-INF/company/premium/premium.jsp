@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>RendezVouz | Pro</title>
+        <title>RendezVouz | Premium</title>
 <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <p class="text-white display-4 py-5 py-md-2">Expand your<br/>customer base</p>
-                        <h3 class="text-white lead py-2">Unlock the Pro package and let our users find your business when searching for a your specific category</h3>
+                        <h3 class="text-white lead py-2">Unlock the Premium package and let our users find your business when searching for a your specific category</h3>
                         <h5 class="text-white lead py-2">
                             <ul>
                                 <li>One time purchase</li>
@@ -59,7 +59,7 @@
                             <h4 class="widget-title">Order Summary</h4>
                             <div class="summary-block">
                                 <div class="summary-content">
-                                    <div class="summary-head"><h5 class="summary-title">Pro Package</h5></div>
+                                    <div class="summary-head"><h5 class="summary-title">Premium Package</h5></div>
                                     <div class="summary-price">
                                         <h4 class="summary-text py-1">${amount/100} &euro;</h4>
                                         <span class="summary-small-text pull-right">Lifetime</span>
@@ -72,7 +72,7 @@
                                             data-amount=${amount}
                                             data-currency=eur
                                             data-name='RendezVous'
-                                            data-description='Unlock Pro'
+                                            data-description='Unlock Premium'
                                             data-image='/favicon.ico'
                                             data-locale='auto'
                                             data-zip-code='false'

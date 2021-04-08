@@ -62,7 +62,11 @@
                 </div>
                 <div class="row mx-0 mx-md-5">
                     <div class="col-12">
-                        <h4>Click on one of the available slots to close your appointment</h4>
+                        <h4>
+                            <div class="d-none d-md-inline">Click</div>
+                            <div class="d-inline d-md-none">Press and hold</div>
+                            on one of the available slots to close your appointment
+                        </h4>
                         <h4>Confirm your appointment in the popup window</h4>
                         <div id="legendInfo" class="fa fa-info-circle fa-lg float-right pb-2"></div>
                     </div>

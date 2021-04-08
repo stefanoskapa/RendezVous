@@ -50,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
             contentHeight: 1500,
             // displayEventTime: false,
             selectConstraint: "businessHours",
+            longPressDelay: 25,
             select: function (info) {
                 let startTime = new Date(info.start);
                 startTime.setHours(startTime.getHours() + (startTime.getTimezoneOffset() / 60));
                 let endTime = new Date(info.end);
                 endTime.setHours(endTime.getHours() + (endTime.getTimezoneOffset() / 60));
-
                 $("#hdate").val(info.start);
                 $(".modal-title").text("Confirmation");
                 $(".modal-body p").html(
