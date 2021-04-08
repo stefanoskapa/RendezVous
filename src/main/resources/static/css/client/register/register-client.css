@@ -14,14 +14,14 @@ body {
 }
 
 .login-dark form {
-    max-width:320px;
+    /*max-width:320px;*/
     /*width:90%;*/
     background: rgb(36,39,58);
     background: -moz-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
     background: -webkit-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
     background: linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#24273a",endColorstr="#212529",GradientType=1);
-    padding:40px;
+    padding:5px 50px 5px 50px;
     border-radius:4px;
     /*transform:translate(-50%, -50%);*/
     /*position:absolute;*/
@@ -52,9 +52,9 @@ body {
     background:#268f47;
     border:none;
     border-radius:4px;
-    padding:11px;
+   /* padding:11px;*/
     box-shadow:none;
-    margin-top:26px;
+    /*margin-top:26px;*/
     text-shadow:none;
     outline:none;
 }

@@ -30,60 +30,68 @@
 
         <!--Current page-->
         <script src="/js/client/register/register.js"></script>
-        <script src="/js/validation/validation.js"></script>
+       
         <link rel="stylesheet" href="/css/client/register/register-client.css">
     </head>
     <body>
         <jsp:include page="/WEB-INF/navbars/loginNavbar.jsp"/>
 
         <main>
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
-                    <div class="col d-flex justify-content-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-5 justify-content-center">
                         <div class="login-dark my-3">
                             <form:form action="${pageContext.request.contextPath}/client-register" 
                                        method="POST" modelAttribute="newClient" id="register-form">
-                                <div class="title">Client Register</div>
-                                <div class="illustration">
+                                <div class="title mb-4">Client Register</div>
 
-                                    <i class="icon ion-ios-calendar"></i>
-                                </div> 
                                 <c:if test="${userExistsError != null}">
                                     ${userExistsError}
                                 </c:if>
-                                <i class="material-icons">mail</i>
-                                <div class="form-group">
-                                    <form:input path="user.email" class="form-control" type="email" placeholder="Email"  required="required" maxlength="45"/>
-                                    <form:errors path="user.email"/>
+
+                                <div class="form-group row">
+                                    <i class="col-sm-2 material-icons">mail</i>
+                                    <div class="col-sm-10">
+                                        <form:input path="user.email" class="form-control" type="email" placeholder="Email"  required="required" maxlength="45"/>
+                                        <form:errors path="user.email"/>
+                                    </div>
                                 </div>
 
-                                <i class="material-icons">vpn_key</i>
-                                <div class="form-group">
-                                    <form:input path="user.password" class="form-control" type="password" name="password" placeholder="Password" id="password" required="required" maxlength="45" />
-                                    <i class="fa fa-eye showpwd"></i>
-                                    <form:errors path="user.password" />
-
+                                <div class="form-group row">
+                                    <i class="col-sm-2 material-icons">vpn_key</i>
+                                    <div class="col-sm-10">
+                                        <form:input path="user.password" class="form-control" type="password" name="password" placeholder="Password" id="password" required="required" maxlength="45" />
+                                        <i class="fa fa-eye showpwd"></i>
+                                        <form:errors path="user.password" />
+                                    </div>
                                 </div>
 
-                                <i class="material-icons">spellcheck</i>
-                                <div class="form-group">
-                                    <form:input path="fname" class="form-control" type="text" name="fname" placeholder="First Name" id="fname" required="required" maxlength="20"/>
-                                    <form:errors path="fname"/>
-                                </div>
-                                <i class="material-icons">spellcheck</i>
-                                <div class="form-group">
-                                    <form:input path="lname" class="form-control" type="text" name="lname" placeholder="Last Name" id="lname" required="required" maxlength="20" />
-                                    <form:errors path="lname"/>
-                                </div>
-                                <i class="material-icons">phone</i>
-                                <div class="form-group">
-                                    <form:input path="tel" class="form-control" type="text" name="tel" placeholder="Telephone" id="tel" required="required" maxlength="10"/>
-                                    <form:errors path="tel"/>
+                                <div class="form-group row"> 
+                                    <i class="col-sm-2 material-icons">spellcheck</i>
+                                    <div class="col-sm-10">
+                                        <form:input path="fname" class="form-control" type="text" name="fname" placeholder="First Name" id="fname" required="required" maxlength="20"/>
+                                        <form:errors path="fname"/>
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group row"> 
+                                    <i class="col-sm-2 material-icons">spellcheck</i>
+                                    <div class="col-sm-10">
+                                        <form:input path="lname" class="form-control" type="text" name="lname" placeholder="Last Name" id="lname" required="required" maxlength="20" />
+                                        <form:errors path="lname"/>
+                                    </div>
+                                </div>
 
-                                    <button class="btn btn-primary btn-block g-recaptcha" value="Register" type="submit" data-sitekey="6Lfe3aAaAAAAAA2eogoecmMRNClD1euKJHpR6xQB" 
+                                <div class="form-group row">
+                                    <i class="col-sm-2 material-icons">phone</i>
+                                    <div class="col-sm-10">
+                                        <form:input path="tel" class="form-control" type="text" name="tel" placeholder="Telephone" id="tel" required="required" maxlength="10"/>
+                                        <form:errors path="tel"/>
+                                    </div>
+                                </div>
+                                    
+                                <div class="form-group row justify-content-center">
+                                    <button class="btn btn-primary btn-lg m-3 g-recaptcha" value="Register" type="submit" data-sitekey="6Lfe3aAaAAAAAA2eogoecmMRNClD1euKJHpR6xQB" 
                                             data-callback='onSubmit' 
                                             data-action='registerClient'>Register</button>
                                 </div>

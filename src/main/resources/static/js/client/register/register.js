@@ -18,8 +18,8 @@ window.onload = function () {
 
 function onSubmit(token) {
     
-  //  if (document.getElementById("register-form").reportValidity()) {
+   if (document.getElementById("register-form").reportValidity()) {
         document.getElementById("register-form").submit();
-    //}
+    }
    
 }
