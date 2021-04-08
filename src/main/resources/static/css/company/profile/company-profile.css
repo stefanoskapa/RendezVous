@@ -8,6 +8,15 @@ body {
 .container profile profile-view{
     color: rgb(36,40,43);
 }
+#profile{
+background: rgb(36,39,58);
+    background: -moz-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
+    background: -webkit-linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
+    background: linear-gradient(180deg, rgba(36,39,58,1) 35%, rgba(33,37,41,1) 63%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#24273a",endColorstr="#212529",GradientType=1);    
+    border-radius:4px;
+    box-shadow:3px 3px 4px rgba(0,0,0,0.2);
+}
 
 h1{
     color: rgb(255,255,255);

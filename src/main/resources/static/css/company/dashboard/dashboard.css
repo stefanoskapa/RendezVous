@@ -14,3 +14,22 @@ body {
 #calendar-container {
     display: none;
 }
+.modal-content{
+    background-color: #24273a;
+    color:white;
+}
+
+#submitDateToServer{
+    background-color: green;
+    color:white;
+    border-color: green;
+}
+#buttonOk{
+    color:white;
+}
+.modal-footer{
+    border-top:none;
+}
+#xButton{
+    color:white;
+}
