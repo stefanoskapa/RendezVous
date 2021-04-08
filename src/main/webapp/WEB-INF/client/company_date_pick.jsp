@@ -7,6 +7,7 @@
         <title>Rendezvouz | Availability</title>        
 
         <!--Bootstrap-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
@@ -24,13 +25,14 @@
         <link rel="stylesheet" href="/footer/Dark-Footer.css">
 
         <!--Current page-->
-        <link href='${pageContext.request.contextPath}/calendar/lib/main.min.css' rel='stylesheet' />
-        <script src='${pageContext.request.contextPath}/calendar/lib/main.min.js'></script>
-        <script src="${pageContext.request.contextPath}/calendar/calendar-date-pick.js"></script>
+        <link href='/calendar/lib/main.min.css' rel='stylesheet' />
+        <script src='/calendar/lib/main.min.js'></script>
+        <script src="/calendar/calendar-date-pick.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
         <link rel="stylesheet" href="/chat/styles.css">
         <link rel="stylesheet" href="/css/client/date-pick/availability.css">
+        <script src="/js/client/date-pick/legend-popover.js"></script>
     </head>
     <body>
         <header>
@@ -62,64 +64,68 @@
                     <div class="col-12">
                         <h4>Click on one of the available slots to close your appointment</h4>
                         <h4>Confirm your appointment in the popup window</h4>
+                        <div id="legendInfo" class="fa fa-info-circle fa-lg float-right pb-2"></div>
                     </div>
                 </div>
                 <div class="row mx-0 mx-md-5">
-                    <div class="alert alert-dismissible fade show" role="alert" id="alert"></div>
+                    <div class="col-12">
+                        <div class="alert alert-dismissible fade show" role="alert" id="alert"></div>
+                    </div>
                 </div>
 
                 <div class="row mx-0 mx-md-5">
                     <div class="col-12">
-                        <div id='calendar' class="mb-0 mt-3"></div>
+                        <div id='calendar' class="mb-0 mt-3 mb-5"></div>
                     </div>
                 </div>
 
-                <div class="row mx-0 mx-md-5 mb-3">
-                    <div class="col-12 col-md-5">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-1 px-0 d-flex align-items-center">
-                                    <div id="slot-available" class="legend-box mr-1"></div>
-                                </div>
-                                <div class="col-11 px-0">
-                                    <p class="my-1 my-md-0">Available for booking</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 px-0 d-flex align-items-center">
-                                    <div id="slot-existing-with-comp" class="legend-box mr-1"></div>
-                                </div>
-                                <div class="col-11 px-0">
-                                    <p class="my-1 my-md-0">Appointment with the company already booked</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 px-0 d-flex align-items-center">
-                                    <div id="slot-existing-with-other-comp" class="legend-box mr-1"></div>
-                                </div>
-                                <div class="col-11 px-0">
-                                    <p class="my-1 my-md-0">Appointment with another company booked</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 px-0 d-flex align-items-center">
-                                    <div id="slot-unavailable" class="legend-box mr-1"></div>
-                                </div>
-                                <div class="col-11 px-0">
-                                    <p class="my-1 my-md-0">Company is unavailable on the specific slot</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 px-0 d-flex align-items-center">
-                                    <div id="slot-of-working-hours" class="legend-box mr-1"></div>
-                                </div>
-                                <div class="col-11 px-0">
-                                    <p class="my-1 my-md-0">Slot belongs outside company's opening hours</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--                <div class="row mx-0 mx-md-5 mb-3">
+                                    <div class="col-12 col-md-5">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-1 px-0 d-flex align-items-center">
+                                                    <div id="slot-available" class="legend-box mr-1"></div>
+                                                </div>
+                                                <div class="col-11 px-0">
+                                                    <p class="my-1 my-md-0">Available for booking</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1 px-0 d-flex align-items-center">
+                                                    <div id="slot-existing-with-comp" class="legend-box mr-1"></div>
+                                                </div>
+                                                <div class="col-11 px-0">
+                                                    <p class="my-1 my-md-0">Appointment with the company already booked</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1 px-0 d-flex align-items-center">
+                                                    <div id="slot-existing-with-other-comp" class="legend-box mr-1"></div>
+                                                </div>
+                                                <div class="col-11 px-0">
+                                                    <p class="my-1 my-md-0">Appointment with another company booked</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1 px-0 d-flex align-items-center">
+                                                    <div id="slot-unavailable" class="legend-box mr-1"></div>
+                                                </div>
+                                                <div class="col-11 px-0">
+                                                    <p class="my-1 my-md-0">Company is unavailable on the specific slot</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1 px-0 d-flex align-items-center">
+                                                    <div id="slot-of-working-hours" class="legend-box mr-1"></div>
+                                                </div>
+                                                <div class="col-11 px-0">
+                                                    <p class="my-1 my-md-0">Slot belongs outside company's opening hours</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+
             </div>
 
 
