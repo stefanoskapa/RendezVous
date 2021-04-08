@@ -58,8 +58,8 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="col-12 col-md-2">
-                        <select class="form-control custom-select my-2 px-1" id="city">
+                    <div class="col-12 col-md-2 px-1">
+                        <select class="form-control custom-select my-2" id="city">
                             <option selected="selected" value="All">All Cities</option>
                             <c:forEach items="${listCities}" var="city">         
                                     <option value="${city}">${city}</option>                              

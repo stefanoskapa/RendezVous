@@ -16,17 +16,13 @@ body {
     display: none;
 }
 
-#legend{
-    list-style: none;
-}
-
-#legend li div{
-    display: inline-block;
+.legend-box {
+        display: inline-block;
     width: 18px;
     height: 18px;
 }
 
-#legend li h6{
+p{
     display: inline-block;
 }
 

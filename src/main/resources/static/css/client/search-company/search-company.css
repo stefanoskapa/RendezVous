@@ -43,14 +43,17 @@ main{
 
 .mycard-title{
     grid-area: title;
+    padding-left: 0px;
 }
 
 .mycard-telephone{
     grid-area: telephone;
+    padding-left: 0px;
 }
 
-.mycard-adress{
+.mycard-address{
     grid-area: address;
+    padding-left: 0px;
 }
 
 .mycard-link{
@@ -80,6 +83,18 @@ main{
             "address"
             "link";
         padding: 10px 0;
+    }
+
+    .mycard-title{
+        padding-left: 1rem;
+    }
+
+    .mycard-telephone{
+        padding-left: 1rem;
+    }
+
+    .mycard-address{
+        padding-left: 1rem;
     }
 }
 
