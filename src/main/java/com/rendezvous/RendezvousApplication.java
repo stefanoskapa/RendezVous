@@ -1,5 +1,6 @@
 package com.rendezvous;
 
+import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 @SpringBootApplication
 
 
-//@EnableJpaRepositories(basePackageClasses = UserRepository.class)
+//@EnableJpaRepositories(basePackageClasses = AppointmentRepository.class)
 //@EnableJpaRepositories(basePackages="com.rendezvous.repository")
 public class RendezvousApplication extends SpringBootServletInitializer{
 
