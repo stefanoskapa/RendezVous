@@ -74,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
             eventTextColor: 'white',
             timeZone: 'Europe/Athens',
             eventContent: function (arg) {
-                if (arg.event.title.startsWith("Appointment with")){
+                if (arg.event.title.startsWith("Appointment with")) {
                     arg.backgroundColor = "#3788D8"
-                } else if (arg.event.title.startsWith("Unavailable")){
+                } else if (arg.event.title.startsWith("Unavailable")) {
                     arg.backgroundColor = "gray"
                 } else {
                     arg.backgroundColor = "#6fafed"
@@ -116,12 +116,18 @@ document.addEventListener('DOMContentLoaded', function () {
                         getCalendarDataAndDrawCalendar();
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                        console.log(jqXhr.responseText);
+
                         $('html, body').css("cursor", "auto");
                         $('#alert').removeClass("alert-success");
                         $('#alert').addClass("alert-warning");
 
                         $('#alert').show();
-                        $('#alert').html("Your appointment request could not be completed. Refresh the page and try again")
+                        if (jqXhr.responseText === "past-date") {
+                            $('#alert').html("You can not book an appointment in past date");
+                        } else {
+                            $('#alert').html("Your appointment request could not be completed. Refresh the page and try again");
+                        }
                     }
                 });
     });

@@ -38,5 +38,9 @@ public class AppointmentService {
     public List<Appointment> findByCompany(Company company) {
         return appointmentRepository.findByCompany(company);
     }
+
+    public boolean isRequestedAppointmentInThePast(LocalDateTime appointmentTimestamp) {
+        return appointmentTimestamp.isBefore(LocalDateTime.now());
+    }
     
 }
