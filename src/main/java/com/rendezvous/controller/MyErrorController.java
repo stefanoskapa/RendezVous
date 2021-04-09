@@ -18,7 +18,7 @@ public class MyErrorController implements ErrorController {
         if (status != null) {
             statusCode = Integer.valueOf(status.toString());
         }
-        
+
         String message;
         switch (statusCode) {
             case 400:
@@ -103,8 +103,8 @@ public class MyErrorController implements ErrorController {
                 message = "Something went wrong";
                 break;
         }
-        
-        model.addAttribute("msg",message);
+
+        model.addAttribute("msg", message);
         model.addAttribute("status", statusCode);
         return "error";
     }

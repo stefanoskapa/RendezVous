@@ -1,9 +1,7 @@
 package com.rendezvous.entity;
 
-import com.rendezvous.service.ConversationService;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Messages.findByUserId", query = "SELECT m FROM Messages m WHERE m.userId = :userId")})
 public class Messages implements Serializable {
 
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +35,6 @@ public class Messages implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
-    // @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime timestamp;
     @Basic(optional = false)
     @NotNull
@@ -55,21 +51,13 @@ public class Messages implements Serializable {
     @Column(name = "conversation_id")
     private int conversationId;
 
-
     public Messages() {
     }
 
     public Messages(Integer id) {
         this.id = id;
     }
-/*
-    public Messages(Integer id, LocalDateTime timestamp, String message, int userId) {
-        this.id = id;
-        this.timestamp = timestamp;
-        this.message = message;
-        this.userId = userId;
-    }
-    */
+
     public Messages(int userId, int conversationId, String message, LocalDateTime timestamp) {
         this.userId = userId;
         this.conversationId = conversationId;

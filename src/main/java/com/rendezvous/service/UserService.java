@@ -7,10 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Stefanos
- */
 @Service
 public class UserService {
 
@@ -18,13 +14,13 @@ public class UserService {
     private UserRepository userRepository;
 
     public User findById(Integer userID) {
-        Optional <User>user = userRepository.findById(userID);
+        Optional<User> user = userRepository.findById(userID);
         user.orElseThrow(() -> new UsernameNotFoundException("User " + userID + " not found!"));
         return user.get();
     }
-    
+
     public User findByEmail(String email) {
-        Optional <User>user = userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
         user.orElseThrow(() -> new UsernameNotFoundException("User " + email + " not found!"));
         return user.get();
     }

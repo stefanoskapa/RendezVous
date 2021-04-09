@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.model;
 
 import java.time.LocalTime;
-import javax.persistence.Entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 public class WorkDayHours {
+
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime startTime;
     @DateTimeFormat(pattern = "HH:mm")
@@ -23,7 +17,6 @@ public class WorkDayHours {
         this.startTime = startTime;
         this.closeTime = closeTime;
     }
-    
 
     public LocalTime getStartTime() {
         return startTime;
@@ -49,7 +42,5 @@ public class WorkDayHours {
         sb.append('}');
         return sb.toString();
     }
-    
-    
-    
+
 }

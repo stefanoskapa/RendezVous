@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.service;
 
 import com.rendezvous.customexception.CompanyIdNotFound;
@@ -250,7 +245,7 @@ public class CompanyService {
     }
 
     public Set<SearchResult> companySearch(String searchTerm, String category) {
-        
+
         Set<SearchResult> results = new HashSet<>();
         List<Company> companies;
         if (searchTerm.trim().equals("")) {
@@ -312,14 +307,14 @@ public class CompanyService {
     public void setPremiumStatus(Company company) {
         companyRepository.savePremiumStatus(company.getId());
     }
-    
+
     public List<String> findAllCities() {
         return companyRepository.findAllCities().orElseThrow(() -> new UsernameNotFoundException("Cities not found!"));
     }
-    
+
     public Set<SearchResult> filterByCity(Set<SearchResult> companies, String city) {
         Set<SearchResult> comps = new HashSet<>();
-        for (SearchResult c: companies) {
+        for (SearchResult c : companies) {
             if (c.getAddrCity().trim().equals(city.trim())) {
                 comps.add(c);
             }

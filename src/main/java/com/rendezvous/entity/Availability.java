@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,10 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-
 
 @Entity
 @Table(name = "availability")
@@ -32,28 +22,28 @@ import javax.validation.constraints.NotNull;
 public class Availability implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "week_day")
     private int weekDay;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "open_time")
     private LocalTime openTime;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "close_time")
     private LocalTime closeTime;
-    
+
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Company company;
@@ -136,5 +126,5 @@ public class Availability implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.Availability[ id=" + id + " ]";
     }
-    
+
 }

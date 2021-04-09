@@ -32,9 +32,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
-    /*
-    Setup the authorization for the different APIs
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

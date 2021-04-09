@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.controller;
 
 import com.rendezvous.customexception.CompanyIdNotFound;
@@ -40,7 +35,6 @@ public class ClientController {
 
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
-
         if (principal != null) {
             Client client = clientService.findClientByEmail(principal.getName());
             model.addAttribute("username", client.getFname() + " " + client.getLname());
@@ -91,11 +85,6 @@ public class ClientController {
         return "client/company_search";
     }
 
-//    @PostMapping("/comp-select")
-//    public String showCompanySelect(@RequestParam int companyId, Model model) {
-//        model.addAttribute("comp_id", companyId); //comp_id will be used by company_date_pick
-//        return "client/company_date_pick";
-//    }
     @GetMapping("/date-select")
     public String showDateSelect(@RequestParam int companyId, Model model) {
 

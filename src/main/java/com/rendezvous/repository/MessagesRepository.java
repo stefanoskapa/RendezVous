@@ -6,12 +6,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author Stefanos
- */
 @Repository
-public interface MessagesRepository extends JpaRepository<Messages, Integer>{
-    
-    Optional <List<Messages>> findByConversationId(int conversationId);
+public interface MessagesRepository extends JpaRepository<Messages, Integer> {
+
+    Optional<List<Messages>> findByConversationId(int conversationId);
+
 }

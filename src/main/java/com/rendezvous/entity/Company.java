@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.entity;
 
 import java.io.Serializable;
@@ -24,7 +19,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "company")
 @NamedQueries({
@@ -32,74 +26,68 @@ import javax.validation.constraints.Size;
 public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
     @Column(name = "display_name")
     private String displayName;
-    
+
     @Basic(optional = false)
     @NotNull()
     @Size(min = 1, max = 20)
     @Column(name = "fname")
     private String fname;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "lname")
     private String lname;
-    
+
     @Size(max = 9)
     @Column(name = "afm")
     private String afm;
-    
+
     @Size(max = 10)
     @Column(name = "tel")
     private String tel;
-    
+
     @Size(max = 40)
     @Column(name = "addr_str")
     private String addrStr;
-    
+
     @Size(max = 5)
     @Column(name = "addr_no")
     private String addrNo;
-    
+
     @Size(max = 30)
     @Column(name = "addr_city")
     private String addrCity;
-    
+
     @Column(name = "premium", columnDefinition = "BOOLEAN")
     private Boolean premium;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private List<Messages> messagesList;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
     private List<Appointment> appointmentList;
-    
+
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
     private CompCategory category;
-    
+
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @Valid
     private User user;
-    
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
-//    private List<Availability> availabilityList;
-    
-  //  @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
-   // private List<Conversation> conversationList;
 
     public Company() {
     }
@@ -187,7 +175,7 @@ public class Company implements Serializable {
         this.user = user;
     }
 
-        public String getFname() {
+    public String getFname() {
         return fname;
     }
 
@@ -226,18 +214,6 @@ public class Company implements Serializable {
     public void setPremium(Boolean premium) {
         this.premium = premium;
     }
-    
-//    public List<Availability> getAvailabilityList() {
-//        return availabilityList;
-//    }
-//
-//    public void setAvailabilityList(List<Availability> availabilityList) {
-//        this.availabilityList = availabilityList;
-//    }
-
-    
-
-    
 
     @Override
     public int hashCode() {
@@ -263,5 +239,5 @@ public class Company implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.Company[ id=" + id + " ]";
     }
-   
+
 }

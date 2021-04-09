@@ -1,12 +1,10 @@
-
 package com.rendezvous.model;
-
 
 public class SearchResult {
 
     private int id;
     private String displayName;
-    
+
     private String addrStr;
     private String addrNo;
     private String addrCity;
@@ -68,6 +66,5 @@ public class SearchResult {
     public void setTel(String tel) {
         this.tel = tel;
     }
-    
-   
+
 }

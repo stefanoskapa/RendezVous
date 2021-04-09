@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.service;
 
 import com.rendezvous.entity.Appointment;
@@ -16,10 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author Leyteris
- */
 @Service
 @Transactional
 public class AppointmentService {
@@ -32,11 +23,11 @@ public class AppointmentService {
         int timeslot = dateTime.toLocalTime().getHour();
         appointmentRepository.save(new Appointment(date, timeslot, client, company));
     }
-    
+
     public List<Appointment> findByClient(Client client) {
         return appointmentRepository.findByClient(client);
     }
-    
+
     public List<Appointment> findByCompany(Company company) {
         return appointmentRepository.findByCompany(company);
     }
@@ -44,13 +35,13 @@ public class AppointmentService {
     public boolean isRequestedAppointmentInThePast(LocalDateTime appointmentTimestamp) {
         return appointmentTimestamp.isBefore(LocalDateTime.now());
     }
-    
-    public void deleteByClientAndDateAndTimeslot(Client client, LocalDate date, int timeslot){
+
+    public void deleteByClientAndDateAndTimeslot(Client client, LocalDate date, int timeslot) {
         appointmentRepository.deleteByClientAndDateAndTimeslot(client, date, timeslot);
     }
-    
+
     public boolean existsByClientAndDateAndTimeslot(Client client, LocalDate appDate, int timeslot) {
         return appointmentRepository.existsByClientAndDateAndTimeslot(client, appDate, timeslot);
     }
-    
+
 }

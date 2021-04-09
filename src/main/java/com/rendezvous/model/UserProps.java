@@ -1,14 +1,14 @@
-
 package com.rendezvous.model;
 
 public class UserProps {
 
-   private String fname;
-   private String lname;
-   private String email;
-   private String companyName;
-   
-   public UserProps(){}
+    private String fname;
+    private String lname;
+    private String email;
+    private String companyName;
+
+    public UserProps() {
+    }
 
     public UserProps(String fname, String lname, String email) {
         this.fname = fname;
@@ -22,8 +22,6 @@ public class UserProps {
         this.email = email;
         this.companyName = companyName;
     }
-    
-    
 
     public String getFname() {
         return fname;
@@ -56,6 +54,5 @@ public class UserProps {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-   
-   
+
 }
