@@ -4,15 +4,15 @@
     color: #ffffff;  
 }
 #calendar-logo{
+    color: #ffffff;
     font-size: 57px;
-    padding: 2px;
-    margin: -14px;  
 }
 #navcol-1{
     background-color: #24273a;
     margin: 11px;   
 }
 #navlink1{
+    font-size: 17px;
     color: #ffffff;
     height: 35px;
     padding: 7px;
@@ -53,7 +53,7 @@
     background-color: #24273a;   
 }
 #calendar-logo:hover{
-    color:#52a5bb;
+    /*color:#52a5bb;*/
     cursor:pointer;
 }
 #adress-card:hover{
@@ -71,9 +71,9 @@
 #dropdown-item2:hover{
     color:#52a5bb;  
 }
-#navbar-brand1:hover{
+/*#navbar-brand1:hover{
     color:#52a5bb;
-}
+}*/
 
 #prem-logo{
     height: 59px;
@@ -91,6 +91,7 @@
     color:#52a5bb;  
 }
 
-
-
-
+#calendar-logo-container {
+    padding: 2px;
+    margin: -14px;  
+}

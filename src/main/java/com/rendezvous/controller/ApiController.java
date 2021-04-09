@@ -51,7 +51,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/") //todo add /api/v1/client and /api/v1/company in Spring Security
+@RequestMapping("/api/v1/")
 public class ApiController {
 
     @Autowired
@@ -60,13 +60,13 @@ public class ApiController {
     private CompanyService companyService;
     @Autowired
     private AppointmentService appointmentService;
-    @Autowired
-    private CategoryService categoryService;
+//    @Autowired
+//    private CategoryService categoryService;
     @Autowired
     private UserService userService;
     @Autowired
     private ConversationService conversationService;
-    @Autowired 
+    @Autowired
     private MessagesService messagesService;
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -122,6 +122,8 @@ public class ApiController {
     @PostMapping("/client/request-app")
     public ResponseEntity<String> confirmAppointment(Principal principal, @RequestBody AppointmentRequest appointmentRequest) {
         System.out.println(appointmentRequest);
+        System.out.println(appointmentRequest.getAppointmentTimestamp());
+        System.out.println("is requested appointment before now?>>>>>" + appointmentRequest.getAppointmentTimestamp().isBefore(LocalDateTime.now()));
 
         Client client = null;
         Company company = null;
@@ -136,7 +138,7 @@ public class ApiController {
         boolean isClientOccupied = clientService.isOccupied(client, appointmentRequest.getAppointmentTimestamp());
 
         if (isClientOccupied) {
-            System.out.println("Client is occupied>>>>>>>>> " + isClientOccupied);
+//            System.out.println("Client is occupied>>>>>>>>> " + isClientOccupied);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -144,7 +146,7 @@ public class ApiController {
         try {
             company = companyService.findCompanyById(appointmentRequest.getCompanyId());
         } catch (CompanyIdNotFound ex) {
-            System.out.println("Company doesnt exists");
+//            System.out.println("Company doesnt exists");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -152,7 +154,7 @@ public class ApiController {
         boolean isDateInBusinessHours = companyService.isDateInBusinessHours(company, appointmentRequest.getAppointmentTimestamp());
 
         if (!isDateInBusinessHours) {
-            System.out.println("Date in business hours>>>>>>>>> " + isDateInBusinessHours);
+//            System.out.println("Date in business hours>>>>>>>>> " + isDateInBusinessHours);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -161,8 +163,17 @@ public class ApiController {
         isCompanyOccupied = companyService.isOccupied(company, appointmentRequest.getAppointmentTimestamp());
 
         if (isCompanyOccupied) {
-            System.out.println("Company is occupied>>>>>>>>> " + isCompanyOccupied);
+//            System.out.println("Company is occupied>>>>>>>>> " + isCompanyOccupied);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        //check if requested date is before the current time
+        boolean isRequestedAppointmentInThePast = false;
+        isRequestedAppointmentInThePast = appointmentService.isRequestedAppointmentInThePast(appointmentRequest.getAppointmentTimestamp());
+
+        if (isRequestedAppointmentInThePast) {
+//            System.out.println("Requested appointment date is in the past>>>>>>>>> " + isRequestedAppointmentInThePast);
+            return new ResponseEntity("past-date", HttpStatus.BAD_REQUEST);
         }
 
         //if no error found in request, then save a new appointment
@@ -179,14 +190,8 @@ public class ApiController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-//    @GetMapping("client/categories")
-//    public ResponseEntity<List<String>> getAllCategories() {
-//        List<String> categories = categoryService.getAllCategoriesNames();
-//        return new ResponseEntity<>(categories, HttpStatus.OK);
-//    }
-    
     @GetMapping("/conv") //returns list of conversation-partners
-    public ResponseEntity<List<UserProps>> fetchConvPartners(Principal principal) throws ClientIdNotFound, CompanyIdNotFound{
+    public ResponseEntity<List<UserProps>> fetchConvPartners(Principal principal) throws ClientIdNotFound, CompanyIdNotFound {
         User tempUser = userService.findByEmail(principal.getName());
         List<Conversation> conv = conversationService.findByUserId(tempUser.getId());
         List<UserProps> convPartners = new LinkedList<>();
@@ -194,50 +199,50 @@ public class ApiController {
             UserProps up;
             if (tempUser.getRoleList().get(0).getRole().equals("ROLE_COMPANY")) {
                 Client tempClient = clientService.findClientByUserId(a.getPartnerId(tempUser.getId()).getId());
-                up = new UserProps(tempClient.getFname(),tempClient.getLname(),tempClient.getUser().getEmail());               
+                up = new UserProps(tempClient.getFname(), tempClient.getLname(), tempClient.getUser().getEmail());
             } else {
                 Company comp = companyService.findCompanyByUserId(a.getPartnerId(tempUser.getId()).getId());
-                up = new UserProps(comp.getFname(),comp.getLname(), comp.getUser().getEmail(),comp.getDisplayName());               
+                up = new UserProps(comp.getFname(), comp.getLname(), comp.getUser().getEmail(), comp.getDisplayName());
             }
             convPartners.add(up);
         }
         return new ResponseEntity<>(convPartners, HttpStatus.OK);
     }
-    
- 
+
     @GetMapping("/myprops") // send user information to himself
-    public ResponseEntity<UserProps> fetchMyData(Principal principal) throws ClientIdNotFound, CompanyIdNotFound{
+    public ResponseEntity<UserProps> fetchMyData(Principal principal) throws ClientIdNotFound, CompanyIdNotFound {
         User tempUser = userService.findByEmail(principal.getName());
-        UserProps up; 
+        UserProps up;
         if (tempUser.getRoleList().get(0).getRole().equals("ROLE_CLIENT")) {
             Client tempClient = clientService.findClientByUserEmail(principal.getName());
             System.out.println("client found:" + tempClient.toString());
-            up = new UserProps(tempClient.getFname(),tempClient.getLname(),tempClient.getUser().getEmail());
+            up = new UserProps(tempClient.getFname(), tempClient.getLname(), tempClient.getUser().getEmail());
         } else {
             Company comp = companyService.findCompanyByUserEmail(principal.getName());
-            up = new UserProps(comp.getFname(),comp.getLname(),comp.getUser().getEmail(),comp.getDisplayName());
+            up = new UserProps(comp.getFname(), comp.getLname(), comp.getUser().getEmail(), comp.getDisplayName());
         }
         return new ResponseEntity<>(up, HttpStatus.OK);
     }
 
     @GetMapping("/load/{userEmail}") // loads messages with particular conversation-partner
-    public ResponseEntity<List<Message>> fetchMessages(@PathVariable String userEmail, Principal principal) throws ConversationNotFound{
+    public ResponseEntity<List<Message>> fetchMessages(@PathVariable String userEmail, Principal principal) throws ConversationNotFound {
         User tempUser = userService.findByEmail(principal.getName());
         User otherUser = userService.findByEmail(userEmail);
-        Optional <Conversation> tempConv = conversationService.findConversation(tempUser.getId(), otherUser.getId());
+        Optional<Conversation> tempConv = conversationService.findConversation(tempUser.getId(), otherUser.getId());
         List<Message> msgsToSend = new LinkedList<>();
         if (tempConv.isPresent()) {
             List<Messages> msgs = messagesService.findByConversationId(tempConv.get().getId()).get();
             for (Messages a : msgs) {
-                String sender = tempUser.getId() == a.getUserId()? principal.getName() : userEmail;
+                String sender = tempUser.getId() == a.getUserId() ? principal.getName() : userEmail;
                 Message om = new Message(sender, a.getMessage(), a.getTimestamp().toString());
                 msgsToSend.add(om);
             }
         } else {
-            conversationService.save(new Conversation(tempUser,otherUser));
+            conversationService.save(new Conversation(tempUser, otherUser));
         }
         return new ResponseEntity<>(msgsToSend, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/delete-app")
     public ResponseEntity deleteAppointment(@RequestParam LocalDateTime dateTimeToBeDeleted, Principal principal) {
@@ -251,4 +256,5 @@ public class ApiController {
         System.out.println("Appointment found: " + appointmentRepository.existsByClientAndDateAndTimeslot(client, appDate, timeslot));
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }
