@@ -116,8 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         getCalendarDataAndDrawCalendar();
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
-                        console.log(jqXhr.responseText);
-
                         $('html, body').css("cursor", "auto");
                         $('#alert').removeClass("alert-success");
                         $('#alert').addClass("alert-warning");
