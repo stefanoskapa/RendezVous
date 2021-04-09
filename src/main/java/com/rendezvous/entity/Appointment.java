@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Basic;
@@ -21,7 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
 @Entity
 @Table(name = "appointment")
 @NamedQueries({
@@ -29,28 +22,27 @@ import javax.validation.constraints.NotNull;
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "date")
     private LocalDate date;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "timeslot")
     private int timeslot;
-    
+
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Client client;
-    
+
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Company company;
@@ -68,8 +60,6 @@ public class Appointment implements Serializable {
         this.client = client;
         this.company = company;
     }
-
-    
 
     public Integer getId() {
         return id;
@@ -135,5 +125,5 @@ public class Appointment implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.Appointment[ id=" + id + " ]";
     }
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.security;
 
 import java.io.IOException;
@@ -24,6 +19,7 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -59,7 +55,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         for (final GrantedAuthority grantedAuthority : authorities) {
 
             String authorityName = grantedAuthority.getAuthority();
-            if(roleTargetUrlMap.containsKey(authorityName)) {
+            if (roleTargetUrlMap.containsKey(authorityName)) {
                 return roleTargetUrlMap.get(authorityName);
             }
         }
@@ -68,8 +64,8 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     }
 
     /**
-     * Removes temporary authentication-related data which may have been stored in the session
-     * during the authentication process.
+     * Removes temporary authentication-related data which may have been stored
+     * in the session during the authentication process.
      */
     protected final void clearAuthenticationAttributes(final HttpServletRequest request) {
         final HttpSession session = request.getSession(false);

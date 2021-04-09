@@ -15,22 +15,21 @@ public class ConversationService {
     @Autowired
     private ConversationRepository conversationRepository;
 
-    public Conversation findById(Integer convId) throws ConversationNotFound{
+    public Conversation findById(Integer convId) throws ConversationNotFound {
         Optional<Conversation> conv = conversationRepository.findById(convId);
         conv.orElseThrow(() -> new ConversationNotFound("Conversation " + convId + " not found!"));
         return conv.get();
     }
-    
-    public Optional <Conversation> findConversation(int userId1, int userId2) {
+
+    public Optional<Conversation> findConversation(int userId1, int userId2) {
         Optional<Conversation> conv = conversationRepository.findConversation(userId1, userId2);
-        //conv.orElseThrow(()-> new ConversationNotFound("Conversation between userID=" + userId1 + " iserID="+userId2+" not found!"));
         return conv;
     }
-    
+
     public List<Conversation> findByUserId(int userId) {
         return conversationRepository.findByUserId(userId);
-    } 
-    
+    }
+
     public void save(Conversation conv) {
         conversationRepository.save(conv);
     }

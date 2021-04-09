@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Leyteris
- */
 public class CompanyCalendarProperties {
+
     private List<CompanyDate> events;
     private List<BusinessHoursGroup> businessHours;
 
@@ -41,6 +33,5 @@ public class CompanyCalendarProperties {
     public void setEvents(List<CompanyDate> events) {
         this.events = events;
     }
-    
-    
+
 }

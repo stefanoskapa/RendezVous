@@ -1,11 +1,10 @@
-
 package com.rendezvous.recaptcha;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-
 public class ReCaptchaResponse {
+
     private boolean success;
     private float score;
     private String action;
@@ -67,6 +66,5 @@ public class ReCaptchaResponse {
     public String toString() {
         return "ReCaptchaResponse{" + "success=" + success + ", score=" + score + ", action=" + action + ", challengeTs=" + challengeTs + ", hostname=" + hostname + ", errorCodes=" + errorCodes + '}';
     }
-    
-    
+
 }

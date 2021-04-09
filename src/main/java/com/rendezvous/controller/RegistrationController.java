@@ -36,8 +36,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/client-register")
-    public String clientRegistration(@RequestParam(name = "g-recaptcha-response") String captchaResponse, 
-            @Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model, 
+    public String clientRegistration(@RequestParam(name = "g-recaptcha-response") String captchaResponse,
+            @Valid @ModelAttribute("newClient") Client newClient, BindingResult bindingResult, Model model,
             RedirectAttributes attributes) {
 
         ReCaptchaResponse rcr = reCaptchaRegisterService.verify(captchaResponse);
@@ -67,15 +67,15 @@ public class RegistrationController {
 
     @PostMapping("/company-register")
     public String companyRegistration(@RequestParam(name = "g-recaptcha-response") String captchaResponse,
-            @Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult, 
+            @Valid @ModelAttribute("newCompany") Company newCompany, BindingResult bindingResult,
             Model model, RedirectAttributes attributes) {
-        
+
         ReCaptchaResponse rcr = reCaptchaRegisterService.verify(captchaResponse);
         if (!rcr.isSuccess() || !rcr.getAction().equals("registerCompany") || rcr.getScore() <= 0.5) {
             model.addAttribute("userExistsError", "Bad captcha, please try again");
             return "company/register_company";
         }
-        
+
         if (bindingResult.hasErrors()) {
             return "company/register_company";
         }

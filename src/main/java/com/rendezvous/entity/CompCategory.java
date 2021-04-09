@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 @Entity
 @Table(name = "comp_category")
@@ -28,21 +20,18 @@ import javax.validation.constraints.Size;
 public class CompCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
     @Column(name = "category")
     private String category;
-    
-//    @OneToMany(mappedBy = "categoryId")
-//    private List<Company> companyList;
 
     public CompCategory() {
     }
@@ -72,14 +61,6 @@ public class CompCategory implements Serializable {
         this.category = category;
     }
 
-//    public List<Company> getCompanyList() {
-//        return companyList;
-//    }
-//
-//    public void setCompanyList(List<Company> companyList) {
-//        this.companyList = companyList;
-//    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -104,5 +85,5 @@ public class CompCategory implements Serializable {
     public String toString() {
         return "com.rendezvous.entity.CompCategory[ id=" + id + " ]";
     }
-    
+
 }

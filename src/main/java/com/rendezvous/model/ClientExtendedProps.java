@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.model;
 
-/**
- *
- * @author Leyteris
- */
 public class ClientExtendedProps {
 
     private String addr_str;
@@ -16,7 +7,7 @@ public class ClientExtendedProps {
     private String addr_city;
     private String tel;
     private Integer category;
-    
+
     public ClientExtendedProps() {
     }
 
