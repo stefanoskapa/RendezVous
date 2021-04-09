@@ -145,7 +145,7 @@ public class ApiController {
 
         //check if requested timeslot is inside company's working hour
         boolean isDateInBusinessHours = companyService.isDateInBusinessHours(company, appointmentRequest.getAppointmentTimestamp());
-
+        
         if (!isDateInBusinessHours) {
 //            System.out.println("Date in business hours>>>>>>>>> " + isDateInBusinessHours);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
