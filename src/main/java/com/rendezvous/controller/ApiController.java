@@ -68,8 +68,8 @@ public class ApiController {
     private ConversationService conversationService;
     @Autowired
     private MessagesService messagesService;
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+   // @Autowired
+    //private AppointmentRepository appointmentRepository;
 
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
@@ -253,7 +253,8 @@ public class ApiController {
         System.out.println(client.getUser().getEmail());
         System.out.println("Timeslot: " + timeslot);
         System.out.println("Date: " + appDate);
-        System.out.println("Appointment found: " + appointmentRepository.existsByClientAndDateAndTimeslot(client, appDate, timeslot));
+        System.out.println("Appointment found: " + appointmentService.existsByClientAndDateAndTimeslot(client, appDate, timeslot));
+        appointmentService.deleteByClientAndDateAndTimeslot(client, appDate, timeslot);
         return new ResponseEntity(HttpStatus.OK);
     }
 
