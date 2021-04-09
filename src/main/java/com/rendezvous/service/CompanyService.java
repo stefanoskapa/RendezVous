@@ -280,9 +280,10 @@ public class CompanyService {
 
         //convert getDayOfWeek() output to db availability table 0 based working hours
         //getDayOfWeek().getValue() output 1-7(starting Mondey), db saves 0-6(starting Sunday)
-        int dayNumber = appointmentTimestamp.getDayOfWeek().getValue() == 7 ? 0 : appointmentTimestamp.getDayOfWeek().getValue();
+//        System.out.println(appointmentTimestamp.getDayOfWeek().getValue());
+//        int dayNumber = appointmentTimestamp.getDayOfWeek().getValue() == 7 ? 0 : appointmentTimestamp.getDayOfWeek().getValue();
 
-        Optional<Availability> dayOpt = availabilityRepository.findByCompanyAndWeekDay(company, dayNumber);
+        Optional<Availability> dayOpt = availabilityRepository.findByCompanyAndWeekDay(company, appointmentTimestamp.getDayOfWeek().getValue());
 
         if (!dayOpt.isPresent()) {
             //no Availability entry found for the spesific week day, so the company is closed for the entire day
