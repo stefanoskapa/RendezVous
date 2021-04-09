@@ -14,12 +14,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Leyteris
  */
 @Service
+@Transactional
 public class AppointmentService {
 
     @Autowired
@@ -41,6 +43,14 @@ public class AppointmentService {
 
     public boolean isRequestedAppointmentInThePast(LocalDateTime appointmentTimestamp) {
         return appointmentTimestamp.isBefore(LocalDateTime.now());
+    }
+    
+    public void deleteByClientAndDateAndTimeslot(Client client, LocalDate date, int timeslot){
+        appointmentRepository.deleteByClientAndDateAndTimeslot(client, date, timeslot);
+    }
+    
+    public boolean existsByClientAndDateAndTimeslot(Client client, LocalDate appDate, int timeslot) {
+        return appointmentRepository.existsByClientAndDateAndTimeslot(client, appDate, timeslot);
     }
     
 }

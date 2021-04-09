@@ -247,6 +247,9 @@ a.close-chat {
 	background-color: #DCDCDC;
 }
 
+.msg {
+    display: block;
+}
 @keyframes showhide{
     from{
         transform:scale(.5);

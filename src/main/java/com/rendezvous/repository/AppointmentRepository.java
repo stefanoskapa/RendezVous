@@ -19,5 +19,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     
     boolean existsByClientAndDateAndTimeslot(Client client,LocalDate localDate, int timeslot);
     boolean existsByCompanyAndDateAndTimeslot(Company company,LocalDate localDate, int timeslot);
-    boolean deleteByClientAndDateAndTimeslot(Client client, LocalDate localDate, int timeslot);
+    void deleteByClientAndDateAndTimeslot(Client client, LocalDate localDate, int timeslot);
 }
