@@ -71,11 +71,11 @@ function insertChat(side, text, dateTime) {
     let speechBubble = $('#msgframe').html();
     if (side) {
         $('#msgframe').html(speechBubble + "<div class='container1'><img src='" +
-                myAvatar + "' style='width:100%;'><p>" + text + "</p>" +
+                myAvatar + "' style='width:100%;'><p class='msg'>" + text + "</p>" +
                 "<span class='time-right'>" + timeStamp + "</span></div>");
     } else {
         $('#msgframe').html(speechBubble + "<div class='container1'><img src='" +
-                yourAvatar + "' class='right' style='width:100%;'><p>" + text + "</p>" +
+                yourAvatar + "' class='right' style='width:100%;'><p class='msg'>" + text + "</p>" +
                 "<span class='time-left'>" + timeStamp + "</span></div>");
     }
     $("#msgframe").scrollTop($("#msgframe")[0].scrollHeight);
