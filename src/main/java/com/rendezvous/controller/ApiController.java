@@ -241,7 +241,7 @@ public class ApiController {
         Client client = clientService.findClientByEmail(principal.getName());
         int timeslot = dateTimeToBeDeleted.getHour();
         LocalDate appDate = dateTimeToBeDeleted.toLocalDate();
-        if (appointmentService.existsByClientAndDateAndTimeslot(client, appDate, timeslot)) {
+        if (!appointmentService.existsByClientAndDateAndTimeslot(client, appDate, timeslot)) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         appointmentService.deleteByClientAndDateAndTimeslot(client, appDate, timeslot);
