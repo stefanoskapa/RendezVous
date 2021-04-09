@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 $('#myModal').modal('show');
             },
             eventContent: function (arg) {
-                return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center">' + arg.event.title + '</p></div>'}
+                return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center text-wrap">' + arg.event.title + '</p></div>'}
             },
             events: filteredCalendarData
         });
