@@ -6,23 +6,27 @@ document.addEventListener('DOMContentLoaded', function () {
     var initialView;
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            calendarData = JSON.parse(this.responseText);
+    getCalendarDataAndDrawCalendar();
 
-            filteredCalendarData = calendarData;
-            initialView = 'timeGridWeek';
-            defDate = new Date();
+    function getCalendarDataAndDrawCalendar() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                calendarData = JSON.parse(this.responseText);
 
-            initializeCalendar();
-            $("#loading-container").hide();
-            $("#calendar-container").fadeIn("slow");
-            calendar.render();
-        }
-    };
-    xhttp.open("GET", full + "/api/v1/client/dates", true);
-    xhttp.send();
+                filteredCalendarData = calendarData;
+                initialView = 'timeGridWeek';
+                defDate = new Date();
+
+                initializeCalendar();
+                $("#loading-container").hide();
+                $("#calendar-container").fadeIn("slow");
+                calendar.render();
+            }
+        };
+        xhttp.open("GET", full + "/api/v1/client/dates", true);
+        xhttp.send();
+    }
 
     function initializeCalendar() {
         var calendarEl = document.getElementById('calendar');
@@ -50,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let endTime = new Date(info.event.end);
                 endTime.setHours(endTime.getHours() + (endTime.getTimezoneOffset() / 60));
 
-                $("#hdate").val(info.start);
+                $("#hdate").val(info.event.start);
 
                 $(".modal-title").text(info.event.title);
                 $(".modal-body p").html(
@@ -110,15 +114,11 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#deleteDate").click(function () {
         $('html, body').css("cursor", "wait");
         var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-
+        console.log("in delete");
         $.ajax(full + "/api/v1/client/delete-app",
                 {type: 'DELETE',
                     contentType: 'application/json',
-                    data: JSON.stringify(
-                            {
-                                "dateTimeToBeDeleted": new Date($("#hdate").val())
-                            }
-                    ),
+                    data: JSON.stringify(new Date($("#hdate").val())),
                     success: function (data, status, xhr) {   // success callback function
                         $('html, body').css("cursor", "auto");
                         $('#alert').removeClass("alert-warning");

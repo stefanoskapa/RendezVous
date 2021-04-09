@@ -243,15 +243,15 @@ public class ApiController {
         return new ResponseEntity<>(msgsToSend, HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/delete-app")
-    public ResponseEntity deleteAppointment(@RequestParam LocalDateTime dateTimeToBeDeleted, Principal principal) {
+    @DeleteMapping("client/delete-app")
+    public ResponseEntity deleteAppointment(Principal principal, @RequestBody LocalDateTime dateTimeToBeDeleted) {
         Client client = clientService.findClientByEmail(principal.getName());
         int timeslot = dateTimeToBeDeleted.getHour();
         LocalDate appDate = dateTimeToBeDeleted.toLocalDate();
-        
+        System.out.println(">>>>>>>>>in delete app<<<<<<<<");
+
         System.out.println(client.getUser().getEmail());
-        System.out.println("Timeslot: " + timeslot );
+        System.out.println("Timeslot: " + timeslot);
         System.out.println("Date: " + appDate);
         System.out.println("Appointment found: " + appointmentRepository.existsByClientAndDateAndTimeslot(client, appDate, timeslot));
         return new ResponseEntity(HttpStatus.OK);
