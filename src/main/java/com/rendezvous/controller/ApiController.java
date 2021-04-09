@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.controller;
 
 import com.rendezvous.customexception.ClientIdNotFound;
@@ -63,7 +58,7 @@ public class ApiController {
     private ConversationService conversationService;
     @Autowired
     private MessagesService messagesService;
-  
+
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -131,7 +126,6 @@ public class ApiController {
         boolean isClientOccupied = clientService.isOccupied(client, appointmentRequest.getAppointmentTimestamp());
 
         if (isClientOccupied) {
-//            System.out.println("Client is occupied>>>>>>>>> " + isClientOccupied);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -139,7 +133,6 @@ public class ApiController {
         try {
             company = companyService.findCompanyById(appointmentRequest.getCompanyId());
         } catch (CompanyIdNotFound ex) {
-//            System.out.println("Company doesnt exists");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -147,7 +140,6 @@ public class ApiController {
         boolean isDateInBusinessHours = companyService.isDateInBusinessHours(company, appointmentRequest.getAppointmentTimestamp());
 
         if (!isDateInBusinessHours) {
-//            System.out.println("Date in business hours>>>>>>>>> " + isDateInBusinessHours);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -156,7 +148,6 @@ public class ApiController {
         isCompanyOccupied = companyService.isOccupied(company, appointmentRequest.getAppointmentTimestamp());
 
         if (isCompanyOccupied) {
-//            System.out.println("Company is occupied>>>>>>>>> " + isCompanyOccupied);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -165,7 +156,6 @@ public class ApiController {
         isRequestedAppointmentInThePast = appointmentService.isRequestedAppointmentInThePast(appointmentRequest.getAppointmentTimestamp());
 
         if (isRequestedAppointmentInThePast) {
-//            System.out.println("Requested appointment date is in the past>>>>>>>>> " + isRequestedAppointmentInThePast);
             return new ResponseEntity("past-date", HttpStatus.BAD_REQUEST);
         }
 

@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.model;
 
 import java.time.LocalDateTime;
 
-/**
- *
- * @author Leyteris
- */
 public class ClientCalendarProperties {
+
     private String title;
-    private LocalDateTime  start;
-    private LocalDateTime  end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private ClientExtendedProps extendedProps;
 
     public ClientCalendarProperties() {
@@ -58,6 +50,5 @@ public class ClientCalendarProperties {
     public void setEnd(LocalDateTime end) {
         this.end = end;
     }
-    
-    
+
 }

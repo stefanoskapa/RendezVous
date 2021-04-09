@@ -10,16 +10,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService{
+public class MyUserDetailsService implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
-    /*
-    Here typically we call JPA methods to create a UserDetails object
-    */
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional <User> user = userRepository.findByEmail(username);
-        user.orElseThrow(()-> new UsernameNotFoundException("User " + username + " not found!"));
+        Optional<User> user = userRepository.findByEmail(username);
+        user.orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
         return user.map(MyUserDetails::new).get();
     }
 

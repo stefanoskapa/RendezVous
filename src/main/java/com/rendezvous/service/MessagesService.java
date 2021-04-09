@@ -14,18 +14,14 @@ public class MessagesService {
 
     @Autowired
     private MessagesRepository messagesRepository;
-    
-   
 
-   
-    
     public Optional<List<Messages>> findByConversationId(int conversationId) {
         return messagesRepository.findByConversationId(conversationId);
 
     }
-    
+
     public void save(Messages message) {
-               
-        messagesRepository.save(message);     
+
+        messagesRepository.save(message);
     }
 }

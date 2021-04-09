@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.controller;
 
 import com.rendezvous.customexception.ConversationNotFound;
@@ -34,7 +29,6 @@ public class ChatController {
     private SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     private ConversationService conversationService;
-   
 
     @MessageMapping("/secured/room") //send incoming message to the right user
     public void sendSpecific(
@@ -47,10 +41,11 @@ public class ChatController {
         User tempUser = userService.findByEmail(user.getName()); // sender
         User tempUser2 = userService.findByEmail(msg.getTo()); // recipient
         Optional<Conversation> conv = conversationService.findConversation(tempUser.getId(), tempUser2.getId());
-        if (!conv.isPresent()) throw new ConversationNotFound("Conversation between userID=" + tempUser.getId()+ " iserID="+tempUser2.getId()+" not found!");
-        Messages tempMessage = new Messages(tempUser.getId(), conv.get().getId(),msg.getText(),LocalDateTime.now());
+        if (!conv.isPresent()) {
+            throw new ConversationNotFound("Conversation between userID=" + tempUser.getId() + " iserID=" + tempUser2.getId() + " not found!");
+        }
+        Messages tempMessage = new Messages(tempUser.getId(), conv.get().getId(), msg.getText(), LocalDateTime.now());
         messagesService.save(tempMessage);
     }
 
-    
 }

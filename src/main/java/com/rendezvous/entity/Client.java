@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rendezvous.entity;
 
 import java.io.Serializable;
@@ -24,7 +19,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "client")
 @NamedQueries({
@@ -32,42 +26,36 @@ import javax.validation.constraints.Size;
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "fname")
     private String fname;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "lname")
     private String lname;
-    
+
     @Size(max = 10)
     @Column(name = "tel")
     private String tel;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private List<Messages> messagesList;
-    
+
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @Valid
     private User user;
-    
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientId")
-//    private List<Appointment> appointmentList;
-    
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientId")
-//    private List<Conversation> conversationList;
 
     public Client() {
     }
@@ -130,22 +118,6 @@ public class Client implements Serializable {
         this.user = user;
     }
 
-//    public List<Appointment> getAppointmentList() {
-//        return appointmentList;
-//    }
-//
-//    public void setAppointmentList(List<Appointment> appointmentList) {
-//        this.appointmentList = appointmentList;
-//    }
-//
-//    public List<Conversation> getConversationList() {
-//        return conversationList;
-//    }
-//
-//    public void setConversationList(List<Conversation> conversationList) {
-//        this.conversationList = conversationList;
-//    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -166,11 +138,6 @@ public class Client implements Serializable {
         return true;
     }
 
-//    @Override
-//    public String toString() {
-//        return "com.rendezvous.entity.Client[ id=" + id + " ]";
-//    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -182,8 +149,5 @@ public class Client implements Serializable {
         sb.append('}');
         return sb.toString();
     }
-    
-    
-    
-    
+
 }
