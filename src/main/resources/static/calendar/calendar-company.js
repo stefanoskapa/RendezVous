@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //            slotMaxTime: "18:00:00", //na to allazoume dinamika me vasi to orario
             events: calendarData.events,
             eventContent: function (arg) {
-                return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center">' + arg.event.title + '</p></div>'}
+                return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center text-wrap">' + arg.event.title + '</p></div>'}
             },
         });
         $("#loading-container").hide();
