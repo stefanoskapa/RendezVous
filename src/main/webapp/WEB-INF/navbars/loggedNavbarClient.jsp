@@ -1,7 +1,11 @@
 <link rel="stylesheet" href="/navbar/navbar.css">
 <div>
     <nav id="nav" class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button">
-        <div class="container-fluid"><i id="calendar-logo" class="fa fa-calendar" data-aos="zoom-in" data-aos-once="true"></i><a id="navbar-brand1" class="navbar-brand" href="${pageContext.request.contextPath}/client/dashboard">&nbsp;&nbsp;RendezVouz</a>
+        <div class="container-fluid">
+            <a id="calendar-logo-container" href="${pageContext.request.contextPath}/client/dashboard">
+                <i id="calendar-logo" class="fa fa-calendar" data-aos="zoom-in" data-aos-once="true"></i>
+            </a>
+            <a id="navbar-brand1" class="navbar-brand" href="${pageContext.request.contextPath}/client/dashboard">&nbsp;&nbsp;RendezVouz</a>
             <button
                 data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
