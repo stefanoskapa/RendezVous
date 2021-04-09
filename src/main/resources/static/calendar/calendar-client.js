@@ -9,22 +9,29 @@ document.addEventListener('DOMContentLoaded', function () {
     var initialView;
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
-    getCalendarDataAndDrawCalendar();
+    drawCalendar();
 
-    function getCalendarDataAndDrawCalendar() {
+    function drawCalendar() {
+        getData(function () {
+            defDate = new Date();
+
+            initialView = 'timeGridWeek';
+            defDate = new Date();
+
+            initializeCalendar();
+            $("#loading-container").hide();
+            $("#calendar-container").fadeIn("slow");
+            calendar.render();
+        });
+    }
+
+    function getData(afterLoading) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 calendarData = JSON.parse(this.responseText);
-
                 filteredCalendarData = calendarData;
-                initialView = 'timeGridWeek';
-                defDate = new Date();
-
-                initializeCalendar();
-                $("#loading-container").hide();
-                $("#calendar-container").fadeIn("slow");
-                calendar.render();
+                afterLoading();
             }
         };
         xhttp.open("GET", full + "/api/v1/client/dates", true);
@@ -139,11 +146,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         $('#alert').show();
                         $('#alert').html("Your appointment has been deleted");
-                        defDate = calendar.currentData.currentDate
-                        initialView = calendar.currentData.currentViewType;
+                        
+                        getData(function () {
+                            defDate = calendar.currentData.currentDate
 
-                        initializeCalendar();
-                        calendar.render();
+                            initializeCalendar();
+                            $("#loading-container").hide();
+                            $("#calendar-container").fadeIn("slow");
+                            calendar.render();
+                        });
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
                         $('html, body').css("cursor", "auto");
