@@ -91,11 +91,6 @@ public class ClientController {
         return "client/company_search";
     }
 
-//    @PostMapping("/comp-select")
-//    public String showCompanySelect(@RequestParam int companyId, Model model) {
-//        model.addAttribute("comp_id", companyId); //comp_id will be used by company_date_pick
-//        return "client/company_date_pick";
-//    }
     @GetMapping("/date-select")
     public String showDateSelect(@RequestParam int companyId, Model model) {
 
@@ -107,7 +102,7 @@ public class ClientController {
             model.addAttribute("lname", tempCompany.getLname());
             model.addAttribute("comp_email", tempCompany.getUser().getEmail());
         } catch (CompanyIdNotFound ex) {
-            // todo if exception occures company id is wrong and should be redirected to error page
+            return "client/company_search";
         }
         return "client/company_date_pick";
     }

@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+    $("#alert").hide();
+    $("#confirmDeleteDate").hide();
+
     var calendarData;
     var filteredCalendarData;
     var calendar;
@@ -70,6 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         "<br/>" +
                         info.event.extendedProps.tel
                         );
+                $("#deleteDate").show();
+                $("#confirmDeleteDate").hide();
 
                 $('#myModal').modal('show');
             },
@@ -111,10 +116,18 @@ document.addEventListener('DOMContentLoaded', function () {
         calendar.render();
     }
 
+
     $("#deleteDate").click(function () {
+        $(".modal-title").text("Appointment Deletion");
+        $(".modal-body p").html("Are you sure?");
+        $("#deleteDate").hide();
+        $("#confirmDeleteDate").show();
+    });
+
+    $("#confirmDeleteDate").click(function () {
         $('html, body').css("cursor", "wait");
         var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-        console.log("in delete");
+
         $.ajax(full + "/api/v1/client/delete-app",
                 {type: 'DELETE',
                     contentType: 'application/json',
@@ -125,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#alert').addClass("alert-success");
 
                         $('#alert').show();
-                        $('#alert').html("Your appointment has been deleted")
+                        $('#alert').html("Your appointment has been deleted");
                         getCalendarDataAndDrawCalendar();
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
@@ -137,6 +150,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#alert').html("Wrong request");
                     }
                 });
-    });
+
+                setTimeout(() => {$("#deleteDate").show();},500)
+                setTimeout(() => {$("#confirmDeleteDate").hide()},500)
+    })
 
 });

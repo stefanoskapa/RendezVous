@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <div class="row mx-0 mx-md-5">
+                <div class="row mx-0 mx-md-4">
                     <div class="col-12">
                         <div class="alert alert-dismissible fade show" role="alert" id="alert"></div>
                     </div>
@@ -114,7 +114,8 @@
                         </div>
                         <div class="modal-footer">
                             <input type="text" hidden id="hdate" value="">
-                            <button type="button" id="deleteDate" class="btn btn-warning" data-dismiss="modal">Delete</button>
+                            <button type="button" id="deleteDate" class="btn btn-warning mr-auto">Delete</button>
+                            <button type="button" id="confirmDeleteDate" class="btn btn-warning mr-auto" data-dismiss="modal">Confirm</button>
 
                             <button type="button" id="buttonOk" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
@@ -127,11 +128,5 @@
         <footer>
             <jsp:include page="/WEB-INF/navbars/footer.jsp"/>             
         </footer>
-
-
-        <script>
-           
-        </script>
-
     </body>
 </html>

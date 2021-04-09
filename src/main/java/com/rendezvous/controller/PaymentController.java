@@ -46,28 +46,28 @@ public class PaymentController {
         return "company/premium/premium";
     }
 
-    //testing todo delete
-    @GetMapping(value = "/pro/cuss")
-    public String fou(Principal principal, Model model) {
-
-        if (principal != null) {
-            Company c = companyService.findCompanyByEmail(principal.getName());
-            model.addAttribute("company_name", c.getDisplayName());
-            model.addAttribute("company", c);
-        }
-        return "company/premium/success_premium";
-    }
-
-    //testing todo delete
-    @GetMapping(value = "/pro/fail")
-    public String fou2(Principal principal, Model model) {
-        if (principal != null) {
-            Company c = companyService.findCompanyByEmail(principal.getName());
-            model.addAttribute("company_name", c.getDisplayName());
-            model.addAttribute("company", c);
-        }
-        return "company/premium/failed_premium";
-    }
+//    //for testing success purchase page
+//    @GetMapping(value = "/pro/cuss")
+//    public String fou(Principal principal, Model model) {
+//
+//        if (principal != null) {
+//            Company c = companyService.findCompanyByEmail(principal.getName());
+//            model.addAttribute("company_name", c.getDisplayName());
+//            model.addAttribute("company", c);
+//        }
+//        return "company/premium/success_premium";
+//    }
+//
+//    //for testing failed purchase page
+//    @GetMapping(value = "/pro/fail")
+//    public String fou2(Principal principal, Model model) {
+//        if (principal != null) {
+//            Company c = companyService.findCompanyByEmail(principal.getName());
+//            model.addAttribute("company_name", c.getDisplayName());
+//            model.addAttribute("company", c);
+//        }
+//        return "company/premium/failed_premium";
+//    }
 
     @PostMapping(value = "/pro/charge")
     public String chargeCard(HttpServletRequest request, Principal principal, Model model) throws Exception {
