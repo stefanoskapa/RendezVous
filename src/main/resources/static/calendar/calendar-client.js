@@ -139,7 +139,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         $('#alert').show();
                         $('#alert').html("Your appointment has been deleted");
-                        getCalendarDataAndDrawCalendar();
+                        defDate = calendar.currentData.currentDate
+                        initialView = calendar.currentData.currentViewType;
+
+                        initializeCalendar();
+                        calendar.render();
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
                         $('html, body').css("cursor", "auto");
@@ -151,8 +155,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-                setTimeout(() => {$("#deleteDate").show();},500)
-                setTimeout(() => {$("#confirmDeleteDate").hide()},500)
+        setTimeout(() => {
+            $("#deleteDate").show();
+        }, 500)
+        setTimeout(() => {
+            $("#confirmDeleteDate").hide()
+        }, 500)
     })
 
 });

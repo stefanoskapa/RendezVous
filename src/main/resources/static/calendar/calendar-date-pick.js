@@ -1,9 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var calendarData = {};
     $("#alert").hide();
-    getCalendarDataAndDrawCalendar();
 
-    function getCalendarDataAndDrawCalendar() {
+    var calendarData;
+    var calendar;
+    var defDate;
+
+    drawCalendar();
+
+    function drawCalendar() {
+        getData(function () {
+            defDate = new Date();
+
+            initializeCalendar();
+            $("#loading-container").hide();
+            $("#calendar-container").fadeIn("slow");
+            calendar.render();
+        });
+    }
+
+    function getData(afterLoading) {
         var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
         var comp_id = $("#comp-id").val();
         var xhttp = new XMLHttpRequest();
@@ -14,17 +29,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (calendarData.businessHours.length == 0) {
                     calendarData.businessHours = [{daysOfWeek: 1, startTime: "00:00:00", endTime: "00:00:00"}]
                 }
-                drawCalendar();
+                afterLoading();
             }
         };
         xhttp.open("GET", full + "/api/v1/client/company/" + comp_id + "/availability", true);
         xhttp.send();
     }
 
-    function drawCalendar() {
+    function initializeCalendar() {
         var calendarEl = document.getElementById('calendar');
         calendarEl.innerHTML = "";
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialDate: defDate,
             businessHours: calendarData.businessHours,
 //                slotMinTime: x.slotMinTime,
 //                slotMaxTime: x.slotMaxTime,
@@ -84,13 +100,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 return {html: '<div class="row h-100"><p class="col-sm-12 my-auto text-center">' + arg.event.title + '</p></div>'}
             }
         });
-        $("#loading-container").hide();
-        $("#calendar-container").fadeIn("slow");
-        calendar.render();
     }
 
     $(window).on("orientationchange", function (event) {
-        setTimeout(drawCalendar, 100);
+        setTimeout(function () {
+            initializeCalendar();
+            calendar.render();
+        }, 200);
     });
 
     $("#submitDateToServer").click(function () {
@@ -113,7 +129,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         $('#alert').show();
                         $('#alert').html("Your appointment has been successfully created")
-                        getCalendarDataAndDrawCalendar();
+
+                        getData(function () {
+                            defDate = calendar.currentData.currentDate
+
+                            initializeCalendar();
+                            $("#loading-container").hide();
+                            $("#calendar-container").fadeIn("slow");
+                            calendar.render();
+                        });
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
                         $('html, body').css("cursor", "auto");
