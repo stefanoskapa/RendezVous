@@ -8,6 +8,7 @@ package com.rendezvous.controller;
 import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.customexception.ConversationNotFound;
+import com.rendezvous.entity.Appointment;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Conversation;
@@ -20,6 +21,7 @@ import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.Message;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.model.UserProps;
+import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.service.AppointmentService;
 import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
@@ -28,6 +30,7 @@ import com.rendezvous.service.ConversationService;
 import com.rendezvous.service.MessagesService;
 import com.rendezvous.service.UserService;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +41,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,6 +68,8 @@ public class ApiController {
     private ConversationService conversationService;
     @Autowired
     private MessagesService messagesService;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
@@ -235,6 +241,20 @@ public class ApiController {
             conversationService.save(new Conversation(tempUser, otherUser));
         }
         return new ResponseEntity<>(msgsToSend, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/delete-app")
+    public ResponseEntity deleteAppointment(@RequestParam LocalDateTime dateTimeToBeDeleted, Principal principal) {
+        Client client = clientService.findClientByEmail(principal.getName());
+        int timeslot = dateTimeToBeDeleted.getHour();
+        LocalDate appDate = dateTimeToBeDeleted.toLocalDate();
+        
+        System.out.println(client.getUser().getEmail());
+        System.out.println("Timeslot: " + timeslot );
+        System.out.println("Date: " + appDate);
+        System.out.println("Appointment found: " + appointmentRepository.existsByClientAndDateAndTimeslot(client, appDate, timeslot));
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
