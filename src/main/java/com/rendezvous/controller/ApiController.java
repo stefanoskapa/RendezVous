@@ -8,7 +8,6 @@ package com.rendezvous.controller;
 import com.rendezvous.customexception.ClientIdNotFound;
 import com.rendezvous.customexception.CompanyIdNotFound;
 import com.rendezvous.customexception.ConversationNotFound;
-import com.rendezvous.entity.Appointment;
 import com.rendezvous.entity.Client;
 import com.rendezvous.entity.Company;
 import com.rendezvous.entity.Conversation;
@@ -21,9 +20,7 @@ import com.rendezvous.model.CompanyCalendarProperties;
 import com.rendezvous.model.Message;
 import com.rendezvous.model.SearchResult;
 import com.rendezvous.model.UserProps;
-import com.rendezvous.repository.AppointmentRepository;
 import com.rendezvous.service.AppointmentService;
-import com.rendezvous.service.CategoryService;
 import com.rendezvous.service.ClientService;
 import com.rendezvous.service.CompanyService;
 import com.rendezvous.service.ConversationService;
@@ -60,17 +57,13 @@ public class ApiController {
     private CompanyService companyService;
     @Autowired
     private AppointmentService appointmentService;
-//    @Autowired
-//    private CategoryService categoryService;
     @Autowired
     private UserService userService;
     @Autowired
     private ConversationService conversationService;
     @Autowired
     private MessagesService messagesService;
-   // @Autowired
-    //private AppointmentRepository appointmentRepository;
-
+  
     @GetMapping("/client/dates")
     public ResponseEntity<List<ClientCalendarProperties>> fetchClientAppointments() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -248,12 +241,9 @@ public class ApiController {
         Client client = clientService.findClientByEmail(principal.getName());
         int timeslot = dateTimeToBeDeleted.getHour();
         LocalDate appDate = dateTimeToBeDeleted.toLocalDate();
-        System.out.println(">>>>>>>>>in delete app<<<<<<<<");
-
-        System.out.println(client.getUser().getEmail());
-        System.out.println("Timeslot: " + timeslot);
-        System.out.println("Date: " + appDate);
-        System.out.println("Appointment found: " + appointmentService.existsByClientAndDateAndTimeslot(client, appDate, timeslot));
+        if (!appointmentService.existsByClientAndDateAndTimeslot(client, appDate, timeslot)) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         appointmentService.deleteByClientAndDateAndTimeslot(client, appDate, timeslot);
         return new ResponseEntity(HttpStatus.OK);
     }
