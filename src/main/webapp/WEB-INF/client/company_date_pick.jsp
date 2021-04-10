@@ -57,17 +57,18 @@
             <div class="container-fluid" id="calendar-container">
                 <div class="row">
                     <div class="col">
-                        <h1 class="text-center">${comp_name}</h1>
+                        
+                        <h1 class="text-center my-2">${comp_name}</h1>
                     </div>
                 </div>
                 <div class="row mx-0 mx-md-5">
                     <div class="col-12">
-                        <h4>
+                        <h5>
                             <div class="d-none d-md-inline">Click</div>
                             <div class="d-inline d-md-none">Press and hold</div>
-                            on one of the available slots to close your appointment
-                        </h4>
-                        <h4>Confirm your appointment in the popup window</h4>
+                            on one of the available slots to book your appointment
+                        </h5>
+                        
                         <div id="legendInfo" class="fa fa-info-circle fa-lg float-right pb-2"></div>
                     </div>
                 </div>
