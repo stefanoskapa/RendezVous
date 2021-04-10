@@ -1,9 +1,3 @@
-<%-- 
-    Document   : chat
-    Created on : Apr 1, 2021, 8:11:55 PM
-    Author     : Stefanos
---%>
-
 <div id='whatsapp-chat' class='hideCh'>
     <div class='header-chat'>
         <div class='head-home'>
@@ -23,4 +17,4 @@
     <a class='close-chat' >×</a>
 </div>
 <a class='blantershow-chat' title='Show Chat'>Chat</a>
-<script src="${pageContext.request.contextPath}/chat/chat.js"></script>
+<script src="/chat/chat.js"></script>
