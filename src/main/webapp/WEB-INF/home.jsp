@@ -30,7 +30,7 @@
 
         <!--Current page-->
         <style>
-            .buffer { margin:50px;}      
+            .buffer { margin:100px;}      
         </style>
 
     </head>

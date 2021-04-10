@@ -83,14 +83,17 @@ function insertChat(side, text, dateTime) {
 
 function connect() {
 
-    const socket = new SockJS("/secured/room");
+  const socket = new SockJS("/secured/room");
+
+
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function () {
         var url = stompClient.ws._transport.url;
+        url = url.replace("wss://","");
         url = url.replace("ws://" + location.hostname + (location.port ? ':' + location.port : '') + "/secured/room/", "");
         url = url.replace("/websocket", "");
         url = url.replace(/^[0-9]+\//, "");
-//        console.log("Your current session is: " + url);
+        console.log("Your current session is: " + url);
         sessionId = url;
         subscribe();
     });
