@@ -29,12 +29,7 @@
         <link rel="stylesheet" href="/footer/Dark-Footer.css">
 
         <!--Current page-->
-        <style>
-            .buffer { 
-                margin-top:100px;
-                margin-bottom: 100px;
-            }      
-        </style>
+       
 
     </head>
     <body>
@@ -42,7 +37,7 @@
 
         <div class="container-fluid">
             <div class="row bg-dark justify-content-around">
-                <div class="col-md-4 buffer">                   
+                <div class="col-md-4 my-5 py-5">                   
                     <h1 class="text-white">All you need to do is show up at the right time!</h1> 
                     <br>
                     <p class="text-white">Make your day easier by booking all your appointments online using the best features in one tool</p>
@@ -51,18 +46,18 @@
 
 
                 </div>
-                <div class="col-md-4 buffer">
+                <div class="col-md-4 my-5 py-5">
                     <br><br>
                     <img src="/img/rendezvous-landing_page-hero.png" class="img-fluid mx-auto d-block" alt="RendezVouz">
                 </div>
             </div>
 
             <div class="row bg-white justify-content-around">               
-                <div class="col-md-4 buffer">
+                <div class="col-md-4 my-5 py-5">
                     <br><br>
                     <img src="/img/dashboard.jpg" class="img-fluid mx-auto d-block" alt="RendezVouz"  style="width:100%; border-radius: 30px; box-shadow:10px 10px 8px #888888;">
                 </div>
-                <div class="col-md-4 buffer">
+                <div class="col-md-4 my-5 py-5">
                     <br>
                     <h1 class="text-dark">All you need to know about RendezVouz</h1> 
                     <br>
@@ -73,7 +68,7 @@
             </div>
 
             <div class="row bg-light justify-content-around">                
-                <div class="col-md-4 buffer">
+                <div class="col-md-4 my-5 py-5">
                     <h2 class="text-dark">"It is really refreshing to work with this software which is
                         truly helpful in the client's preferences."</h2>
                     <br>
@@ -81,7 +76,7 @@
                     <p class="text-dark">Head of Marketing, Apple Inc.</p>
                     <br>
                 </div>     
-                <div class="col-md-4 buffer">
+                <div class="col-md-4 my-5 py-5">
                     <img src="/img/rendezvous-landing_page-testimonials.png" class="img-fluid mx-auto d-block" alt="RendezVouz2">
                 </div>
             </div>
