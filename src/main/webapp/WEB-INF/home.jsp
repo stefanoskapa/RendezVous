@@ -72,8 +72,8 @@
                     <h2 class="text-dark">"It is really refreshing to work with this software which is
                         truly helpful in the client's preferences."</h2>
                     <br>
-                    <h5 class="text-dark">Matt Calderon</h5>
-                    <p class="text-dark">Head of Marketing, Apple Inc.</p>
+                    <h5 class="text-dark">John Papadopoulos</h5>
+                    <p class="text-dark">Head of Marketing</p>
                     <br>
                 </div>     
                 <div class="col-md-4 my-5 py-5">
