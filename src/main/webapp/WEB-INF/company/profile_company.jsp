@@ -17,17 +17,17 @@
         <!--Navbar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-        <script src="/navbar/bs-init.js"></script>
+        <script src="/js/bs-init.js"></script>
 
         <!--Footer-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-        <link rel="stylesheet" href="/footer/Dark-Footer.css">
+        <link rel="stylesheet" href="/css/Dark-Footer.css">
 
         <!--Current page-->
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/css/company/profile/company-profile.css">
+        <link rel="stylesheet" href="/css/profile.css">
 
         
     </head>

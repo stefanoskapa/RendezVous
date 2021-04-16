@@ -18,15 +18,15 @@
         <!--Navbar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-        <script src="/navbar/bs-init.js"></script>
+        <script src="/js/bs-init.js"></script>
 
         <!--Footer-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/footer/Dark-Footer.css">       
+        <link rel="stylesheet" href="/css/Dark-Footer.css">       
 
         <!--Current page-->
-        <link rel="stylesheet" href="/css/login/login.css">
+        <link rel="stylesheet" href="/css/login.css">
 
     </head>
     <body>

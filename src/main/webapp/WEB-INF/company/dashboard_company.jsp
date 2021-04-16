@@ -23,23 +23,23 @@
         <!--Navbar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-        <script src="/navbar/bs-init.js"></script>
+        <script src="/js/bs-init.js"></script>
 
         <!--Footer-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/footer/Dark-Footer.css">
+        <link rel="stylesheet" href="/css/Dark-Footer.css">
 
         <!--Current page-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-        <link href='/calendar/lib/main.min.css' rel='stylesheet' />
-        <script src='/calendar/lib/main.min.js'></script>
-        <script src="/calendar/calendar-company.js"></script>
-        <link rel="stylesheet" href="/chat/styles.css">
-        <link rel="stylesheet" href="/css/company/dashboard/dashboard.css">
-        <script src="/js/company/dashboard/popover.js"></script>
+        <link href='/css/main.min.css' rel='stylesheet' />
+        <script src='/js/main.min.js'></script>
+        <script src="/js/calendar-company.js"></script>
+        <link rel="stylesheet" href="/css/chat.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+        <script src="/js/popover.js"></script>
     </head>
     <body>
         <header>

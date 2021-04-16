@@ -25,15 +25,15 @@
         <!--Navbar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-        <script src="/navbar/bs-init.js"></script>
+        <script src="/js/bs-init.js"></script>
 
         <!--Footer-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/footer/Dark-Footer.css">
+        <link rel="stylesheet" href="/css/Dark-Footer.css">
 
         <!--Current page-->
-        <link rel="stylesheet" href="/css/company/purchase/pro/pro.css">
+        <link rel="stylesheet" href="/css/pro.css">
         
     </head>
     <body>
@@ -73,7 +73,7 @@
                                             data-currency=eur
                                             data-name='RendezVous'
                                             data-description='Unlock Premium'
-                                            data-image='/favicon.ico'
+                                            data-image='/img/favicon.ico'
                                             data-locale='auto'
                                             data-zip-code='false'
                                             >

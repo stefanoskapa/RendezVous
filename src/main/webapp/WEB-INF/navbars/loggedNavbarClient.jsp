@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/navbar/navbar.css">
+<link rel="stylesheet" href="/css/navbar.css">
 <div>
     <nav id="nav" class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button">
         <div class="container-fluid">

@@ -16,23 +16,23 @@
         <!--Navbar-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-        <script src="/navbar/bs-init.js"></script>
+        <script src="/js/bs-init.js"></script>
         <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">ti kanei?-->
 
         <!--Footer-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/footer/Dark-Footer.css">
+        <link rel="stylesheet" href="/css/Dark-Footer.css">
 
         <!--Current page-->
-        <link href='/calendar/lib/main.min.css' rel='stylesheet' />
-        <script src='/calendar/lib/main.min.js'></script>
-        <script src="/calendar/calendar-date-pick.js"></script>
+        <link href='/css/main.min.css' rel='stylesheet' />
+        <script src='/js/main.min.js'></script>
+        <script src="/js/calendar-date-pick.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-        <link rel="stylesheet" href="/chat/styles.css">
-        <link rel="stylesheet" href="/css/client/date-pick/availability.css">
-        <script src="/js/client/date-pick/legend-popover.js"></script>
+        <link rel="stylesheet" href="/css/chat.css">
+        <link rel="stylesheet" href="/css/availability.css">
+        <script src="/js/legend-popover.js"></script>
     </head>
     <body>
         <header>

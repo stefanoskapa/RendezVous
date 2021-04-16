@@ -17,4 +17,4 @@
     <a class='close-chat' >×</a>
 </div>
 <a class='blantershow-chat' title='Show Chat'>Chat</a>
-<script src="/chat/chat.js"></script>
+<script src="/js/chat.js"></script>
